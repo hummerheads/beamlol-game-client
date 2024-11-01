@@ -35,7 +35,7 @@ const Home = () => {
           </span>
           <span className="block">🪙</span>
         </div>
-        <div className="bg-gray-800 w-full p-2 rounded-lg text-center">
+        <div className="bg-gray-800 w-full hidden p-2 rounded-lg text-center">
           <span className="font-semibold text-xs block text-blue-500">
             Leaderboard
           </span>
@@ -64,7 +64,7 @@ const Home = () => {
             className="rounded-full bg-teal-100 shadow-lg animate-pulse"
             labelPosition="inside"
             style={{
-              width: "100%", 
+              width: "100%",
               background:
                 "linear-gradient(120deg, #ADFAA1 0%, #C597CC 45%, #2F39A3 100%)",
             }}
@@ -86,21 +86,21 @@ const Home = () => {
 
           <span className="text-white">Transaction</span>
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center hidden">
           <img src="icons/airdrop.svg" alt="" />
-
           <span className="text-white">Air drop</span>
         </div>
+        <div className="flex flex-col items-center">
+          <img className="rounded-full w-8" src="/icons/spin.svg" alt="" />
+          <span className="text-white ">Spin</span>
+        </div>
       </div>
-      <div className="flex flex-col items-center mb-4">
-      <img className="rounded-full" src="/icons/spin.svg" alt="" />
-      <span className="text-white text-xs">Spin</span>
-      </div>
-      <div className="flex justify-center mb-4">
+
+      <div className="flex justify-center">
         <img
           src="/banner.png"
           alt="A cute robot with glowing eyes"
-          className="w-64 h-64"
+          className=""
         />
       </div>
 
