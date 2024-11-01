@@ -1,22 +1,22 @@
 import { Progress } from "flowbite-react";
-import { useState } from "react";
+// import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const Home = () => {
-  const [balance, setBalance] = useState(0);
-  const [clickPosition, setClickPosition] = useState(null);
+//   const [balance, setBalance] = useState(0);
+//   const [clickPosition, setClickPosition] = useState(null);
 
-  const handleClick = (event) => {
-    setBalance(balance + 1);
+//   const handleClick = (event) => {
+//     setBalance(balance + 1);
 
-    const rect = event.target.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
+//     const rect = event.target.getBoundingClientRect();
+//     const x = event.clientX - rect.left;
+//     const y = event.clientY - rect.top;
 
-    setClickPosition({ x, y });
+//     setClickPosition({ x, y });
 
-    setTimeout(() => setClickPosition(null), 3000);
-  };
+//     setTimeout(() => setClickPosition(null), 3000);
+//   };
 
   return (
     <div className="bg-[url('/bggif.gif')] flex flex-col items-center p-4 bg-gray-700">
@@ -56,11 +56,10 @@ const Home = () => {
             6/10
           </span>
         </div>
-        <div className="w-full bg-gray-700 rounded-full h-2.5">
           <Progress
             progress={60}
             color="teal"
-            size="lg"
+            size="xl"
             className="rounded-full bg-teal-100 shadow-lg animate-pulse"
             labelPosition="inside"
             style={{
@@ -69,7 +68,6 @@ const Home = () => {
                 "linear-gradient(120deg, #ADFAA1 0%, #C597CC 45%, #2F39A3 100%)",
             }}
           />
-        </div>
       </div>
       <div className="flex justify-evenly w-full mb-4">
         <div className="flex flex-col items-center">
