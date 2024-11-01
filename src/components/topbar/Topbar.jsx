@@ -1,4 +1,6 @@
+// eslint-disable-next-line react/prop-types
 const Topbar = ({ balance }) => {
+
   return (
     <div className="text-center text-xs py-2">
       <h1 className="bg-[#ff9c17] text-[#ffe386] py-3 font-black rounded-full text-xl my-2">

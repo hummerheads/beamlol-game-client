@@ -1,3 +1,4 @@
+import {  NavLink } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -14,10 +15,12 @@ const Footer = () => {
 
 
       <div className="bg-[#ff9c17] py-1 rounded-t-xl shadow-2xl grid grid-cols-5 justify-center items-center ">
-        <div>
+<NavLink to="premium">
+<div>
           <img className="w-1/2 rounded-md mx-auto" src="/icons/Premium.png" alt="" />
           <p className="text-white text-xs text-center font-bold">Premium</p>
         </div>
+</NavLink>
         <div>
           <img className="w-1/2 rounded-md mx-auto" src="/icons/shop.png" alt="" />
           <p className="text-white text-xs text-center font-bold">Shop</p>

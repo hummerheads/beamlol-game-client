@@ -19,7 +19,7 @@ const RightBar = () => {
       <div className="relative w-10">
         <img className=" bg-white rounded-md" src="/icons/daily.jpg" alt="" />
         <div className="absolute left-0 -bottom-2">
-        <NavLink className="bg-black  text-white p-1 font-bold text-xs rounded-full">Daily Transaction</NavLink>
+        <NavLink className="bg-black  text-center text-white p-1  text-xs rounded-full">Daily<br />Transaction</NavLink>
         </div>
       </div>
       <div className="relative w-10">
