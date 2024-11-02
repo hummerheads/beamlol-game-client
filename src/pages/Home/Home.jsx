@@ -138,14 +138,16 @@ const Home = () => {
             />
             <p className="text-white text-xs text-center font-bold">Shop</p>
           </div>
-          <div>
-            <img
-              className="w-1/2 rounded-md mx-auto"
-              src="/icons/earn.svg"
-              alt=""
-            />
-            <p className="text-white text-xs text-center font-bold">Earn</p>
-          </div>
+          <NavLink to="/earn">
+            <div>
+              <img
+                className="w-1/2 rounded-md mx-auto"
+                src="/icons/earn.svg"
+                alt=""
+              />
+              <p className="text-white text-xs text-center font-bold">Earn</p>
+            </div>
+          </NavLink>
           <div>
             <img
               className="w-1/2 rounded-md mx-auto"

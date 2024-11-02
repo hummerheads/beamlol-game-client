@@ -7,6 +7,7 @@ import Main from "./main/Main";
 import Premium from "./pages/premium/Premium";
 import Shop from "./pages/shop/Shop";
 import Spin from "./pages/spin/Spin";
+import Earn from "./pages/earn/Earn";
 
 
 const router = createBrowserRouter([
@@ -28,7 +29,7 @@ const router = createBrowserRouter([
        },
        {
         path: "/earn",
-        element: <Home></Home>,
+        element: <Earn></Earn>,
        },
        {
         path: "/invite",
