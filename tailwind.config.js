@@ -17,6 +17,9 @@ export default {
         "gradient-custom":
           "linear-gradient(180deg, rgba(204, 232, 254, 0.35) 0%, rgba(205, 160, 255, 0.35) 24%, rgba(132, 137, 245, 0.35) 40%, rgba(132, 137, 245, 0.35) 71%, rgba(181, 145, 233, 0.35) 100%)",
       },
+      animation: {
+        'spin-slow': 'spin 3s linear infinite',
+      },
     },
   },
 

@@ -3,20 +3,20 @@ import { Progress } from "flowbite-react";
 import { NavLink } from "react-router-dom";
 
 const Home = () => {
-//   const [balance, setBalance] = useState(0);
-//   const [clickPosition, setClickPosition] = useState(null);
+  //   const [balance, setBalance] = useState(0);
+  //   const [clickPosition, setClickPosition] = useState(null);
 
-//   const handleClick = (event) => {
-//     setBalance(balance + 1);
+  //   const handleClick = (event) => {
+  //     setBalance(balance + 1);
 
-//     const rect = event.target.getBoundingClientRect();
-//     const x = event.clientX - rect.left;
-//     const y = event.clientY - rect.top;
+  //     const rect = event.target.getBoundingClientRect();
+  //     const x = event.clientX - rect.left;
+  //     const y = event.clientY - rect.top;
 
-//     setClickPosition({ x, y });
+  //     setClickPosition({ x, y });
 
-//     setTimeout(() => setClickPosition(null), 3000);
-//   };
+  //     setTimeout(() => setClickPosition(null), 3000);
+  //   };
 
   return (
     <div className="bg-[url('/bggif.gif')] flex flex-col items-center p-4 bg-gray-700">
@@ -56,18 +56,18 @@ const Home = () => {
             6/10
           </span>
         </div>
-          <Progress
-            progress={60}
-            color="teal"
-            size="xl"
-            className="rounded-full bg-teal-100 shadow-lg animate-pulse"
-            labelPosition="inside"
-            style={{
-              width: "100%",
-              background:
-                "linear-gradient(120deg, #ADFAA1 0%, #C597CC 45%, #2F39A3 100%)",
-            }}
-          />
+        <Progress
+          progress={60}
+          color="teal"
+          size="xl"
+          className="rounded-full bg-teal-100 shadow-lg animate-pulse"
+          labelPosition="inside"
+          style={{
+            width: "100%",
+            background:
+              "linear-gradient(120deg, #ADFAA1 0%, #C597CC 45%, #2F39A3 100%)",
+          }}
+        />
       </div>
       <div className="flex justify-evenly w-full mb-4">
         <div className="flex flex-col items-center">
@@ -84,14 +84,16 @@ const Home = () => {
 
           <span className="text-white">Transaction</span>
         </div>
-        <div className="flex flex-col items-center hidden">
+        <div className=" flex-col items-center hidden">
           <img src="icons/airdrop.svg" alt="" />
           <span className="text-white">Air drop</span>
         </div>
-        <div className="flex flex-col items-center">
-          <img className="rounded-full w-8" src="/icons/spin.svg" alt="" />
-          <span className="text-white ">Spin</span>
-        </div>
+        <NavLink to="/spin">
+          <div className="flex flex-col items-center">
+            <img className="rounded-full w-8" src="/icons/spin.svg" alt="" />
+            <span className="text-white ">Spin</span>
+          </div>
+        </NavLink>{" "}
       </div>
 
       <div className="flex justify-center">

@@ -63,9 +63,15 @@ const Premium = () => {
               <hr />
             </div>
           </div>
-          <div className="mx-auto ">
+          <div className="mx-auto flex justify-center gap-2">
             <button className="text-base font-bold rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
-              Buy For 500
+              500
+            </button>
+            <button className="text-base font-bold rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
+              500
+            </button>
+            <button className="text-base font-bold rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
+              500
             </button>
           </div>
         </Drawer.Items>

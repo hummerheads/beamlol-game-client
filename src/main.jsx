@@ -6,6 +6,7 @@ import Home from "../src/pages/Home/Home"
 import Main from "./main/Main";
 import Premium from "./pages/premium/Premium";
 import Shop from "./pages/shop/Shop";
+import Spin from "./pages/spin/Spin";
 
 
 const router = createBrowserRouter([
@@ -39,7 +40,7 @@ const router = createBrowserRouter([
        },
        {
         path: "/spin",
-        element: <Home></Home>,
+        element: <Spin></Spin>,
        },
        {
         path: "/boost",
