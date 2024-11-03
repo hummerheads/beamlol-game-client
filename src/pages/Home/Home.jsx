@@ -3,8 +3,13 @@ import { Drawer, Progress } from "flowbite-react";
 import { NavLink } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
 import { useState } from "react";
+import Topbar from "../../components/topbar/Topbar";
 
 const Home = () => {
+  // Example code for your web app to get user_id from URL
+
+  // You can now use this userId for further processing, like storing it in a database or displaying it.
+
   const [isOpen, setIsOpen] = useState(true);
 
   const handleClose = () => setIsOpen(false);
@@ -22,17 +27,14 @@ const Home = () => {
 
   //     setTimeout(() => setClickPosition(null), 3000);
   //   };
+  const urlParams = new URLSearchParams(window.location.search);
+  const userId = urlParams.get("user_id");
 
+  console.log("User's Telegram ID:", userId);
   return (
     <div className="bg-[url('/bggif.gif')] flex flex-col items-center p-4 bg-gray-700">
-      <div className="flex justify-end items-center w-full mb-4">
-        <div className="flex items-center space-x-2">
-          <div className="bg-gray-800 p-2 rounded-full">
-            <img src="/name.svg" alt="" />
-          </div>
-          <span className="text-white">Nick Jay</span>
-        </div>
-      </div>
+      <Topbar></Topbar>
+      <div className="flex justify-end items-center w-full mb-4"></div>
       <div className="flex  gap-5 w-full mb-4">
         <div className="w-full bg-gray-800 p-2 rounded-lg text-center">
           <span className="font-semibold text-xs block text-yellow-500">
@@ -120,7 +122,6 @@ const Home = () => {
         </div>
       </div>
       <div className="my-2 ">
-
         <Drawer
           className="bg-[url('/Premium/bg.gif')]"
           open={isOpen}
@@ -192,15 +193,13 @@ const Home = () => {
       <div className="text-center">
         <div className=" py-1 rounded-t-xl shadow-2xl grid grid-cols-5 justify-center items-center ">
           <div onClick={() => setIsOpen(true)}>
-              <img
-                className="w-1/2 rounded-md mx-auto"
-                src="/icons/Premium.png"
-                alt=""
-              />
-              <p className="text-white text-xs text-center font-bold">
-                Premium
-              </p>
-            </div>
+            <img
+              className="w-1/2 rounded-md mx-auto"
+              src="/icons/Premium.png"
+              alt=""
+            />
+            <p className="text-white text-xs text-center font-bold">Premium</p>
+          </div>
           <NavLink to="/shop">
             <div>
               <img

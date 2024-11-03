@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import Footer from "../../components/footer/Footer";
+import Topbar from "../../components/topbar/Topbar";
+
+
 
 const Earn = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -35,17 +38,7 @@ const Earn = () => {
   return (
     <div className="bg-[url('/Earn/Earn.gif')] ">
       <div className="mx-4">
-        <div className="mx-auto flex justify-around gap-2">
-          <div className="flex gap-2 items-center text-base font-bold rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
-            <img className="w-6" src="/icons/booster.png" alt="" />
-            <p className="text-[#555555] text-xs">236,900,600</p>
-          </div>
-          <div className="flex gap-2 items-center text-base font-bold rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
-            <img className="w-5 rounded-full" src="/icons/spin.svg" alt="" />
-            <p className="text-[#555555] text-xs">236</p>
-            <img className="w-4 rounded-full" src="/icons/plus.svg" alt="" />
-          </div>
-        </div>
+<Topbar></Topbar>
 
         {/* Wrapper for the banner with sliding divs */}
         <div className="relative">

@@ -2,39 +2,21 @@
 const Topbar = ({ balance }) => {
 
   return (
-    <div className="text-center text-xs py-2">
-      <h1 className="bg-[#ff9c17] text-[#ffe386] py-3 font-black rounded-full text-xl my-2">
-        Weekly Giveaway: 100 TON
-      </h1>
-      <div className="flex justify-center gap-10 py-2">
-        <div className="flex items-center">
-          <div>
-            <img className="w-12" src="/icons/balance.gif" alt="" />
-          </div>
-          <div className="bg-[#ff9c17] text-[#ffe386] shadow-2xl font-black py-3 px-10 text-xl rounded-full">
-            {balance}
-          </div>
-        </div>
-        <div className="flex items-center">
-          <div>
-            <img className="w-12" src="/icons/level1.svg" alt="" />
-          </div>
-          <div className="bg-[#ff9c17] text-[#ffe386] shadow-xl font-black py-3 px-5 text-xl rounded-full">
-            Level 1
-          </div>
-        </div>
-      </div>
-      <div className="bg-[#ff9c17] text-[#ffe386] py-1 font-black rounded-full text-md my-2 flex justify-center gap-10 mx-16">
-        <div className="flex items-center gap-2">
-          <img className="w-7 h-7 rounded-full" src="/icons/boost.jpg" alt="" />
-          <p>Boosters</p>
-        </div>
-        <div className="flex items-center gap-2">
-          <img className="w-7 h-7 rounded-full" src="/icons/lederbord.webp" alt="" />
-          <p>Leaderboard</p>
-        </div>
-      </div>
+    <div className="mx-auto flex justify-around gap-2 py-2">
+    <div className="flex gap-2 items-center text-base font-bold rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
+      <img className="w-6" src="/icons/booster.png" alt="" />
+      <p className="text-[#555555] text-xs">236</p>
     </div>
+    <div className="flex gap-2 items-center text-base font-bold rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
+    <img className="w-6" src="/shop/perk.webp" alt="" />
+    <p className="text-[#555555] text-xs">900</p>
+    </div>
+    <div className="flex gap-2 items-center text-base font-bold rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
+      <img className="w-5 rounded-full" src="/icons/spin.svg" alt="" />
+      <p className="text-[#555555] text-xs">236</p>
+      <img className="w-4 rounded-full" src="/icons/plus.svg" alt="" />
+    </div>
+  </div>
   );
 };
 

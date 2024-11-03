@@ -48,8 +48,8 @@ const Spin = () => {
   }, [spinning, rotation, segments.length]);
 
   return (
-    <div className="bg-[url('/Spin/background.gif')] py-10">
-      <div className="py-3 shadow-xl rounded-xl mx-6 flex justify-around gap-2 bg-gray-500">
+    <div className="bg-[url('/Spin/spin.jpg')] py-10">
+      <div className="py-3 mb-10 shadow-xl rounded-xl mx-6 flex justify-around gap-2 bg-gray-500 bg-opacity-50">
         <div className="flex gap-2 items-center text-base font-bold rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
           <img className="w-6" src="/icons/booster.png" alt="" />
           <p className="text-[#555555] text-xs">236,900,600</p>
@@ -60,7 +60,7 @@ const Spin = () => {
           <img className="w-4 rounded-full" src="/icons/plus.svg" alt="" />
         </div>
       </div>
-      <div className="flex flex-col items-center relative">
+      <div className="flex flex-col items-center relative shadow-2xl">
         {/* Spike Icon - Upside Down */}
         <div className="absolute top-0 transform rotate-180">
           <FaArrowUp className="text-red-500" size={50} />
@@ -133,7 +133,7 @@ const Spin = () => {
         {/* Modal */}
         {showModal && result !== null && (
           <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white rounded-lg p-6 text-center">
+            <div className="bg-white bg-opacity-30 rounded-lg p-6 text-center">
               <h2 className="text-2xl font-bold mb-4">Congratulations!</h2>
               <p className="text-lg">You won: {segments[result].text}</p>
               <button
