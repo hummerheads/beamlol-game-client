@@ -82,7 +82,7 @@ const Home = () => {
         <div className="flex flex-col items-center">
           <img src="icons/transaction.svg" alt="" />
 
-          <span className="text-white">Transaction</span>
+          <span className="text-white">Check In</span>
         </div>
         <div className=" flex-col items-center hidden">
           <img src="icons/airdrop.svg" alt="" />
@@ -130,14 +130,16 @@ const Home = () => {
               </p>
             </div>
           </NavLink>
-          <div>
-            <img
-              className="w-1/2 rounded-md mx-auto"
-              src="/icons/shop.png"
-              alt=""
-            />
-            <p className="text-white text-xs text-center font-bold">Shop</p>
-          </div>
+          <NavLink to="/shop">
+            <div>
+              <img
+                className="w-1/2 rounded-md mx-auto"
+                src="/icons/shop.png"
+                alt=""
+              />
+              <p className="text-white text-xs text-center font-bold">Shop</p>
+            </div>
+          </NavLink>
           <NavLink to="/earn">
             <div>
               <img

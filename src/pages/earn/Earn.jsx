@@ -62,8 +62,8 @@ const Earn = () => {
         <div className="text-base w-1/3 mx-auto font-bold rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
           <p className="text-[#555555] text-xl  ">Special</p>
         </div>
-        <div>
-          <div className="flex gap-4">
+        <div className="">
+          <div className="flex gap-4 justify-center mb-5">
             <img src="/Earn/wallet.png" alt="" />
             <div>
               <div>
@@ -91,11 +91,11 @@ const Earn = () => {
           </div>
         </div>
         <div>
-          <div className="flex gap-4">
-            <img src="/Earn/wallet.png" alt="" />
+          <div className="flex gap-4 justify-center mb-5">
+            <img src="/Earn/youtube.png" alt="" />
             <div>
               <div>
-                <p className="text-white text-xl">Connect wallet on sui</p>
+                <p className="text-white text-xl">Watch youtube videos</p>
               </div>
               <div className="flex justify-around">
                 <div className="flex">
@@ -119,11 +119,11 @@ const Earn = () => {
           </div>
         </div>
         <div>
-          <div className="flex gap-4">
-            <img src="/Earn/wallet.png" alt="" />
+          <div className="flex gap-4 justify-center mb-5">
+            <img src="/Earn/promo.png" alt="" />
             <div>
               <div>
-                <p className="text-white text-xl">Connect wallet on sui</p>
+                <p className="text-white text-xl">Watch promo videos</p>
               </div>
               <div className="flex justify-around">
                 <div className="flex">
