@@ -1,49 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BeamLOL</title>
+  <head>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link rel="stylesheet" href="https://cdn.tailwindcss.com">
-</head>
-<body>
-    <h1>Welcome to Our Game!</h1>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/balance.gif" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./src/index.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
 
+    <title>BeamLOL</title>
     <script>
-        // Check if Telegram Web App API is available
-        if (window.Telegram && window.Telegram.WebApp) {
-            // Automatically expand to full screen when the page loads
-            window.Telegram.WebApp.expand();
+      // Check if Telegram Web App API is available
+      if (window.Telegram && window.Telegram.WebApp) {
+          // Automatically expand to full screen when the page loads
+          window.Telegram.WebApp.expand();
 
-            // Get user ID from URL parameters
-            const urlParams = new URLSearchParams(window.location.search);
-            const userId = urlParams.get('user_id');
+          // Get user ID from URL parameters
+          const urlParams = new URLSearchParams(window.location.search);
+          const userId = urlParams.get('user_id');
 
-            console.log("User's Telegram ID:", userId); // Log the user ID
+          console.log("User's Telegram ID:", userId); // Log the user ID
 
-            if (!userId) {
-                console.error("User ID is null or undefined");
-            } else {
-                // Send user ID to your server
-                fetch("https://beam-lol-server.vercel.app/api/allusers", { // Change this URL based on your deployment
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ telegram_ID: userId }), // Send as an object
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log("Response from server:", data);
-                })
-                .catch(error => {
-                    console.error("Error adding user:", error);
-                });
-            }
-        } else {
-            console.error("Telegram WebApp API is not available");
-        }
-    </script>
-</body>
+          if (!userId) {
+              console.error("User ID is null or undefined");
+          } else {
+              // Send user ID to your server
+              fetch("https://beam-lol-server.vercel.app/api/allusers", { // Change this URL based on your deployment
+                  method: "POST",
+                  headers: {
+                      "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ telegram_ID: userId }), // Send as an object
+              })
+              .then(response => response.json())
+              .then(data => {
+                  console.log("Response from server:", data);
+              })
+              .catch(error => {
+                  console.error("Error adding user:", error);
+              });
+          }
+      } else {
+          console.error("Telegram WebApp API is not available");
+      }
+  </script>
+    <style>
+      .wheel {
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        border: 10px solid #000;
+        position: relative;
+        margin: 0 auto;
+      }
+      .wheel .segment {
+        width: 50%;
+        height: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform-origin: 0% 0%;
+        overflow: hidden;
+      }
+      .wheel .segment div {
+        width: 200%;
+        height: 200%;
+        border-radius: 50%;
+        position: absolute;
+        top: -100%;
+        left: -100%;
+        border: 5px solid #000;
+      }
+      .wheel .segment:nth-child(1) div {
+        background: #ff0000;
+        transform: rotate(0deg);
+      }
+      .wheel .segment:nth-child(2) div {
+        background: #ff8000;
+        transform: rotate(45deg);
+      }
+      .wheel .segment:nth-child(3) div {
+        background: #ffff00;
+        transform: rotate(90deg);
+      }
+      .wheel .segment:nth-child(4) div {
+        background: #80ff00;
+        transform: rotate(135deg);
+      }
+      .wheel .segment:nth-child(5) div {
+        background: #00ff00;
+        transform: rotate(180deg);
+      }
+      .wheel .segment:nth-child(6) div {
+        background: #00ff80;
+        transform: rotate(225deg);
+      }
+      .wheel .segment:nth-child(7) div {
+        background: #00ffff;
+        transform: rotate(270deg);
+      }
+      .wheel .segment:nth-child(8) div {
+        background: #0080ff;
+        transform: rotate(315deg);
+      }
+      .wheel .center {
+        width: 100px;
+        height: 100px;
+        background: #ffcc00;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+      .pointer {
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-bottom: 40px solid #ffcc00;
+        position: absolute;
+        top: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    </style>
+  </head>
+  <body className="max-w-sm">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

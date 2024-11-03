@@ -8,7 +8,7 @@ const Premium = () => {
   const handleClose = () => setIsOpen(false);
   return (
     <>
-    {/* <div className="my-2 ">
+    <div className="my-2 ">
       <div className="flex min-h-[50vh] items-center justify-center">
         <Button onClick={() => setIsOpen(true)}>Show left drawer</Button>
       </div>
@@ -79,7 +79,7 @@ const Premium = () => {
         </Drawer.Items>
         <Footer></Footer>
       </Drawer>
-    </div> */}
+    </div>
     </>
   );
 };

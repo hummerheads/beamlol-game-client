@@ -1,7 +1,6 @@
 import { Drawer, Progress } from "flowbite-react";
 // import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import Footer from "../../components/footer/Footer";
 import { useState } from "react";
 import Topbar from "../../components/topbar/Topbar";
 
@@ -187,8 +186,59 @@ const Home = () => {
               </button>
             </div>
           </Drawer.Items>
-          <Footer></Footer>
-        </Drawer>
+          <div className="text-center">
+
+<div className=" py-1 rounded-t-xl shadow-2xl grid grid-cols-5 justify-center items-center ">
+  <NavLink to="/">
+    <div>
+      <img
+        className="w-1/2 rounded-md mx-auto"
+        src="/home.svg"
+        alt=""
+      />
+      <p className="text-white text-xs text-center font-bold">
+        Home
+      </p>
+    </div>
+  </NavLink>
+  <NavLink to="/shop">
+    <div>
+      <img
+        className="w-1/2 rounded-md mx-auto"
+        src="/icons/shop.png"
+        alt=""
+      />
+      <p className="text-white text-xs text-center font-bold">Shop</p>
+    </div>
+  </NavLink>
+  <NavLink to="/earn">
+    <div>
+      <img
+        className="w-1/2 rounded-md mx-auto"
+        src="/icons/earn.svg"
+        alt=""
+      />
+      <p className="text-white text-xs text-center font-bold">Earn</p>
+    </div>
+  </NavLink>
+  <div>
+    <img
+      className="w-1/2 rounded-md mx-auto"
+      src="/icons/invite.png"
+      alt=""
+    />
+    <p className="text-white text-xs text-center font-bold">Invite</p>
+  </div>
+  <div>
+    <img
+      className="w-1/2 rounded-md mx-auto"
+      src="/icons/wallet.svg"
+      alt=""
+    />
+    <p className="text-white text-xs text-center font-bold">Wallet</p>
+  </div>
+</div>
+</div>        </Drawer>
       </div>
       <div className="text-center">
         <div className=" py-1 rounded-t-xl shadow-2xl grid grid-cols-5 justify-center items-center ">
