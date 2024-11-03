@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "flowbite-react": "^0.10.2",
     "localforage": "^1.10.0",
     "match-sorter": "^7.0.0",
@@ -18,7 +19,8 @@
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.27.0",
     "reactjs-popup": "^2.0.6",
-    "sort-by": "^1.2.0"
+    "sort-by": "^1.2.0",
+    "telegraf": "^4.16.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",

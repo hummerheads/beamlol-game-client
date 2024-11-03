@@ -1,8 +1,13 @@
-import { Progress } from "flowbite-react";
+import { Drawer, Progress } from "flowbite-react";
 // import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import Footer from "../../components/footer/Footer";
+import { useState } from "react";
 
 const Home = () => {
+  const [isOpen, setIsOpen] = useState(true);
+
+  const handleClose = () => setIsOpen(false);
   //   const [balance, setBalance] = useState(0);
   //   const [clickPosition, setClickPosition] = useState(null);
 
@@ -50,7 +55,7 @@ const Home = () => {
       </div>
       <div className="w-full mb-4">
         <div className=" flex justify-between items-center mb-1">
-          <span className="text-white text-xs">Epic {">"}</span>
+          <span className="text-white text-xs">Epic </span>
           <span className="text-white text-xs">
             Level <br />
             6/10
@@ -93,33 +98,100 @@ const Home = () => {
             <img className="rounded-full w-8" src="/icons/spin.svg" alt="" />
             <span className="text-white ">Spin</span>
           </div>
-        </NavLink>{" "}
+        </NavLink>
       </div>
-
       <div className="flex justify-center">
         <img
           src="/banner.png"
           alt="A cute robot with glowing eyes"
-          className=""
+          className="h-[360px]"
         />
       </div>
+      <div className="bg-[#ff9c17] my-5 items-center justify-center w-1/3 gap-2 rounded-full flex">
+        <img
+          className="w-10 h-10 rounded-full"
+          src="/icons/energy.svg"
+          alt=""
+        />
+        <div>
+          <p className="font-bold text-xs text-white">0000</p>
 
-      <div className="text-center">
-        <div className="bg-[#ff9c17] my-5 items-center justify-center w-1/3 gap-2 rounded-full flex">
-          <img
-            className="w-10 h-10 rounded-full"
-            src="/icons/energy.svg"
-            alt=""
-          />
-          <div>
-            <p className="font-bold text-xs text-white">0000</p>
-
-            <p className="text-[#ffe386] text-xs">/0000</p>
-          </div>
+          <p className="text-[#ffe386] text-xs">/0000</p>
         </div>
-        <div className=" py-1 rounded-t-xl shadow-2xl grid grid-cols-5 justify-center items-center ">
-          <NavLink to="premium">
+      </div>
+      <div className="my-2 ">
+
+        <Drawer
+          className="bg-[url('/Premium/bg.gif')]"
+          open={isOpen}
+          onClose={handleClose}
+          position="bottom"
+        >
+          <Drawer.Header />
+          <Drawer.Items>
+            <div></div>
+            <div className="flex gap-2 items-center text-lg font-black mx-auto rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white w-1/2 justify-center">
+              <img src="/Premium/Avatar Stack.svg" alt="" />
+              <h1 className="text-white ">890,357 Joined</h1>
+            </div>
             <div>
+              <h1 className="text-4xl text-[#FBE67B] mb-4 font-bold text-center shadow-2xl">
+                Get access to BeamLol Premium
+              </h1>
+            </div>
+            <div className="p-2 rounded-lg bg-gray-500 border border-[rgba(255,255,255,0.53)] shadow-inner grid gap-2">
+              <div className="flex items-center gap-4">
+                <img src="/Premium/achievement.png" alt="" />
+                <p className="text-base text-white font-medium">
+                  To achieve permanent eligibility for the Grand Giveaway, an
+                  exclusive series of events for BeamLol premium holders
+                  featuring substantial USDT and luxury item prizes.
+                </p>
+                <hr />
+              </div>
+              <div className="flex items-center gap-4">
+                <img src="/Premium/priority.png" alt="" />
+                <p className="text-base text-white font-medium">
+                  Ensure that your transaction is prioritized in the airdrop
+                  claim queue.
+                </p>
+                <hr />
+              </div>
+              <div className="flex items-center gap-4">
+                <img src="/Premium/bonus.png" alt="" />
+                <p className="text-base text-white font-medium">
+                  Receive a one-time bonus of 100,000,000 coins along with 1,000
+                  spins.
+                </p>
+                <hr />
+              </div>
+              <div className="flex items-center gap-4">
+                <img src="/Premium/specific.svg" alt="" />
+                <p className="text-base text-white font-medium">
+                  Enhance your profile presentation with a distinctive design
+                  specifically crafted for premium users.
+                </p>
+                <hr />
+              </div>
+            </div>
+            <div className="mx-auto flex justify-center gap-2">
+              <button className="text-base font-bold rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
+                500
+              </button>
+              <button className="text-base font-bold rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
+                500
+              </button>
+              <button className="text-base font-bold rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
+                500
+              </button>
+            </div>
+          </Drawer.Items>
+          <Footer></Footer>
+        </Drawer>
+      </div>
+      <div className="text-center">
+        <div className=" py-1 rounded-t-xl shadow-2xl grid grid-cols-5 justify-center items-center ">
+          <div onClick={() => setIsOpen(true)}>
               <img
                 className="w-1/2 rounded-md mx-auto"
                 src="/icons/Premium.png"
@@ -129,7 +201,6 @@ const Home = () => {
                 Premium
               </p>
             </div>
-          </NavLink>
           <NavLink to="/shop">
             <div>
               <img

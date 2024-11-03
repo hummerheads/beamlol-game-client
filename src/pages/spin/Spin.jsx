@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaArrowUp } from "react-icons/fa"; // Import an arrow icon for the spike
+import Footer from "../../components/footer/Footer";
 
 const Spin = () => {
   const [spinning, setSpinning] = useState(false);
@@ -145,6 +146,8 @@ const Spin = () => {
           </div>
         )}
       </div>
+      <Footer></Footer>
+
     </div>
   );
 };

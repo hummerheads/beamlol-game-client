@@ -1,12 +1,14 @@
 import { Button, Drawer } from "flowbite-react";
 import { useState } from "react";
+import Footer from "../../components/footer/Footer";
 
 const Premium = () => {
   const [isOpen, setIsOpen] = useState(true);
 
   const handleClose = () => setIsOpen(false);
   return (
-    <div className="my-2 ">
+    <>
+    {/* <div className="my-2 ">
       <div className="flex min-h-[50vh] items-center justify-center">
         <Button onClick={() => setIsOpen(true)}>Show left drawer</Button>
       </div>
@@ -75,8 +77,10 @@ const Premium = () => {
             </button>
           </div>
         </Drawer.Items>
+        <Footer></Footer>
       </Drawer>
-    </div>
+    </div> */}
+    </>
   );
 };
 

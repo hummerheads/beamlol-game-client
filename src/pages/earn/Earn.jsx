@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Footer from "../../components/footer/Footer";
 
 const Earn = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -62,9 +63,13 @@ const Earn = () => {
         <div className="text-base w-1/3 mx-auto font-bold rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
           <p className="text-[#555555] text-xl  ">Special</p>
         </div>
-        <div className="">
+        <div className="w-2/3 mx-auto">
           <div className="flex gap-4 justify-center mb-5">
-            <img src="/Earn/wallet.png" alt="" />
+            <img
+              className="w-10 bg-white px-1 rounded-md"
+              src="/Earn/wallet.svg"
+              alt=""
+            />
             <div>
               <div>
                 <p className="text-white text-xl">Connect wallet on sui</p>
@@ -90,9 +95,13 @@ const Earn = () => {
             </div>
           </div>
         </div>
-        <div>
+        <div className="w-2/3 mx-auto">
           <div className="flex gap-4 justify-center mb-5">
-            <img src="/Earn/youtube.png" alt="" />
+            <img
+              className="w-10 bg-white rounded-md"
+              src="/Earn/youtube.svg"
+              alt=""
+            />
             <div>
               <div>
                 <p className="text-white text-xl">Watch youtube videos</p>
@@ -118,9 +127,9 @@ const Earn = () => {
             </div>
           </div>
         </div>
-        <div>
+        <div className="w-2/3 mx-auto">
           <div className="flex gap-4 justify-center mb-5">
-            <img src="/Earn/promo.png" alt="" />
+            <img className="w-10 bg-white rounded-md" src="/Earn/video.svg" alt="" />
             <div>
               <div>
                 <p className="text-white text-xl">Watch promo videos</p>
@@ -147,6 +156,7 @@ const Earn = () => {
           </div>
         </div>
       </div>
+      <Footer></Footer>
     </div>
   );
 };
