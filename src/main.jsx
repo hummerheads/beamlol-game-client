@@ -9,7 +9,8 @@ import Shop from "./pages/shop/Shop";
 import Spin from "./pages/spin/Spin";
 import Earn from "./pages/earn/Earn";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
+import UserProvider from "./provider/UserProvider";
+import Level from "./pages/level/Level";
 
 const queryClient = new QueryClient();
 
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
         path: "/transactions",
         element: <Home></Home>,
       },
+      {
+        path: "/level",
+        element: <Level></Level>,
+      },
     ],
   },
 ]);
@@ -69,7 +74,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <UserProvider>
+        <RouterProvider router={router} />
+      </UserProvider>
     </QueryClientProvider>
   </StrictMode>
 );
