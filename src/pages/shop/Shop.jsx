@@ -1,12 +1,11 @@
-import { NavLink } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
 import Topbar from "../../components/topbar/Topbar";
 
 const Shop = () => {
   return (
-    <div className="bg-[url('/shop/bg.png')]">
+    <div className="bg-[url('/shop/bg.png')] px-4">
       <Topbar></Topbar>
-      <div className="py-4">
+      <div className=" mx-4">
         <div className="p-2  rounded-t-xl shadow-[0px_4px_6px_rgba(255,255,255,0.6)] flex items-center justify-evenly border border-[rgba(255,255,255,0.53)] bg-gradient-to-r from-[rgba(18,18,20,0.25)] via-[rgba(93,96,100,0.25)_71%] to-[rgba(149,153,160,0.25)]">
           <div>
             <img className="w-10" src="/icons/spin.svg" alt="" />
@@ -45,7 +44,7 @@ const Shop = () => {
           </div>
         </div>
       </div>
-      <div className="py-4 grid grid-cols-2 gap-2 px-4">
+      <div className="py-2 grid grid-cols-2 gap-2 px-4">
         <div className="pb-4">
           <div className="p-2 rounded-t-xl border border-[rgba(255,255,255,0.53)] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] bg-gradient-to-r from-[rgba(18,18,20,0.25)] via-[rgba(148,153,159,0.25)_27%] via-[rgba(33,33,36,0.25)_40%] via-[rgba(93,96,100,0.25)_71%] to-[rgba(149,153,160,0.25)]">
             <img className="mx-auto" src="/icons/spin.svg" alt="/" />
@@ -135,13 +134,13 @@ const Shop = () => {
           </div>
         </div>
       </div>
-      <div className="py-5">
-        <div className="font-bold rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
+      <div className="py-2">
+        <div className="font-bold rounded-md p-2 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
           <p className="text-[#201b1b] text-xl">NFT&apos;s Coming Soon</p>
         </div>
-        <div className="py-4 grid grid-cols-2 gap-2 px-4 hidden">
+        <div className="py grid grid-cols-2 gap-2 px-4 hidden">
           <div className="pb-4">
-            <div className="p-2 rounded-t-xl border border-[rgba(255,255,255,0.53)] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] bg-gradient-to-r from-[rgba(18,18,20,0.25)] via-[rgba(148,153,159,0.25)_27%] via-[rgba(33,33,36,0.25)_40%] via-[rgba(93,96,100,0.25)_71%] to-[rgba(149,153,160,0.25)]">
+            <div className="p- rounded-t-xl border border-[rgba(255,255,255,0.53)] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] bg-gradient-to-r from-[rgba(18,18,20,0.25)] via-[rgba(148,153,159,0.25)_27%] via-[rgba(33,33,36,0.25)_40%] via-[rgba(93,96,100,0.25)_71%] to-[rgba(149,153,160,0.25)]">
               <img className="mx-auto" src="/icons/spin.svg" alt="/" />
               <p className="text-center text-white">50</p>
             </div>
@@ -162,8 +161,8 @@ const Shop = () => {
               </div>
             </div>
           </div>
-          <div className="pb-4">
-            <div className="p-2 rounded-t-xl border border-[rgba(255,255,255,0.53)] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] bg-gradient-to-r from-[rgba(18,18,20,0.25)] via-[rgba(148,153,159,0.25)_27%] via-[rgba(33,33,36,0.25)_40%] via-[rgba(93,96,100,0.25)_71%] to-[rgba(149,153,160,0.25)]">
+          <div className="pb-">
+            <div className="p- rounded-t-xl border border-[rgba(255,255,255,0.53)] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] bg-gradient-to-r from-[rgba(18,18,20,0.25)] via-[rgba(148,153,159,0.25)_27%] via-[rgba(33,33,36,0.25)_40%] via-[rgba(93,96,100,0.25)_71%] to-[rgba(149,153,160,0.25)]">
               <img className="mx-auto" src="/icons/spin.svg" alt="/" />
               <p className="text-center text-white">100</p>
             </div>
@@ -184,7 +183,7 @@ const Shop = () => {
               </div>
             </div>
           </div>
-          <div className="pb-4">
+          <div className="pb-">
             <div className="p-2 rounded-t-xl border border-[rgba(255,255,255,0.53)] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] bg-gradient-to-r from-[rgba(18,18,20,0.25)] via-[rgba(148,153,159,0.25)_27%] via-[rgba(33,33,36,0.25)_40%] via-[rgba(93,96,100,0.25)_71%] to-[rgba(149,153,160,0.25)]">
               <img className="mx-auto" src="/icons/spin.svg" alt="/" />
               <p className="text-center text-white">500</p>
@@ -206,7 +205,7 @@ const Shop = () => {
               </div>
             </div>
           </div>
-          <div className="pb-4">
+          <div className="pb-">
             <div className="p-2 rounded-t-xl border border-[rgba(255,255,255,0.53)] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] bg-gradient-to-r from-[rgba(18,18,20,0.25)] via-[rgba(148,153,159,0.25)_27%] via-[rgba(33,33,36,0.25)_40%] via-[rgba(93,96,100,0.25)_71%] to-[rgba(149,153,160,0.25)]">
               <img className="mx-auto" src="/icons/spin.svg" alt="/" />
               <p className="text-center text-white">5000</p>
@@ -230,58 +229,7 @@ const Shop = () => {
           </div>
         </div>
       </div>
-      <div className="text-center">
-        <div className=" py-1 rounded-t-xl shadow-2xl grid grid-cols-5 justify-center items-center ">
-          <NavLink to="/premium">
-            <div>
-              <img
-                className="w-1/2 rounded-md mx-auto"
-                src="/icons/Premium.png"
-                alt=""
-              />
-              <p className="text-white text-xs text-center font-bold">
-                Premium
-              </p>
-            </div>
-          </NavLink>
-          <NavLink to="/">
-            <div>
-              <img
-                className="w-1/2 rounded-md mx-auto"
-                src="/home.svg"
-                alt=""
-              />
-              <p className="text-white text-xs text-center font-bold">Home</p>
-            </div>
-          </NavLink>
-          <NavLink to="/earn">
-            <div>
-              <img
-                className="w-1/2 rounded-md mx-auto"
-                src="/icons/earn.svg"
-                alt=""
-              />
-              <p className="text-white text-xs text-center font-bold">Earn</p>
-            </div>
-          </NavLink>
-          <div>
-            <img
-              className="w-1/2 rounded-md mx-auto"
-              src="/icons/invite.png"
-              alt=""
-            />
-            <p className="text-white text-xs text-center font-bold">Invite</p>
-          </div>
-          <div>
-            <img
-              className="w-1/2 rounded-md mx-auto"
-              src="/icons/wallet.svg"
-              alt=""
-            />
-            <p className="text-white text-xs text-center font-bold">Wallet</p>
-          </div>
-        </div>
-      </div>
+      <Footer></Footer>
     </div>
   );
 };

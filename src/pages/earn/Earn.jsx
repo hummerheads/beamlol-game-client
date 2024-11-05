@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
 import Topbar from "../../components/topbar/Topbar";
 import { NavLink } from "react-router-dom";
+import Footer from "../../components/footer/Footer";
 
 const Earn = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const userId = urlParams.get("user_id");
 
   // Carousel slides with images and text overlays
   const carouselSlides = [
@@ -29,7 +33,7 @@ const Earn = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % carouselSlides.length);
-    }, 3000); // Change slide every 3 seconds
+    }, 2000); // Change slide every 3 seconds
 
     return () => clearInterval(interval); // Cleanup on unmount
   }, []);
@@ -37,10 +41,10 @@ const Earn = () => {
   return (
     <div className="bg-[url('/Earn/Earn.gif')]">
       <div className="mx-4">
-        <Topbar />
+        <Topbar telegram_ID={userId}/>
 
         {/* Carousel Wrapper */}
-        <div className="relative h-[300px] mt-4">
+        <div className="relative h-[300px]">
           {carouselSlides.map((slide, index) => (
             <div
               key={index}
@@ -62,13 +66,13 @@ const Earn = () => {
         </div>
 
         {/* Special Announcement */}
-        <div className="text-base w-1/3 mx-auto font-bold rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
+        <div className="text-base w-1/3 mx-auto font-bold rounded-md p-2 my-2 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
           <p className="text-[#555555] text-xl">Special</p>
         </div>
 
         {/* Connect Wallet Section */}
         <div className="w-2/3 mx-auto">
-          <div className="flex gap-4 justify-center mb-5">
+          <div className="flex gap-4 justify-center mb-2">
             <img
               className="w-10 bg-white px-1 rounded-md"
               src="/Earn/wallet.svg"
@@ -94,7 +98,7 @@ const Earn = () => {
 
         {/* Watch YouTube Videos Section */}
         <div className="w-2/3 mx-auto">
-          <div className="flex gap-4 justify-center mb-5">
+          <div className="flex gap-4 justify-center mb-2">
             <img
               className="w-10 bg-white rounded-md"
               src="/Earn/youtube.svg"
@@ -146,58 +150,7 @@ const Earn = () => {
       </div>
 
       {/* Bottom Navigation Links */}
-      <div className="text-center">
-        <div className="py-1 rounded-t-xl shadow-2xl grid grid-cols-5 justify-center items-center">
-          <NavLink to="/premium">
-            <div>
-              <img
-                className="w-1/2 rounded-md mx-auto"
-                src="/icons/Premium.png"
-                alt=""
-              />
-              <p className="text-white text-xs text-center font-bold">
-                Premium
-              </p>
-            </div>
-          </NavLink>
-          <NavLink to="/shop">
-            <div>
-              <img
-                className="w-1/2 rounded-md mx-auto"
-                src="/icons/shop.png"
-                alt=""
-              />
-              <p className="text-white text-xs text-center font-bold">Shop</p>
-            </div>
-          </NavLink>
-          <NavLink to="/">
-            <div>
-              <img
-                className="w-1/2 rounded-md mx-auto"
-                src="/home.svg"
-                alt=""
-              />
-              <p className="text-white text-xs text-center font-bold">Home</p>
-            </div>
-          </NavLink>
-          <div>
-            <img
-              className="w-1/2 rounded-md mx-auto"
-              src="/icons/invite.png"
-              alt=""
-            />
-            <p className="text-white text-xs text-center font-bold">Invite</p>
-          </div>
-          <div>
-            <img
-              className="w-1/2 rounded-md mx-auto"
-              src="/icons/wallet.svg"
-              alt=""
-            />
-            <p className="text-white text-xs text-center font-bold">Wallet</p>
-          </div>
-        </div>
-      </div>
+<Footer></Footer>
     </div>
   );
 };

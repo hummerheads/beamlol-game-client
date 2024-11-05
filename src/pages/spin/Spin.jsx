@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaArrowUp } from "react-icons/fa"; // Import an arrow icon for the spike
 import Footer from "../../components/footer/Footer";
+import Topbar from "../../components/topbar/Topbar";
 
 const Spin = () => {
   const [spinning, setSpinning] = useState(false);
@@ -49,17 +50,7 @@ const Spin = () => {
 
   return (
     <div className="bg-[url('/Spin/spin.jpg')] py-10">
-      <div className="py-3 mb-10 shadow-xl rounded-xl mx-6 flex justify-around gap-2 bg-gray-500 bg-opacity-50">
-        <div className="flex gap-2 items-center text-base font-bold rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
-          <img className="w-6" src="/icons/booster.png" alt="" />
-          <p className="text-[#555555] text-xs">236,900,600</p>
-        </div>
-        <div className="flex gap-2 items-center text-base font-bold rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
-          <img className="w-5 rounded-full" src="/icons/spin.svg" alt="" />
-          <p className="text-[#555555] text-xs">236</p>
-          <img className="w-4 rounded-full" src="/icons/plus.svg" alt="" />
-        </div>
-      </div>
+<Topbar></Topbar>
       <div className="flex flex-col items-center relative shadow-2xl">
         {/* Spike Icon - Upside Down */}
         <div className="absolute top-0 transform rotate-180">
