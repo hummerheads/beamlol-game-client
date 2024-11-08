@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="text-center">
+    <div className="text-center bg-gray-800 fixed">
       <div className=" py-1 rounded-t-xl shadow-2xl grid grid-cols-6 justify-center items-center ">
         <NavLink to="/">
           <div>
@@ -40,22 +40,27 @@ const Footer = () => {
             <p className="text-white text-xs text-center font-bold">Earn</p>
           </div>
         </NavLink>
-        <div>
-          <img
-            className="w-1/2 rounded-md mx-auto"
-            src="/icons/invite.png"
-            alt=""
-          />
-          <p className="text-white text-xs text-center font-bold">Invite</p>
-        </div>
-        <div>
-          <img
-            className="w-1/2 rounded-md mx-auto"
-            src="/icons/wallet.svg"
-            alt=""
-          />
-          <p className="text-white text-xs text-center font-bold">Wallet</p>
-        </div>
+        <NavLink to="/referral">
+          <div>
+            <img
+              className="w-1/2 rounded-md mx-auto"
+              src="/icons/referral.svg"
+              alt=""
+            />
+            <p className="text-white text-xs text-center font-bold">Invite</p>
+          </div>
+        </NavLink>
+
+        <NavLink to="/wallet">
+          <div>
+            <img
+              className="w-1/2 rounded-md mx-auto"
+              src="/icons/wallet.svg"
+              alt=""
+            />
+            <p className="text-white text-xs text-center font-bold">Wallet</p>
+          </div>
+        </NavLink>
       </div>
     </div>
   );

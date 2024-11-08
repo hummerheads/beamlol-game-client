@@ -1,12 +1,18 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+// vite.config.js
 
-// https://vite.dev/config/
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 export default defineConfig({
-  server: {
-    proxy: {
-      "/api": "https://astounding-licorice-1ef290.netlify.app/"
-    }
+  resolve: {
+    alias: {
+      '@tonconnect/sdk': path.resolve(__dirname, 'node_modules/@tonconnect/sdk'),
+    },
   },
   plugins: [react()],
-})
+});

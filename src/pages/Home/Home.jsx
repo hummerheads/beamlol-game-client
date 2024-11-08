@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { Drawer, Progress } from "flowbite-react";
 import { NavLink } from "react-router-dom";
-import Footer from "../../components/footer/Footer";
 import { useUser } from "../../context/UserContext"; // Adjust the path accordingly
-import Topbar from "../../components/topbar/Topbar";
 
 const Home = () => {
   const { level, available_energy, total_energy } = useUser();
@@ -11,38 +9,44 @@ const Home = () => {
   const [isOpen, setIsOpen] = useState(true);
   const handleClose = () => setIsOpen(false);
 
+  // Function to assign text colors dynamically for the labels
+  const getLabelColor = (index) => {
+    switch (index) {
+      case 0: return "text-yellow-500";
+      case 1: return "text-blue-500";
+      case 2: return "text-green-500";
+      default: return "";
+    }
+  };
+
+  // Ensure progress does not exceed 100%
+  const progress = Math.min(level * 10, 100);
+
   return (
-    <div className="bg-[url('/bggif.gif')] flex flex-col items-center p-2 bg-gray-700">
+    <div className="bg-[url('/bggif.gif')] flex flex-col items-center px-2 bg-gray-700 pt-5" style={{ height: 'calc(100vh - 124px)', overflow: 'auto'}}>
       {/* Balance Display */}
-      <Topbar></Topbar>
+      {/* <Topbar /> */}
 
       {/* Giveaway, Leaderboard, and Level Section */}
-      <div className="flex gap-5 w-full mb-1">
+      <div className="flex gap-5 w-full mb-5">
         {["Giveaways", "Leaderboard", "Level"].map((label, index) => (
           <div
             key={index}
             className="w-full bg-gray-800 p-2 rounded-lg text-center"
           >
             <span
-              className={`font-semibold text-xs block ${
-                index === 0
-                  ? "text-yellow-500"
-                  : index === 1
-                  ? "text-blue-500"
-                  : "text-green-500"
-              }`}
+              className={`font-semibold text-xs block ${getLabelColor(index)}`}
             >
               {label}
             </span>
             <span className="block text-white">
-              {index === 1 ? "1st" : index === 2 ? `0${level}` : "🪙"}
+              {index === 1 ? "1st" : index === 2 ? `${level}` : "🪙"}
             </span>
           </div>
         ))}
       </div>
 
       {/* Level Progress */}
-      <NavLink to="/level">
         <div className="w-full mb-2">
           <div className="flex justify-between items-center mb-1">
             <span className="text-white text-xs">Epic</span>
@@ -50,36 +54,34 @@ const Home = () => {
               Level <br /> {level}/10
             </span>
           </div>
+          <NavLink to="/level">
           <Progress
-            progress={level * 10}
+            progress={progress}
             color="teal"
             size="xl"
             className="rounded-full bg-teal-100 shadow-lg animate-pulse"
             style={{
               width: "100%",
-              background:
-                "linear-gradient(120deg, #ADFAA1 0%, #C597CC 45%, #2F39A3 100%)",
+              background: "linear-gradient(120deg, #ADFAA1 0%, #C597CC 45%, #2F39A3 100%)",
             }}
           />
+          </NavLink>
         </div>
-      </NavLink>
 
       {/* Feature Icons */}
       <div className="flex justify-evenly w-full mb-4">
-        {["Booster", "NFT", "Check In", "Air Drop", "Spin"].map(
-          (label, index) => (
-            <NavLink key={index} to={label === "Spin" ? "/spin" : "#"}>
-              <div className="flex flex-col items-center">
-                <img
-                  className="w-8"
-                  src={`/icons/${label.toLowerCase().replace(" ", "")}.png`}
-                  alt={label}
-                />
-                <span className="text-white">{label}</span>
-              </div>
-            </NavLink>
-          )
-        )}
+        {["Booster", "NFT", "Check In", "Air Drop", "Spin"].map((label, index) => (
+          <NavLink key={index} to={label === "Spin" ? "/spin" : "#"}>
+            <div className="flex flex-col items-center">
+              <img
+                className="w-8"
+                src={`/icons/${label.toLowerCase().replace(" ", "")}.svg`}
+                alt={label}
+              />
+              <span className="text-white">{label}</span>
+            </div>
+          </NavLink>
+        ))}
       </div>
 
       {/* Banner */}
@@ -120,9 +122,7 @@ const Home = () => {
             ].map((benefit, idx) => (
               <div key={idx} className="flex items-center gap-4">
                 <img src={`/Premium/${benefit.img}`} alt="" />
-                <p className="text-base text-white font-medium">
-                  {benefit.text}
-                </p>
+                <p className="text-base text-white font-medium">{benefit.text}</p>
                 <hr />
               </div>
             ))}
@@ -130,21 +130,21 @@ const Home = () => {
         </Drawer.Items>
       </Drawer>
 
+      {/* Energy Display */}
       <div className="bg-[#ff9c17] my-2 items-center justify-center w-1/3 gap-2 rounded-full flex">
         <img
           className="w-10 h-10 rounded-full"
           src="/icons/energy.svg"
-          alt=""
+          alt="Energy Icon"
         />
         <div>
           <p className="font-bold text-xs text-white">{available_energy}</p>
-
           <p className="text-[#ffe386] text-xs">/{total_energy}</p>
         </div>
       </div>
 
       {/* Footer */}
-      <Footer></Footer>
+      
     </div>
   );
 };

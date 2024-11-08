@@ -1,10 +1,6 @@
-import Footer from "../../components/footer/Footer";
-import Topbar from "../../components/topbar/Topbar";
-
 const Shop = () => {
   return (
-    <div className="bg-[url('/shop/bg.png')] px-4">
-      <Topbar></Topbar>
+    <div className="bg-[url('/shop/bg.png')] px-4 pt-10" style={{ height: 'calc(100vh - 124px)', overflow: 'auto'}}>
       <div className=" mx-4">
         <div className="p-2  rounded-t-xl shadow-[0px_4px_6px_rgba(255,255,255,0.6)] flex items-center justify-evenly border border-[rgba(255,255,255,0.53)] bg-gradient-to-r from-[rgba(18,18,20,0.25)] via-[rgba(93,96,100,0.25)_71%] to-[rgba(149,153,160,0.25)]">
           <div>
@@ -229,7 +225,6 @@ const Shop = () => {
           </div>
         </div>
       </div>
-      <Footer></Footer>
     </div>
   );
 };

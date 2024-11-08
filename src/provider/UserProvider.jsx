@@ -1,12 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
-import PropTypes from "prop-types"; // Import PropTypes
-import { UserContext } from "../context/UserContext"; // Import UserContext from UserContext.js
+import { useMemo } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import PropTypes from "prop-types";
+import { UserContext } from "../context/UserContext"; // Import from separate file
 
 const UserProvider = ({ children }) => {
-  // Get userId from URL parameters
+  const queryClient = useQueryClient();
   const userId = new URLSearchParams(window.location.search).get("user_id");
 
-  // Fetch user details with React Query
   const { data, error, isLoading } = useQuery({
     queryKey: ["userDetails", userId],
     queryFn: async () => {
@@ -15,25 +15,42 @@ const UserProvider = ({ children }) => {
       return response.json();
     },
     enabled: !!userId,
-    refetchInterval: 1000, // Poll every second
+    refetchInterval: 1000,
+    refetchOnWindowFocus: true,
   });
 
-  // Destructure data properties, providing default values if data is undefined
-  const { balance = 0, perk = 0, level = 0, spin = 0, available_energy = 0, total_energy = 0 } = data || {};
+  const contextValue = useMemo(() => {
+    if (isLoading || error) {
+      return {
+        telegram_ID: "",
+        balance: 0,
+        perk: 0,
+        level: 0,
+        spin: 0,
+        available_energy: 0,
+        total_energy: 0,
+        refetchUserData: () => queryClient.invalidateQueries(["userDetails", userId]),
+      };
+    }
+    const { telegram_ID = "", balance = 0, perk = 0, level = 0, spin = 0, available_energy = 0, total_energy = 0 } = data || {};
 
-  // Handle loading and error states within the provider if needed
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+    return {
+      telegram_ID,
+      balance,
+      perk,
+      level,
+      spin,
+      available_energy,
+      total_energy,
+      refetchUserData: () => queryClient.invalidateQueries(["userDetails", userId]),
+    };
+  }, [data, isLoading, error, queryClient, userId]);
+  console.log(contextValue);
 
-  // Provide user data to components
-  return (
-    <UserContext.Provider value={{ balance, perk, level, spin, available_energy, total_energy }}>
-      {children}
-    </UserContext.Provider>
-  );
+
+  return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;
 };
 
-// Define prop types
 UserProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };

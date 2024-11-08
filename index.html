@@ -7,44 +7,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="./src/index.css" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
 
     <title>BeamLOL</title>
     <script>
       // Check if Telegram Web App API is available
       if (window.Telegram && window.Telegram.WebApp) {
-          // Automatically expand to full screen when the page loads
-          window.Telegram.WebApp.expand();
+        // Automatically expand to full screen when the page loads
+        window.Telegram.WebApp.expand();
 
-          // Get user ID from URL parameters
-          const urlParams = new URLSearchParams(window.location.search);
-          const userId = urlParams.get('user_id');
+        // Get user ID from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get("user_id");
 
-          console.log("User's Telegram ID:", userId); // Log the user ID
+        console.log("User's Telegram ID:", userId); // Log the user ID
 
-          if (!userId) {
-              console.error("User ID is null or undefined");
-          } else {
-              // Send user ID to your server
-              fetch("https://beamlol-server.onrender.com/allusers", { // Change this URL based on your deployment
-                  method: "POST",
-                  headers: {
-                      "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({ telegram_ID: userId }), // Send as an object
-              })
-              .then(response => response.json())
-              .then(data => {
-                  console.log("Response from server:", data);
-              })
-              .catch(error => {
-                  console.error("Error adding user:", error);
-              });
-          }
+        if (!userId) {
+          console.error("User ID is null or undefined");
+        } else {
+          // Send user ID to your server
+          fetch("https://beamlol-server.onrender.com/allusers", {
+            // Change this URL based on your deployment
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ telegram_ID: userId }), // Send as an object
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("Response from server:", data);
+            })
+            .catch((error) => {
+              console.error("Error adding user:", error);
+            });
+        }
       } else {
-          console.error("Telegram WebApp API is not available");
+        console.error("Telegram WebApp API is not available");
       }
-  </script>
+    </script>
     <style>
+      /* src/index.css */
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+        color: #333;
+      }
+
+      .App {
+        text-align: center;
+        padding: 20px;
+      }
+
+      .wallet-connection button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        margin: 10px 0;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+      }
+
+      .wallet-connection p {
+        font-size: 18px;
+        color: #333;
+      }
+
       .wheel {
         width: 300px;
         height: 300px;
@@ -52,6 +90,10 @@
         border: 10px solid #000;
         position: relative;
         margin: 0 auto;
+      }
+      .montserrat {
+        font-family: "Montserrat", sans-serif;
+        font-optical-sizing: auto;
       }
       .wheel .segment {
         width: 50%;
@@ -131,7 +173,7 @@
       }
     </style>
   </head>
-  <body className="max-w-sm">
+  <body className="max-w-sm flex flex-col montserrat  w-full">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

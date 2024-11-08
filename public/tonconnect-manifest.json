@@ -1,0 +1,6 @@
+{
+  "url": "https://beamlol.web.app/",
+  "name": "BEAMlol",
+  "iconUrl": "https://i.ibb.co.com/TRCcCcV/icon.png",
+  "permissions": ["ton_send"]
+}

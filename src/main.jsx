@@ -11,6 +11,9 @@ import Earn from "./pages/earn/Earn";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UserProvider from "./provider/UserProvider";
 import Level from "./pages/level/Level";
+import Wallet from "./pages/wallet/Wallet";
+import Referral from "./pages/referral/Referral";
+import { TonConnectUIProvider } from "@tonconnect/ui-react";
 
 const queryClient = new QueryClient();
 
@@ -19,64 +22,30 @@ const router = createBrowserRouter([
     path: "/",
     element: <Main></Main>,
     children: [
-      {
-        path: "/",
-        element: <Home></Home>,
-      },
-      {
-        path: "/Premium",
-        element: <Premium></Premium>,
-      },
-      {
-        path: "/shop",
-        element: <Shop></Shop>,
-      },
-      {
-        path: "/earn",
-        element: <Earn></Earn>,
-      },
-      {
-        path: "/invite",
-        element: <Home></Home>,
-      },
-      {
-        path: "/wallet",
-        element: <Home></Home>,
-      },
-      {
-        path: "/spin",
-        element: <Spin></Spin>,
-      },
-      {
-        path: "/boost",
-        element: <Home></Home>,
-      },
-      {
-        path: "/leaderboard",
-        element: <Home></Home>,
-      },
-      {
-        path: "/airdrop",
-        element: <Home></Home>,
-      },
-      {
-        path: "/transactions",
-        element: <Home></Home>,
-      },
-      {
-        path: "/level",
-        element: <Level></Level>,
-      },
+      { path: "/", element: <Home></Home> },
+      { path: "/Premium", element: <Premium></Premium> },
+      { path: "/shop", element: <Shop></Shop> },
+      { path: "/earn", element: <Earn></Earn> },
+      { path: "/referral", element: <Referral></Referral> },
+      { path: "/spin", element: <Spin></Spin> },
+      { path: "/boost", element: <Home></Home> },
+      { path: "/leaderboard", element: <Home></Home> },
+      { path: "/airdrop", element: <Home></Home> },
+      { path: "/transactions", element: <Home></Home> },
+      { path: "/level", element: <Level></Level> },
+      { path: "/wallet", element: <Wallet></Wallet> },
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <UserProvider>
-        <RouterProvider router={router} />
-      </UserProvider>
-    </QueryClientProvider>
+      <TonConnectUIProvider manifestUrl="/tonconnect-manifest.json">
+        <QueryClientProvider client={queryClient}>
+          <UserProvider>
+            <RouterProvider router={router} />
+          </UserProvider>
+        </QueryClientProvider>
+      </TonConnectUIProvider>
   </StrictMode>
 );

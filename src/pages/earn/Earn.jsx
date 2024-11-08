@@ -1,13 +1,9 @@
 import { useState, useEffect } from "react";
-import Topbar from "../../components/topbar/Topbar";
-import { NavLink } from "react-router-dom";
-import Footer from "../../components/footer/Footer";
 
 const Earn = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const userId = urlParams.get("user_id");
+
 
   // Carousel slides with images and text overlays
   const carouselSlides = [
@@ -29,22 +25,20 @@ const Earn = () => {
     },
   ];
 
-  // Automatically change active slide every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % carouselSlides.length);
-    }, 2000); // Change slide every 3 seconds
-
-    return () => clearInterval(interval); // Cleanup on unmount
+    }, 2000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="bg-[url('/Earn/Earn.gif')]">
+    <div className="bg-[url('/Earn/Earn.gif')]" style={{ height: 'calc(100vh - 124px)', overflow: 'auto'}}>
       <div className="mx-4">
-        <Topbar telegram_ID={userId}/>
+      {/* <Topbar /> */}
 
         {/* Carousel Wrapper */}
-        <div className="relative h-[300px]">
+        <div className="relative h-[300px] my-5">
           {carouselSlides.map((slide, index) => (
             <div
               key={index}
@@ -150,7 +144,7 @@ const Earn = () => {
       </div>
 
       {/* Bottom Navigation Links */}
-<Footer></Footer>
+      {/* <Footer></Footer> */}
     </div>
   );
 };
