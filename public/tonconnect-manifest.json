@@ -1,6 +1,10 @@
 {
-  "url": "https://beamlol.web.app/",
-  "name": "BEAMlol",
-  "iconUrl": "https://i.ibb.co.com/TRCcCcV/icon.png",
-  "permissions": ["ton_send"]
+  "manifest": {
+    "name": "BeamLOL App",
+    "description": "A fun crypto earning app with TON integration",
+    "url": "https://astounding-licorice-1ef290.netlify.app",
+    "icons": [
+      "https://i.ibb.co.com/TRCcCcV/icon.png"
+    ]
+  }
 }

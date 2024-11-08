@@ -1,48 +1,99 @@
-// // src/provider/WalletContext.jsx
-// import { createContext, useContext, useState, useEffect, useMemo } from "react";
-// import { TonConnect } from "@tonconnect/sdk";
+import { createContext, useState, useMemo, useContext, useEffect } from "react";
+import { TonConnect } from "@tonconnect/sdk";
+import PropTypes from "prop-types";
 
-// const WalletContext = createContext();
+const WalletContext = createContext();
 
-// export const WalletProvider = ({ children }) => {
-//   const [walletAddress, setWalletAddress] = useState(null);
-//   const tonConnect = useMemo(() => new TonConnect({ manifestUrl: "/tonconnect-manifest.json" }), []);
+export const WalletProvider = ({ children }) => {
+  const [walletAddress, setWalletAddress] = useState(null);
+  const [isConnected, setIsConnected] = useState(false);
 
-//   const connectWallet = async () => {
-//     try {
-//       await tonConnect.connect({
-//         universalLink: "https://tonhub.com/connect",
-//         bridgeUrl: "https://bridge.tonapi.io/bridge",
-//       });
+  // Initialize TonConnect with manifest URL and bridge URL
+  const tonConnect = useMemo(() => {
+    console.log("Initializing TonConnect SDK...");
+    return new TonConnect({
+      manifestUrl: "/tonconnect-manifest.json",
+      bridgeUrl: "https://tonconnect.bridge.ton.org",
+    });
+  }, []);
 
-//       // Listen for wallet connection status change
-//       tonConnect.onStatusChange(async (wallet) => {
-//         if (wallet) {
-//           const walletInfo = await tonConnect.getWallet();
-//           setWalletAddress(walletInfo.account.address);
-//           console.log("Wallet connected:", walletInfo.account.address);
-//         } else {
-//           console.log("Wallet disconnected");
-//           setWalletAddress(null);
-//         }
-//       });
-//     } catch (error) {
-//       console.error("Error connecting wallet:", error);
-//     }
-//   };
+  useEffect(() => {
+    const handleStatusChange = (wallet) => {
+      console.log("Status Change Event:", wallet);
+      if (wallet && wallet.account) {
+        setWalletAddress(wallet.account.address);
+        setIsConnected(true);
+        console.log("Wallet connected:", wallet.account.address);
+      } else {
+        setWalletAddress(null);
+        setIsConnected(false);
+        console.warn("Wallet disconnected or missing account information.");
+      }
+    };
 
-//   useEffect(() => {
-//     // Cleanup event listener on component unmount
-//     return () => {
-//       tonConnect.offStatusChange();
-//     };
-//   }, [tonConnect]);
+    console.log("Subscribing to status changes...");
+    const unsubscribe = tonConnect.onStatusChange(handleStatusChange);
 
-//   return (
-//     <WalletContext.Provider value={{ walletAddress, connectWallet, tonConnect }}>
-//       {children}
-//     </WalletContext.Provider>
-//   );
-// };
+    return () => {
+      console.log("Unsubscribing from status changes...");
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, [tonConnect]);
 
-// export const useWallet = () => useContext(WalletContext);
+  const connectWallet = async () => {
+    try {
+      console.log("Opening wallet connection modal...");
+
+      // Detect JS Bridge key if running inside a wallet browser
+      const jsBridgeKey = window.ton?.jsBridgeKey;
+      const isWalletBrowser = tonConnect.isWalletBrowser;
+      console.log("JS Bridge Key:", jsBridgeKey, "Is Wallet Browser:", isWalletBrowser);
+
+      if (jsBridgeKey && isWalletBrowser) {
+        console.log("Using JS Bridge mode...");
+        await tonConnect.connect({ jsBridgeKey });
+      } else {
+        console.log("Using HTTP Bridge mode...");
+        await tonConnect.connect({
+          universalLink: "https://tonhub.com/connect",
+          bridgeUrl: "https://ton-connect-bridge.bgwapi.io/bridge",
+        });
+      }
+
+      const wallet = tonConnect.wallet;
+      console.log("Wallet object after connect:", wallet);
+
+      if (wallet && wallet.account) {
+        setWalletAddress(wallet.account.address);
+        setIsConnected(true);
+        console.log("Wallet connected successfully:", wallet.account.address);
+      } else {
+        console.error("Failed to retrieve wallet information.");
+        alert("Failed to retrieve wallet information.");
+      }
+    } catch (error) {
+      console.error("Error connecting wallet:", error);
+      alert(`Connection failed: ${error.message}`);
+    }
+  };
+
+  return (
+    <WalletContext.Provider value={{ walletAddress, connectWallet, isConnected }}>
+      {children}
+    </WalletContext.Provider>
+  );
+};
+
+export const useWallet = () => {
+  const context = useContext(WalletContext);
+  if (!context) {
+    throw new Error("useWallet must be used within a WalletProvider");
+  }
+  return context;
+};
+
+WalletProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};

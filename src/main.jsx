@@ -14,6 +14,7 @@ import Level from "./pages/level/Level";
 import Wallet from "./pages/wallet/Wallet";
 import Referral from "./pages/referral/Referral";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
+import { WalletProvider } from "./provider/WalletContext";
 
 const queryClient = new QueryClient();
 
@@ -40,12 +41,14 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-      <TonConnectUIProvider manifestUrl="/tonconnect-manifest.json">
-        <QueryClientProvider client={queryClient}>
-          <UserProvider>
+    <TonConnectUIProvider manifestUrl="https://astounding-licorice-1ef290.netlify.app/tonconnect-manifest.json">
+      <QueryClientProvider client={queryClient}>
+        <UserProvider>
+          <WalletProvider>
             <RouterProvider router={router} />
-          </UserProvider>
-        </QueryClientProvider>
-      </TonConnectUIProvider>
+          </WalletProvider>
+        </UserProvider>
+      </QueryClientProvider>
+    </TonConnectUIProvider>
   </StrictMode>
 );
