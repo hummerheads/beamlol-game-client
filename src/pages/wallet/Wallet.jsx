@@ -17,7 +17,7 @@ const Wallet = () => {
       await connectWallet();
       if (walletAddress) {
         // Save wallet address to the backend
-        await axios.post("https://your-backend-url.com/allusers", {
+        await axios.post("https://beamlol-server.onrender.com/allusers", {
           telegram_ID: walletAddress,
         });
         alert("Wallet connected and saved successfully!");
