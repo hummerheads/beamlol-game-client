@@ -33,7 +33,7 @@ const Earn = () => {
   }, []);
 
   return (
-    <div className="bg-[url('/Earn/Earn.gif')]" style={{ height: 'calc(100vh - 124px)', overflow: 'auto'}}>
+    <div className="bg-[url('/Earn/bg.png')]" style={{ height: 'calc(100vh - 124px)', overflow: 'auto'}}>
       <div className="mx-4">
       {/* <Topbar /> */}
 

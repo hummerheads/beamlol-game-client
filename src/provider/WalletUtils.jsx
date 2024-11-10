@@ -1,4 +1,4 @@
-import tonConnectUI from "./TonConnectUIInstance"; // Import tonConnect instance
+// import tonConnectUI from "./TonConnectUIInstance"; // Import tonConnect instance
 
 export const promptPayment = async (amount, recipient) => {
   try {
@@ -9,7 +9,7 @@ export const promptPayment = async (amount, recipient) => {
     };
 
     // Initiate TON payment via TonConnect
-    const paymentResult = await tonConnectUI.sendTransaction(transaction);
+    // const paymentResult = await tonConnectUI.sendTransaction(transaction);
 
     return { success: paymentResult.success };
   } catch (error) {

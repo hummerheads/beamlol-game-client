@@ -49,7 +49,7 @@ const Spin = () => {
 
   return (
     <div className="bg-[url('/Spin/spin.jpg')] py-10 h-[800px]">
-      <div className="flex flex-col items-center relative shadow-2xl">
+      <div className="flex flex-col items-center relative ">
         {/* Spike Icon - Upside Down */}
         <div className="absolute top-0 transform rotate-180">
           <FaArrowUp className="text-red-500" size={50} />
@@ -122,7 +122,7 @@ const Spin = () => {
         {/* Modal */}
         {showModal && result !== null && (
           <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white bg-opacity-30 rounded-lg p-6 text-center">
+            <div className="bg-white bg-opacity-80 rounded-lg p-6 text-center">
               <h2 className="text-2xl font-bold mb-4">Congratulations!</h2>
               <p className="text-lg">You won: {segments[result].text}</p>
               <button

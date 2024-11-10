@@ -18,7 +18,7 @@ const Shop = () => {
             <img src="/shop/add.svg" alt="" />
           </div>
           <div>
-            <img className="mx-auto" src="/shop/star.svg" alt="" />
+            <img className="mx-auto w-12" src="/Premium/premium.png" alt="" />
             <h1 className="text-white text-center text-2xl font-bold">
               Premium
             </h1>

@@ -5,7 +5,7 @@ const Premium = () => {
   return (
     <>
       <div
-        className="bg-[url('/Premium/bg.gif')] h-[800px] pt-10"
+        className="bg-[url('/Premium/bg.png')] h-[800px] pt-10"
         style={{ height: "calc(100vh - 124px)", overflow: "auto" }}
       >
         {/* <Topbar></Topbar> */}

@@ -110,8 +110,8 @@ const Home = () => {
       </div>
 
       {/* Feature Icons */}
-      <div className="flex justify-evenly w-full mb-4">
-        {["Booster", "NFT", "Check In", "Air Drop", "Spin"].map(
+      <div className="flex justify-center gap-7 w-full mb-4">
+        {["Booster", "Air Drop", "Spin"].map(
           (label, index) => (
             <NavLink key={index} to={label === "Spin" ? "/spin" : "#"} className={label === "Air Drop" ? "hidden" : ""}>
               <div className="flex flex-col items-center">
@@ -165,20 +165,21 @@ const Home = () => {
         </Drawer.Items>
       </Drawer>
 
-      {/* Energy Display */}
-      <div className="bg-[#ff9c17] my-2 items-center justify-center w-1/3 gap-2 rounded-full flex">
+   
+
+      {/* Footer */}
+         {/* Energy Display */}
+         <div className=" my-2 items-center w-1/3 gap-2 rounded-full flex">
         <img
           className="w-10 h-10 rounded-full"
           src="/icons/energy.svg"
           alt="Energy Icon"
         />
-        <div>
+        <div className="bg-[#ff9c17] px-8 py-1 rounded-2xl">
           <p className="font-bold text-xs text-white">{available_energy}</p>
           <p className="text-[#ffe386] text-xs">/{total_energy}</p>
         </div>
       </div>
-
-      {/* Footer */}
     </div>
   );
 };

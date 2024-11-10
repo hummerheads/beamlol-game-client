@@ -15,4 +15,13 @@ export default defineConfig({
     },
   },
   plugins: [react()],
+  server: {
+    proxy: {
+      '/cdn/assets': {
+        target: 'https://static.okx.com',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
 });
