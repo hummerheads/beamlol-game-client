@@ -4,11 +4,13 @@ import { NavLink } from "react-router-dom";
 import { useUser } from "../../context/UserContext"; 
 import { useWallet } from "../../provider/WalletContext";
 import axios from "axios";
+import { promptPayment } from "../../provider/WalletUtils";
 // Adjust the path accordingly
 
 const Home = () => {
   const { level, available_energy, total_energy } = useUser();
-  const { tonConnect, walletAddress } = useWallet();
+  const { walletAddress } = useWallet();
+  const [isCheckingIn, setIsCheckingIn] = useState(false);
 
 
   const [isOpen, setIsOpen] = useState(true);
@@ -29,33 +31,29 @@ const Home = () => {
   };
 
   const handleCheckIn = async () => {
-    if (!tonConnect) {
-      alert("Wallet is not connected. Please connect your wallet first.");
-      return;
-    }
-  
     try {
-      const transactionPayload = {
-        to: "your-ton-wallet-address", // Replace with your TON wallet address
-        value: 0.2, // Amount in TON
-        stateInit: null,
-        data: null,
-      };
-  
-      // Request permission for the transaction
-      await tonConnect.sendTransaction(transactionPayload);
-  
-      // Notify the backend about the check-in
-      await axios.post("https://beamlol-server.onrender.com/checkin", {
-        telegram_ID: walletAddress,
-      });
-  
-      alert("Check-in successful! 0.2 TON sent.");
+      setIsCheckingIn(true);
+
+      // Trigger payment of 0.2 TON to a specific wallet address
+      const paymentResult = await promptPayment(0.2, "YUQCe9aSKTBSM1Z0_QqanctJqmEltQ9a1C2n9Xm9oesEvCp0l");
+
+      if (paymentResult.success) {
+        // Call backend to update balance and spins after successful payment
+        await axios.post("https://beamlol-server.onrender.com/checkin", {
+          telegram_ID: walletAddress,
+        });
+        alert("Check-in successful! Balance and spins have been updated.");
+      } else {
+        alert("Payment was unsuccessful. Please try again.");
+      }
     } catch (error) {
       console.error("Error during check-in:", error);
-      alert("Failed to complete the check-in.");
+      alert("Check-in failed. Please try again.");
+    } finally {
+      setIsCheckingIn(false);
     }
   };
+
   
 
   // Ensure progress does not exceed 100%
@@ -150,9 +148,9 @@ const Home = () => {
           <div className="pt-24 pb-20">
             <div className="flex gap-1 justify-center bg-gray-400 w-2/3 py-2 mx-auto bg-opacity-20 rounded-xl">
               <img className="w-6" src="/balance.gif" alt="" />
-              <p className="text-md font-bold">+236,900,600</p>
+              <p className="text-md font-bold">+1,00,000</p>
               <img className="w-5 rounded-full" src="/icons/spin.svg" alt="" />
-              <p className="text-md font-bold">+60</p>
+              <p className="text-md font-bold">+100</p>
             </div>
             <div className="text-center">
               <h1 className="text-2xl font-bold py-4">DAILY CHECK-IN ON TON</h1>
@@ -161,7 +159,7 @@ const Home = () => {
               </p>
             </div>
             <div className="flex justify-center">
-              <NavLink onClick={handleCheckIn} className="text-2xl px-3 py-2 rounded-2xl font-bold bg-gradient-to-r from-yellow-600 via-yellow-700 to-white ">Pay 0.2 TON to Check In</NavLink>
+              <NavLink onClick={handleCheckIn} disabled={isCheckingIn} className="text-2xl px-3 py-2 rounded-2xl font-bold bg-gradient-to-r from-yellow-600 via-yellow-700 to-white ">  {isCheckingIn ? "Processing..." : "Pay 0.2 TON to Check In"}</NavLink>
             </div>
           </div>
         </Drawer.Items>

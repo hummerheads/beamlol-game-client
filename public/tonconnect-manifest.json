@@ -1,10 +1,7 @@
 {
-  "manifest": {
-    "name": "BeamLOL App",
-    "description": "A fun crypto earning app with TON integration",
-    "url": "https://astounding-licorice-1ef290.netlify.app",
-    "icons": [
-      "https://i.ibb.co.com/TRCcCcV/icon.png"
-    ]
-  }
+  "url": "https://astounding-licorice-1ef290.netlify.app",
+  "name": "BeamLOL App",
+  "iconUrl": "https://astounding-licorice-1ef290.netlify.app/icon.png",
+  "termsOfUseUrl": "https://astounding-licorice-1ef290.netlify.app/terms-of-use",
+  "privacyPolicyUrl": "https://astounding-licorice-1ef290.netlify.app/privacy-policy"
 }

@@ -1,4 +1,4 @@
-// src/utils/TonConnectUIInstance.js
+// src/provider/TonConnectUIInstance.jsx
 import { TonConnectUI } from "@tonconnect/ui-react";
 
 if (!window._tonConnectUIInstance) {
