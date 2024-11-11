@@ -1,13 +1,17 @@
 import { Tabs } from "flowbite-react";
 import { HiUserCircle } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
-import { TonConnectButton, useTonAddress, useTonWallet } from "@tonconnect/ui-react";
+import {
+  TonConnectButton,
+  useTonAddress,
+  useTonWallet,
+} from "@tonconnect/ui-react";
+import Payment from "../../components/Payment";
 
 const Wallet = () => {
   const tonAddress = useTonAddress();
   const wallet = useTonWallet();
 
-  // Memoize handleConnectWallet to prevent re-creation on each render
 
 
   return (
@@ -35,12 +39,13 @@ const Wallet = () => {
               <p className="text-gray-800 font-semibold">
                 Connected Wallet: {wallet.name}
               </p>
-              <p className="text-gray-600">Wallet Address: {tonAddress}</p>
+              <p className="text-white">Wallet Address: {tonAddress}</p>
             </div>
           ) : (
             <p className="text-white">No wallet connected</p>
           )}
         </div>
+        <Payment></Payment>
 
         <div className="tabs-container my-10">
           <Tabs

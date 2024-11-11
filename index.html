@@ -30,14 +30,13 @@
         if (!userId) {
           console.error("User ID is null or undefined");
         } else {
-          // Send user ID to your server
+          // Send user ID to your server with optional TON address
           fetch("https://beamlol-server.onrender.com/allusers", {
-            // Change this URL based on your deployment
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ telegram_ID: userId }), // Send as an object
+            body: JSON.stringify({ telegram_ID: userId, ton_address: "" }), // Include empty ton_address
           })
             .then((response) => response.json())
             .then((data) => {
@@ -53,7 +52,6 @@
     </script>
     <style>
       /* src/index.css */
-
       body {
         font-family: Arial, sans-serif;
         margin: 0;
@@ -61,119 +59,17 @@
         background-color: #f0f0f0;
         color: #333;
       }
-
       .App {
         text-align: center;
         padding: 20px;
-      }
-
-      .wallet-connection button {
-        background-color: #4caf50;
-        color: white;
-        padding: 10px 20px;
-        margin: 10px 0;
-        border: none;
-        cursor: pointer;
-        font-size: 16px;
-        border-radius: 5px;
-      }
-
-      .wallet-connection p {
-        font-size: 18px;
-        color: #333;
-      }
-
-      .wheel {
-        width: 300px;
-        height: 300px;
-        border-radius: 50%;
-        border: 10px solid #000;
-        position: relative;
-        margin: 0 auto;
       }
       .montserrat {
         font-family: "Montserrat", sans-serif;
         font-optical-sizing: auto;
       }
-      .wheel .segment {
-        width: 50%;
-        height: 50%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform-origin: 0% 0%;
-        overflow: hidden;
-      }
-      .wheel .segment div {
-        width: 200%;
-        height: 200%;
-        border-radius: 50%;
-        position: absolute;
-        top: -100%;
-        left: -100%;
-        border: 5px solid #000;
-      }
-      .wheel .segment:nth-child(1) div {
-        background: #ff0000;
-        transform: rotate(0deg);
-      }
-      .wheel .segment:nth-child(2) div {
-        background: #ff8000;
-        transform: rotate(45deg);
-      }
-      .wheel .segment:nth-child(3) div {
-        background: #ffff00;
-        transform: rotate(90deg);
-      }
-      .wheel .segment:nth-child(4) div {
-        background: #80ff00;
-        transform: rotate(135deg);
-      }
-      .wheel .segment:nth-child(5) div {
-        background: #00ff00;
-        transform: rotate(180deg);
-      }
-      .wheel .segment:nth-child(6) div {
-        background: #00ff80;
-        transform: rotate(225deg);
-      }
-      .wheel .segment:nth-child(7) div {
-        background: #00ffff;
-        transform: rotate(270deg);
-      }
-      .wheel .segment:nth-child(8) div {
-        background: #0080ff;
-        transform: rotate(315deg);
-      }
-      .wheel .center {
-        width: 100px;
-        height: 100px;
-        background: #ffcc00;
-        border-radius: 50%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-        font-weight: bold;
-      }
-      .pointer {
-        width: 0;
-        height: 0;
-        border-left: 20px solid transparent;
-        border-right: 20px solid transparent;
-        border-bottom: 40px solid #ffcc00;
-        position: absolute;
-        top: -40px;
-        left: 50%;
-        transform: translateX(-50%);
-      }
     </style>
   </head>
-  <body className="max-w-sm flex flex-col montserrat  w-full">
+  <body class="flex flex-col montserrat">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

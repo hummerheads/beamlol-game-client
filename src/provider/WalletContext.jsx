@@ -3,7 +3,7 @@ import { TonConnect } from "@tonconnect/sdk";
 import PropTypes from "prop-types";
 
 const WalletContext = createContext();
-
+// @vite-ignore
 export const WalletProvider = ({ children }) => {
   const [walletAddress, setWalletAddress] = useState(null);
   const [isConnected, setIsConnected] = useState(false);

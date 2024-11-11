@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import PropTypes from "prop-types";
-import { UserContext } from "../context/UserContext"; // Import from separate file
+import { UserContext } from "../context/UserContext";
 
 const UserProvider = ({ children }) => {
   const queryClient = useQueryClient();
@@ -15,9 +15,11 @@ const UserProvider = ({ children }) => {
       return response.json();
     },
     enabled: !!userId,
-    refetchInterval: 1000,
-    refetchOnWindowFocus: true,
+    refetchInterval: false, // Disabled frequent refetching
+    refetchOnWindowFocus: false, // Disable refetch on window focus
   });
+
+  const refetchUserData = () => queryClient.invalidateQueries(["userDetails", userId]);
 
   const contextValue = useMemo(() => {
     if (isLoading || error) {
@@ -29,10 +31,19 @@ const UserProvider = ({ children }) => {
         spin: 0,
         available_energy: 0,
         total_energy: 0,
-        refetchUserData: () => queryClient.invalidateQueries(["userDetails", userId]),
+        refetchUserData,
       };
     }
-    const { telegram_ID = "", balance = 0, perk = 0, level = 0, spin = 0, available_energy = 0, total_energy = 0 } = data || {};
+
+    const {
+      telegram_ID = "",
+      balance = 0,
+      perk = 0,
+      level = 0,
+      spin = 0,
+      available_energy = 0,
+      total_energy = 0,
+    } = data || {};
 
     return {
       telegram_ID,
@@ -42,11 +53,11 @@ const UserProvider = ({ children }) => {
       spin,
       available_energy,
       total_energy,
-      refetchUserData: () => queryClient.invalidateQueries(["userDetails", userId]),
+      refetchUserData,
     };
-  }, [data, isLoading, error, queryClient, userId]);
-  console.log(contextValue);
+  }, [data, refetchUserData]);
 
+  console.log(contextValue);
 
   return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;
 };
