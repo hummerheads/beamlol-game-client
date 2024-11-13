@@ -90,8 +90,8 @@ const Shop = () => {
 
   return (
     <div
-      className="bg-[url('/shop/bg.png')] px-4 pt-10"
-      style={{ height: "calc(100vh - 128px)", overflow: "auto" }}
+      className="bg-[url('/shop/bg.webp')] bg-cover font-heading-aldrich px-4 pt-10"
+      style={{ height: "calc(100vh - 132px)", overflow: "auto" }}
     >
       {/* Toast Container */}
       <ToastContainer
@@ -105,10 +105,10 @@ const Shop = () => {
         transition={Bounce}
       />
       {/* Top Card (Keep as it is) */}
-      <div className="mx-4">
+      <div className="mx-4 mt-10 mb-10">
         <div className="p-2 rounded-t-xl shadow-lg flex items-center justify-evenly border border-[rgba(255,255,255,0.53)] bg-gradient-to-r from-[rgba(18,18,20,0.25)] via-[rgba(93,96,100,0.25)_71%] to-[rgba(149,153,160,0.25)]">
           <div>
-            <img className="rounded-full w-10" src="/icons/spin.svg" alt="" />
+            <img className="rounded-full w-16" src="/icons/spin.png" alt="" />
             <h1 className="text-white text-center text-2xl font-bold">10k</h1>
           </div>
           <div>
@@ -198,13 +198,13 @@ const Shop = () => {
       </dialog>
 
       {/* Cards with Dynamic Modal for Left Button */}
-      <div className="py-2 grid grid-cols-2 gap-2 px-4">
+      <div className="py-2 grid grid-cols-2 gap-5 mb-5 px-4">
         {modalData.map((item) => (
           <div key={item.id} className="pb-4">
             <div className="p-2 rounded-t-xl border border-[rgba(255,255,255,0.53)] shadow-lg bg-gradient-to-r from-[rgba(18,18,20,0.25)] via-[rgba(148,153,159,0.25)_27%] to-[rgba(149,153,160,0.25)]">
               <img
-                className="mx-auto rounded-full"
-                src="/icons/spin.svg"
+                className="mx-auto w-16 rounded-full"
+                src="/icons/spin.png"
                 alt="/"
               />
               <p className="text-center text-white">{item.spins} </p>
@@ -258,7 +258,7 @@ const Shop = () => {
                 />
               </div>
               <div className="space-y-6 mt-10">
-                <h3 className="text-md font-medium text-gray-900">
+                <h3 className="text-md font-medium text-white">
                   {selectedItem.description}
                 </h3>
                 <div>
@@ -278,6 +278,9 @@ const Shop = () => {
           )}
         </Modal.Body>
       </Modal>
+      <div className="font-bold w-11/12 mx-auto rounded-md p-2 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
+          <p className="text-[#201b1b] text-xl">NFT&apos;s Coming Soon</p>
+        </div>
     </div>
   );
 };

@@ -57,24 +57,24 @@ const Topbar = () => {
   const spin = userData?.spin ?? 0;
 
   return (
-    <div className="mx-auto flex justify-around gap-2 bg-gray-800">
-      {/* Balance Section */}
-      <div className="flex gap-2 items-center text-base font-bold rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
-        <img className="w-6" src="/icons/booster.png" alt="Booster Icon" />
-        <p className="text-[#555555] text-xs">{balance}</p>
+    <div className="mx-auto flex justify-around bg-[#001F3F] p-3 shadow-lg ring-4 ring-yellow-400 ring-opacity-50  transition-all duration-300 hover:ring-opacity-70">
+      {/* Balance */}
+      <div className="group flex px-4 gap-2 items-center text-base font-semibold rounded-lg  bg-yellow-400 to-white text-center transition-all transform hover:scale-105 duration-200 glow-effect">
+        <img className="w-10 drop-shadow-md group-hover:animate-bounce" src="/icons/booster.png" alt="Balance Icon" />
+        <p className="text-[#555555] text-xs font-bold font-heading-aldrich">{balance}</p>
       </div>
 
-      {/* Perk Section */}
-      <div className="flex gap-2 items-center text-base font-bold rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
-        <img className="w-6" src="/perk.svg" alt="Perk Icon" />
-        <p className="text-[#555555] text-xs">{perk}</p>
+      {/* Perk */}
+      <div className="group px-4 flex gap-2 items-center text-base font-semibold rounded-lg  bg-yellow-400 to-white text-center transition-all transform hover:scale-105 duration-200 glow-effect">
+        <img className="w-7 drop-shadow-md group-hover:animate-bounce" src="/shop/perk.svg" alt="Perk Icon" />
+        <p className="text-[#555555] text-xs font-bold font-heading-aldrich">{perk}</p>
       </div>
 
-      {/* Spin Section */}
-      <div className="flex gap-2 items-center text-base font-bold rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
-        <img className="w-5 rounded-full" src="/icons/spin.svg" alt="Spin Icon" />
-        <p className="text-[#555555] text-xs">{spin}</p>
-        <img className="w-4 rounded-full" src="/icons/plus.svg" alt="Plus Icon" />
+      {/* Spin */}
+      <div className="group px-4 py-2 flex gap-2 items-center text-base font-semibold rounded-lg  bg-yellow-400 to-white text-center transition-all transform hover:scale-105 duration-200 glow-effect">
+        <img className="w-8 rounded-full drop-shadow-md group-hover:animate-bounce" src="/icons/spin.png" alt="Spin Icon" />
+        <p className="text-[#555555] text-xs font-bold font-heading-aldrich">{spin}</p>
+        <img className="w-4 rounded-full ml-1 drop-shadow-md" src="/icons/plus.svg" alt="Add Icon" />
       </div>
     </div>
   );

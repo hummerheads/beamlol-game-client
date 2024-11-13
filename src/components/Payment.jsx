@@ -54,8 +54,8 @@ const Payment = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Make a TON Payment</h1>
+    <div className="container py-10 mb-10 mx-auto p-6">
+      <h1 className="text-2xl text-white font-bold mb-4">Make a <span className='text-yellow-400'>TON Payment</span></h1>
 
       <input
         type="number"
@@ -69,12 +69,12 @@ const Payment = () => {
       <button
         onClick={handlePayment}
         disabled={!connected}
-        className={`button ${connected ? 'bg-blue-500 hover:bg-blue-700' : 'bg-gray-300 cursor-not-allowed'} text-white font-bold py-2 px-4 rounded`}
+        className={`button ${connected ? 'bg-blue-500 hover:bg-blue-700' : 'bg-gray-500 cursor-not-allowed'} text-white font-bold py-2 px-4 rounded`}
       >
         {connected ? 'Send Payment' : 'Connect Wallet'}
       </button>
 
-      <h1 className="text-2xl font-bold mb-4 mt-8">Send Telegram Stars</h1>
+      <h1 className="text-2xl font-bold text-white mb-4 mt-8">Send <span className='text-yellow-400'>Telegram Stars</span></h1>
       <input
         type="number"
         step="1"
@@ -87,7 +87,7 @@ const Payment = () => {
       <button
         onClick={handleSendStars}
         disabled={!connected}
-        className={`button ${connected ? 'bg-blue-500 hover:bg-blue-700' : 'bg-gray-300 cursor-not-allowed'} text-white font-bold py-2 px-4 rounded`}
+        className={`button ${connected ? 'bg-blue-500 hover:bg-blue-700' : 'bg-gray-500 cursor-not-allowed'} text-white font-bold py-2 px-4 rounded`}
       >
         {connected ? 'Send Stars' : 'Connect Wallet'}
       </button>

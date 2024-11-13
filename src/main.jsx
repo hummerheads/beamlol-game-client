@@ -9,12 +9,13 @@ import Shop from "./pages/shop/Shop";
 import Spin from "./pages/spin/Spin";
 import Earn from "./pages/earn/Earn";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import UserProvider from "./provider/UserProvider";
+import { UserProvider } from "./context/UserContext";
 import Level from "./pages/level/Level";
 import Wallet from "./pages/wallet/Wallet";
 import Referral from "./pages/referral/Referral";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import { WalletProvider } from "./provider/WalletContext";
+import Booster from "./pages/booster/Booster";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,8 @@ const router = createBrowserRouter([
       { path: "/transactions", element: <Home></Home> },
       { path: "/level", element: <Level></Level> },
       { path: "/wallet", element: <Wallet></Wallet> },
+      { path: "/booster", element: <Booster></Booster> },
+
     ],
   },
 ]);

@@ -24,7 +24,7 @@ const Footer = () => {
           <div>
             <img
               className="w-1/2 rounded-md mx-auto"
-              src="/icons/shop.png"
+              src="/icons/shop.svg"
               alt=""
             />
             <p className="text-white text-xs text-center font-bold">Shop</p>

@@ -1,210 +1,274 @@
-import { useEffect, useState } from "react";
-import { Drawer, Progress } from "flowbite-react";
+//Home.jsx
+import { useEffect, useState, useCallback } from "react";
+import { Drawer } from "flowbite-react";
 import { NavLink } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import useTonConnect from "../../hooks/useTonConnect";
 import { TonConnectButton } from "@tonconnect/ui-react";
-
-// import { useWallet } from "../../provider/WalletContext";
-// import axios from "axios";
-// import { promptPayment } from "../../provider/WalletUtils";
-// Adjust the path accordingly
+import { FaCoins } from "react-icons/fa";
 
 const Home = () => {
-  const { level, available_energy, total_energy } = useUser();
+
+  // Home.jsx
+
+  const context = useUser();
+  console.log("Context in Home:", context);
+
+  const {
+    telegram_ID,
+    level,
+    available_energy,
+    total_energy,
+    tap_power,
+    refetchUserData,
+    updateUserData,
+  } = context;
+
+  console.log("updateUserData:", updateUserData);
+  console.log("refetchUserData:", refetchUserData);
+
+  // ... rest of your component
+
+
+
   const [isOpen, setIsOpen] = useState(false);
   const [status, setStatus] = useState("");
   const { sender, connected } = useTonConnect();
+  const [taps, setTaps] = useState([]);
 
-  // Check cooldown from localStorage
+  const handleTap = useCallback(async (e) => {
+    if (!e || !e.currentTarget) return;
+    
+    if (available_energy < (tap_power || 1)) {
+      alert("Not enough energy to tap!");
+      return;
+    }
+  
+    if (!telegram_ID) {
+      alert("User ID is missing. Please log in again.");
+      return;
+    }
+  
+    const rect = e.currentTarget.getBoundingClientRect();
+    const tapX = e.clientX - rect.left;
+    const tapY = e.clientY - rect.top;
+  
+    const newTap = {
+      id: Date.now(),
+      x: tapX,
+      y: tapY,
+    };
+  
+    setTaps((prevTaps) => [...prevTaps, newTap]);
+  
+    const newEnergy = available_energy - (tap_power || 1);
+    
+    // Update local state first
+    updateUserData({
+      available_energy: newEnergy
+    });
+  
+    try {
+      const response = await fetch(
+        `https://beamlol-server.onrender.com/allusers/${telegram_ID}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            balanceIncrement: tap_power || 1,
+            available_energy_decrement: tap_power || 1,
+          }),
+        }
+      );
+  
+      if (!response.ok) {
+        // Revert the change if the server request fails
+        updateUserData({
+          available_energy: available_energy
+        });
+        console.error("Failed to process tap.");
+      }
+    } catch (error) {
+      // Revert the change if there's an error
+      updateUserData({
+        available_energy: available_energy
+      });
+      console.error("Error during tap action:", error);
+    }
+  }, [available_energy, tap_power, telegram_ID, updateUserData]);
+  
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  const handlePayment = useCallback(async () => {
+    if (!connected) {
+      setStatus("Please connect your wallet first.");
+      return;
+    }
+
+    if (!telegram_ID) {
+      setStatus("User ID not found. Please log in again.");
+      return;
+    }
+
+    try {
+      setStatus("Sending payment...");
+      const transactionResponse = await sender.send(
+        "UQAXP55KXVCUp-kTYQ7nuST3YNcvipJ8JSet9F7COb6EjMJF",
+        "0.2"
+      );
+
+      if (!transactionResponse) {
+        throw new Error("No response from TON Connect transaction.");
+      }
+
+      setStatus("Payment sent successfully!");
+
+      const response = await fetch(
+        `https://beamlol-server.onrender.com/${telegram_ID}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            balanceIncrement: 100000,
+            spinIncrement: 100,
+            checkInIncrement: 1,
+            isCheckIn: true,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setStatus(data.message);
+        localStorage.setItem("lastCheckIn", new Date().getTime().toString());
+        setIsOpen(false);
+        refetchUserData(telegram_ID);
+      } else {
+        setStatus("Check-in failed. Please try again.");
+      }
+    } catch (error) {
+      setStatus("Payment failed. Please try again.");
+      console.error("Error during payment:", error);
+    }
+  }, [connected, telegram_ID, sender, refetchUserData]);
+
+  useEffect(() => {
+    const resetEnergy = async () => {
+      if (!telegram_ID) return;
+      
+      try {
+        await fetch(
+          `https://beamlol-server.onrender.com/reset-energy/${telegram_ID}`,
+          {
+            method: "PATCH",
+          }
+        );
+        refetchUserData(telegram_ID);
+      } catch (error) {
+        console.error("Error resetting energy:", error);
+      }
+    };
+
+    const interval = setInterval(resetEnergy, 3600000);
+    return () => clearInterval(interval);
+  }, [telegram_ID, refetchUserData]);
+
   useEffect(() => {
     const lastCheckIn = localStorage.getItem("lastCheckIn");
     const now = new Date().getTime();
 
-    // Open drawer if it's the first visit of the day or 24 hours have passed
     if (!lastCheckIn || now - parseInt(lastCheckIn) > 24 * 60 * 60 * 1000) {
       setIsOpen(true);
     }
   }, []);
 
-  const handleClose = () => setIsOpen(false);
-
-  // Function to assign text colors dynamically for the labels
-  const getLabelColor = (index) => {
-    switch (index) {
-      case 0:
-        return "text-yellow-500";
-      case 1:
-        return "text-blue-500";
-      case 2:
-        return "text-green-500";
-      default:
-        return "";
+  useEffect(() => {
+    if (taps.length > 0) {
+      const timer = setTimeout(() => {
+        setTaps((prev) => prev.slice(1));
+      }, 1000);
+      return () => clearTimeout(timer);
     }
-  };
+  }, [taps]);
 
-  const handlePayment = async () => {
-    if (!connected) {
-      setStatus("Please connect your wallet first.");
-      console.error("Wallet is not connected.");
-      return;
-    }
-  
-    const amountNumber = parseFloat(0.2);
-    const contractAddress = "UQAXP55KXVCUp-kTYQ7nuST3YNcvipJ8JSet9F7COb6EjMJF";
-  
-    // Extract telegram_ID from URL query parameter
-    const urlParams = new URLSearchParams(window.location.search);
-    const telegram_ID = urlParams.get("user_id");
-  
-    // Check if telegram_ID is available
-    if (!telegram_ID) {
-      setStatus("User ID not found in the URL. Please log in again.");
-      console.error("Telegram ID is missing from URL parameters.");
-      return;
-    }
-  
-    try {
-      setStatus("Sending payment...");
-      console.log("Initiating payment to:", contractAddress);
-  
-      // Attempt to send the payment
-      const transactionResponse = await sender.send(contractAddress, amountNumber.toString());
-  
-      if (!transactionResponse) {
-        throw new Error("No response from TON Connect transaction.");
-      }
-  
-      console.log("Transaction Response:", transactionResponse);
-      setStatus("Payment sent successfully!");
-  
-      // Proceed with backend update if payment was successful
-      const response = await fetch(`https://beamlol-server.onrender.com/allusers/${telegram_ID}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          balanceIncrement: 100000,
-          spinIncrement: 100,
-          checkInIncrement: 1,
-          isCheckIn: true,
-        }),
-      });
-  
-      // Check if the response is JSON before parsing
-      if (response.headers.get("Content-Type")?.includes("application/json")) {
-        const data = await response.json();
-        if (response.ok) {
-          console.log("Backend Response:", data);
-          setStatus(data.message);
-          localStorage.setItem("lastCheckIn", new Date().getTime().toString());
-          setIsOpen(false);
-        } else {
-          console.error("Backend Error:", data.message);
-          setStatus("Check-in failed. Please try again.");
-        }
-      } else {
-        console.error("Unexpected response type:", response);
-        setStatus("Unexpected response from server. Please try again later.");
-      }
-    } catch (error) {
-      console.error("Payment Error:", error);
-      setStatus("Payment failed. Please try again.");
-    }
-  };
-  
-  
-  
-
-  // onClick={handleCheckIn} disabled={isCheckingIn}
-  // const handleCheckIn = async () => {
-  //   try {
-  //     setIsCheckingIn(true);
-
-  //     // Trigger payment of 0.2 TON to a specific wallet address
-  //     const paymentResult = await promptPayment(0.2, "YUQCe9aSKTBSM1Z0_QqanctJqmEltQ9a1C2n9Xm9oesEvCp0l");
-
-  //     if (paymentResult.success) {
-  //       // Call backend to update balance and spins after successful payment
-  //       await axios.post("https://beamlol-server.onrender.com/checkin", {
-  //         telegram_ID: walletAddress,
-  //       });
-  //       alert("Check-in successful! Balance and spins have been updated.");
-  //     } else {
-  //       alert("Payment was unsuccessful. Please try again.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error during check-in:", error);
-  //     alert("Check-in failed. Please try again.");
-  //   } finally {
-  //     setIsCheckingIn(false);
-  //   }
-  // };
-
-  // Ensure progress does not exceed 100%
   const progress = Math.min(level * 10, 100);
 
   return (
     <div
-      className="bg-[url('/bggif.gif')] flex flex-col items-center px-2 bg-gray-700 pt-5"
-      style={{ height: "calc(100vh - 128px)", overflow: "auto" }}
+      className="bg-[url('/bggif1.gif')] flex flex-col items-center px-2 bg-gray-700 pt-5"
+      style={{ height: "calc(100vh - 132px)", overflow: "auto" }}
     >
-      {/* Giveaway, Leaderboard, and Level Section */}
-      <div className="flex gap-5 w-full mb-5">
+      <div className="flex gap-3 font-heading-aldrich tracking-wider w-11/12 mb-5">
         {["Giveaways", "Leaderboard", "Level"].map((label, index) => (
           <div
             key={index}
-            className="w-full bg-gray-800 p-2 rounded-lg text-center"
+            className="w-full py-2 rounded-xl text-center bg-gray-700 hover:from-[#2b6cb0] hover:to-[#63b3ed] transform hover:scale-105 transition-all duration-300 shadow-lg"
           >
-            <span
-              className={`font-semibold text-xs block ${getLabelColor(index)}`}
-            >
-              {label}
-            </span>
-            <span className="block text-white">
-              {index === 1 ? "1st" : index === 2 ? `${level}` : "🪙"}
+            <span className="font-semibold text-xs block mb-1">{label}</span>
+            <span className="block text-white text-lg font-bold drop-shadow-md">
+              {index === 1 ? (
+                "1st"
+              ) : index === 2 ? (
+                `${level}`
+              ) : (
+                <FaCoins className="inline text-yellow-400" />
+              )}
             </span>
           </div>
         ))}
       </div>
 
-      {/* Level Progress */}
-      <div className="w-full mb-2">
-        <div className="flex justify-between items-center mb-1">
-          <span className="text-white text-xs">Epic</span>
-          <span className="text-white text-xs">
-            Level <br /> {level}/10
+      <div className="w-11/12 max-w-lg font-heading-aldrich tracking-wider mb-2">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-gray-100 text-lg font-semibold">Epic Level</span>
+          <span className="text-gray-100 text-base font-medium">
+            Level {level}/10
           </span>
         </div>
         <NavLink to="/level">
-          <Progress
-            progress={progress}
-            color="teal"
-            size="xl"
-            className="rounded-full bg-teal-100 shadow-lg animate-pulse"
+          <div
+            className="relative h-6 rounded-full overflow-hidden bg-gradient-to-r from-blue-900 via-purple-800 to-pink-700 shadow-lg"
             style={{
-              width: "100%",
               background:
-                "linear-gradient(120deg, #ADFAA1 0%, #C597CC 45%, #2F39A3 100%)",
+                "linear-gradient(135deg, #6C63FF 0%, #AB47BC 50%, #FF4081 100%)",
             }}
-          />
+          >
+            <div
+              className="absolute h-full bg-teal-500 rounded-full transition-all duration-500"
+              style={{
+                width: `${progress}%`,
+                background: "linear-gradient(90deg, #00C6FF 0%, #0072FF 100%)",
+              }}
+            />
+            <span className="absolute inset-0 flex items-center justify-center text-white font-semibold text-sm">
+              {progress}%
+            </span>
+          </div>
         </NavLink>
       </div>
 
-      {/* Feature Icons */}
-      <div className="flex justify-center gap-7 w-full mb-4">
+      <div className="flex justify-center font-heading-aldrich tracking-widest gap-7 w-full">
         {["Booster", "Air Drop", "Spin", "Check In"].map((label, index) => (
           <NavLink
             key={index}
-            to={label === "Spin" ? "/spin" : "#"}
+            to={
+              label === "Spin"
+                ? "/spin"
+                : label === "Booster"
+                ? "/booster"
+                : "/"
+            }
             className={label === "Air Drop" ? "hidden" : ""}
-            onClick={label === "Check In" ? () => setIsOpen(true) : ""}
+            onClick={label === "Check In" ? () => setIsOpen(true) : null}
           >
             <div className="flex flex-col items-center">
               <img
-                className="w-8"
-                src={`/icons/${label.toLowerCase().replace(" ", "")}.svg`}
+                className="w-12"
+                src={`/icons/${label.toLowerCase().replace(" ", "")}.png`}
                 alt={label}
               />
               <span className="text-white">{label}</span>
@@ -213,21 +277,43 @@ const Home = () => {
         ))}
       </div>
 
-      {/* Banner */}
-      <div className="flex justify-center">
+      <div className="flex justify-center relative">
         <img
           src="/banner.png"
           alt="A cute robot with glowing eyes"
-          className="h-[360px]"
+          className="h-[380px] mb-3 cursor-pointer"
+          onClick={handleTap}
         />
+
+        {taps.map((tap) => (
+          <div
+            key={tap.id}
+            className="absolute text-white text-3xl font-black pointer-events-none"
+            style={{
+              left: `${tap.x}px`,
+              top: `${tap.y}px`,
+              animation: "fadeUp 1s forwards",
+            }}
+          >
+            +{tap_power || 1}
+          </div>
+        ))}
       </div>
 
-      {/* Premium Drawer */}
+      <style>
+        {`
+          @keyframes fadeUp {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-80px); }
+          }
+        `}
+      </style>
+
       <Drawer
         open={isOpen}
         onClose={handleClose}
         position="bottom"
-        className="bg-[url('/checkinbg.png')] text-white"
+        className="bg-[url('/checkinbg.png')] bg-cover text-white font-heading-aldrich"
       >
         <Drawer.Header />
         <Drawer.Items>
@@ -245,31 +331,28 @@ const Home = () => {
               </p>
             </div>
             <div className="flex justify-center">
-              <NavLink
+              <button
                 className="text-2xl px-3 py-2 rounded-2xl font-bold bg-gradient-to-r from-yellow-600 via-yellow-700 to-white"
                 onClick={handlePayment}
               >
                 Pay 0.2 TON to Check In
-              </NavLink>
+              </button>
             </div>
             {status && <p className="mt-4 text-center">{status}</p>}
-            {!connected ? (
+            {!connected && (
               <TonConnectButton className="my-connect-button mx-auto my-2" />
-            ) : (
-              ""
             )}
           </div>
         </Drawer.Items>
       </Drawer>
 
-      {/* Energy Display */}
-      <div className=" my-2 items-center w-1/3 gap-2 rounded-full flex">
+      <div className="my-2 items-center gap-2 rounded-full flex">
         <img
-          className="w-10 h-10 rounded-full"
+          className="w-12 h-12 rounded-full"
           src="/icons/energy.svg"
           alt="Energy Icon"
         />
-        <div className="bg-[#ff9c17] px-8 py-1 rounded-2xl">
+        <div className="bg-[#ff9c17] px-10 font-heading-aldrich py-1 rounded-2xl">
           <p className="font-bold text-xs text-white">{available_energy}</p>
           <p className="text-[#ffe386] text-xs">/{total_energy}</p>
         </div>

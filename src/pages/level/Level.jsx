@@ -3,9 +3,8 @@ import { useUser } from "../../context/UserContext";
 import { useQueryClient } from "@tanstack/react-query";
 
 const Level = () => {
-  const { level, perk, total_energy, telegram_ID, } = useUser();
+  const { level, perk, total_energy, telegram_ID } = useUser();
   const queryClient = useQueryClient();
-
 
   const levels = [
     {
@@ -96,17 +95,28 @@ const Level = () => {
   const [userLevel, setLevel] = useState(level);
 
   const handleClickToggle = (id) => {
-    setExpandedIds((prevIds) => prevIds.includes(id) ? prevIds.filter((prevId) => prevId !== id) : [...prevIds, id]);
+    setExpandedIds((prevIds) =>
+      prevIds.includes(id)
+        ? prevIds.filter((prevId) => prevId !== id)
+        : [...prevIds, id]
+    );
   };
 
   const handleBuyNow = async (levelId) => {
     const selectedLevel = levels.find((l) => l.id === levelId);
     try {
-      const response = await fetch(`https://beamlol-server.onrender.com/allusers/update/${telegram_ID}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ level: levelId, perk: userPerk - selectedLevel.perks_needed, total_energy: totalEnergy + selectedLevel.details }),
-      });
+      const response = await fetch(
+        `https://beamlol-server.onrender.com/allusers/update/${telegram_ID}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            level: levelId,
+            perk: userPerk - selectedLevel.perks_needed,
+            total_energy: totalEnergy + selectedLevel.details,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -138,7 +148,10 @@ const Level = () => {
   }, []);
 
   return (
-    <div className="bg-[#000] h-full">
+    <div
+      className="bg-[#000]"
+      style={{ height: "calc(100vh - 132px)", overflow: "auto" }}
+    >
       {/* <Topbar perk={userPerk} /> */}
       <div
         className="flex justify-center items-center gap-2 mx-16 py-2 rounded-xl"
@@ -148,7 +161,7 @@ const Level = () => {
         }}
       >
         <img src="/level/tick.svg" alt="" />
-        <p className="text-white font-bold">Upgrade Level</p>
+        <p className="text-white font-bold pt-5">Upgrade Level</p>
         <img src="/level/arrow.svg" alt="" />
       </div>
       <div

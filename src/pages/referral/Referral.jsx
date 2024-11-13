@@ -1,93 +1,97 @@
+
+
 const Referral = () => {
-    return (
-      <div className="bg-[url('/referral/bg.png')]" style={{ height: 'calc(100vh - 124px)', overflow: 'auto'}}>
-        <div className="bg-custom-image bg-gray-300 bg-opacity-10 bg-center bg-cover bg-no-repeat ">
-          <p className="font-extrabold text-white text-2xl text-center pb-6 pt-10">
-            Invite to earn
-          </p>
-          <img className="mx-auto" src="/referral/referral.svg" alt="" />
-          <div className="flex gap-1 items-center py-3 bg-white mx-2 px-2 rounded-2xl my-4 border-2 border-[#CCE8FE]">
-            <img className="w-6 h-6" src="/referral/avatar.svg" alt="" />
-            <p className="text-black">
-              Mr.Dom got
-              <span
-                className="bg-clip-text text-transparent"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(180deg, #856220 0%, #F4E683 28%, #BF923D 50%, #4E341B 75%, #F1EA82 100%)",
-                }}
-              >
-                +2000
-              </span>
-            </p>
-            <img
-              className="rounded-full w-8 h-8"
-              src="/referral/balance.gif"
-              alt=""
-            />
-            <p>by Checking in</p>
-            <p className="text-[#9599A0]">Just now</p>
-          </div>
-          <div className="p-2 bg-black bg-opacity-60 mx-16 rounded-xl border-2 border-white shadow-2xl">
-            <div className="text-center mx-auto">
-              <span
-                className="bg-clip-text text-transparent text-xl font-bold"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(180deg, #856220 0%, #F4E683 28%, #BF923D 50%, #4E341B 75%, #F1EA82 100%)",
-                }}
-              >
-                Referel Rules
-              </span>
-              <div className="pt-4">
-                <div>
-                  <h1 className="text-white font-bold text-left">
-                    Invite a friend
-                  </h1>
-                  <div className="flex text-[#D1DBE6] items-center text-xs text-md">
-                    <div>
-                      <p className="py-2"> You will both get 2000 </p>
-                    </div>
-                    <img className="w-5" src="/referral/balance.gif" alt="" />
-                    <p>and 1 </p>
-                    <img className="w-5" src="/referral/energy.svg" alt="" />
-                  </div>
-                </div>
-                <div>
-                  <h1 className="text-white font-bold text-left">
-                    Invite a friend with a Telegram Premium account
-                  </h1>
-                  <div className="flex text-[#D1DBE6] text-xs  items-center text-md">
-                    <div>
-                      <p className="py-2"> You will both get 20,000 </p>
-                    </div>
-                    <img className="w-5" src="/referral/balance.gif" alt="" />
-                    <p>and 1 </p>
-                    <img className="w-5" src="/referral/energy.svg" alt="" />
-                  </div>
-                </div>
-                <div>
-                  <h1 className="text-white font-bold text-left">
-                    Additional incentives
-                  </h1>
-                  <div className="flex text-[#D1DBE6] text-xs  items-center text-md">
-                    <div>
-                      <p className="py-2"> Get 20% of your friend’s </p>
-                    </div>
-                    <img className="w-5" src="/referral/balance.gif" alt="" />
-                    <p>yeilds in rewards</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="text-white mt-4 w-1/2 mx-auto text-center p-4 font-bold rounded-[20px] border-[2.3px] border-white/[.53] bg-gradient-to-r from-[#856220] via-[#F4E683] via-[#BF923D] via-[#4E341B] to-[#F1EA82] shadow-inner shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
-          Invite a Friend
-          </div>
+  return (
+    <div className="bg-[url('/referral/bg.webp')] bg-cover bg-center font-heading-aldrich" style={{ height: 'calc(100vh - 132px)', overflow: 'auto' }}>
+      <div className="bg-gray-300 bg-opacity-5 p-4 rounded-lg shadow-lg">
+        
+        {/* Header */}
+        <p className="font-extrabold text-white text-3xl text-center pt-10 pb-6">
+          Invite to Earn
+        </p>
+        
+        {/* Referral Image */}
+        <img className="mx-auto w-3/5 max-w-[200px] mb-6" src="/referral/referral.svg" alt="Referral" />
+
+        {/* Notification */}
+        <div className="flex items-center gap-4 bg-white p-4 mx-4 rounded-lg my-4 border border-[#CCE8FE] shadow-lg">
+  <img className="w-10 h-10" src="/referral/avatar.svg" alt="Avatar" />
+  <div className="flex flex-col">
+    <p className="text-gray-800 text-sm font-medium">
+      Mr. Dom earned 
+      <span
+        className="ml-2 font-bold text-transparent bg-clip-text"
+        style={{
+          backgroundImage: "linear-gradient(180deg, #856220 0%, #F4E683 28%, #BF923D 50%, #4E341B 75%, #F1EA82 100%)",
+        }}
+      >
+        +2000
+      </span>
+    </p>
+    <p className="text-xs text-gray-500">by Checking in</p>
+  </div>
+  <img className="w-8 h-8" src="/referral/balance.gif" alt="Balance Icon" />
+  <span className="text-xs text-gray-400 ml-auto">Just now</span>
+</div>
+
+{/* Rules Section */}
+<div className="p-6 bg-black bg-opacity-70 mx-6 rounded-lg border border-white shadow-lg text-white">
+  <div className="mx-auto text-left">
+    <h2
+      className="text-2xl font-bold bg-clip-text text-transparent mb-6"
+      style={{
+        backgroundImage: "linear-gradient(180deg, #856220 0%, #F4E683 28%, #BF923D 50%, #4E341B 75%, #F1EA82 100%)",
+      }}
+    >
+      Referral Rules
+    </h2>
+
+    <div className="space-y-6 text-sm text-gray-300">
+      
+      {/* Rule Item */}
+      <div>
+        <h3 className="text-lg font-bold text-white mb-1">Invite a friend</h3>
+        <div className="flex items-center space-x-1">
+          <p>You will both get 2000</p>
+          <img className="w-5" src="/referral/balance.gif" alt="Balance" />
+          <p>and 1</p>
+          <img className="w-5" src="/referral/energy.svg" alt="Energy" />
         </div>
       </div>
-    );
-  };
-  
-  export default Referral;
-  
+
+      {/* Rule Item */}
+      <div>
+        <h3 className="text-lg font-bold text-white mb-1">Invite a friend with Telegram Premium</h3>
+        <div className="flex items-center space-x-1">
+          <p>You will both get 20,000</p>
+          <img className="w-5" src="/referral/balance.gif" alt="Balance" />
+          <p>and 1</p>
+          <img className="w-5" src="/referral/energy.svg" alt="Energy" />
+        </div>
+      </div>
+
+      {/* Rule Item */}
+      <div>
+        <h3 className="text-lg font-bold text-white mb-1">Additional incentives</h3>
+        <div className="flex items-center space-x-1">
+          <p>Get 20% of your friend’s</p>
+          <img className="w-5" src="/referral/balance.gif" alt="Balance" />
+          <p>earnings as rewards</p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+        {/* Invite Button */}
+        <div className="text-white mt-6 mx-auto text-center p-4 font-bold rounded-full w-3/5 max-w-xs border-2 border-white bg-gradient-to-r from-[#856220] via-[#F4E683] to-[#4E341B] shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 cursor-pointer">
+          Invite a Friend
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Referral;

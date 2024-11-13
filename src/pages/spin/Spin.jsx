@@ -1,141 +1,137 @@
-import { useState, useEffect } from "react";
-import { FaArrowUp } from "react-icons/fa"; // Import an arrow icon for the spike
+import  { useState, useRef,  } from "react";
 
+
+import { PiSpinnerBallFill } from "react-icons/pi";
+import { Link } from "react-router-dom";
+
+
+const symbols = ["🍒", "🍉", "🍊", "🍓", "🍇", "🥝"];
+const winMessages = [
+  "Congratulations! You hit the jackpot!",
+  "Amazing! You’ve won big!",
+  "Lucky day! Here’s your prize!",
+  "You’re on a winning streak!",
+  "Well done! That’s a win!",
+  "Keep going, you’re on fire!"
+];
+const loseMessages = [
+  "Better luck next time!",
+  "Almost there, try again!",
+  "Don’t give up!",
+  "So close! Spin again!",
+  "You can do it! Spin again!",
+  "Keep trying, you’re bound to win!"
+];
 
 const Spin = () => {
   const [spinning, setSpinning] = useState(false);
-  const [result, setResult] = useState(null);
-  const [rotation, setRotation] = useState(0); // State to track rotation
-  const [showModal, setShowModal] = useState(false); // State to control modal visibility
+  const [showModal, setShowModal] = useState(false);
+  const [result, setResult] = useState(["🍒", "🍒", "🍒"]);
+  const [message, setMessage] = useState("");
 
-  // Define segments with different colors
-  const segments = [
-    { text: "1", icon: "/shop/perk.webp", color: "#FF5733" },
-    { text: "5", icon: "/shop/perk.webp", color: "#FFC300" },
-    { text: "10,000", icon: "/shop/perk.webp", color: "#DAF7A6" },
-    { text: "20,000", icon: "/shop/perk.webp", color: "#FF33A8" },
-    { text: "1,00,000", icon: "/shop/perk.webp", color: "#FF8D1A" },
-    { text: "1", icon: "/shop/perk.webp", color: "#C70039" },
-    { text: "5", icon: "/shop/perk.webp", color: "#900C3F" },
-    { text: "10", icon: "/shop/perk.webp", color: "#581845" },
-  ];
+  const reelRefs = [useRef(null), useRef(null), useRef(null)];
 
   const handleSpin = () => {
-    if (spinning) return; // Prevent re-spinning while in motion
+    if (spinning) return;
     setSpinning(true);
-    setShowModal(false); // Hide modal when a new spin starts
+    setShowModal(false);
 
-    const spins = Math.floor(Math.random() * 10) + 5; // Random spins between 5 and 15
-    const finalPosition = Math.floor(Math.random() * segments.length); // Random segment index
-    const segmentAngle = 360 / segments.length;
+    const newResult = [];
+    reelRefs.forEach((reel,) => {
+      const randomIndex = Math.floor(Math.random() * symbols.length);
+      const chosenSymbol = symbols[randomIndex];
+      newResult.push(chosenSymbol);
 
-    // Calculate total rotation to perfectly align the chosen segment's middle with the arrowhead
-    const totalRotation =
-      spins * 360 + segmentAngle * finalPosition + segmentAngle / 2;
+      const reelHeight = reel.current.children[0].offsetHeight;
+      const spins = 10 + Math.floor(Math.random() * 5); // Slower spins between 10 and 15
+      const finalPosition = -randomIndex * reelHeight;
 
-    setRotation(totalRotation);
+      // Slower transition for smoother effect
+      reel.current.style.transition = `top ${spins * 2}s cubic-bezier(0.33, 1, 0.68, 1)`;
+      reel.current.style.top = `${spins * reelHeight * -symbols.length + finalPosition}px`;
+    });
 
-    // Set result after the spin animation
     setTimeout(() => {
+      reelRefs.forEach((reel, index) => {
+        reel.current.style.transition = "none";
+        const symbolIndex = symbols.indexOf(newResult[index]);
+        reel.current.style.top = `-${symbolIndex * reel.current.children[0].offsetHeight}px`;
+      });
       setSpinning(false);
-      setResult(finalPosition);
-      setShowModal(true); // Show modal after spin ends
-    }, spins * 200); // Adjust duration to suit animation time
+      setResult(newResult);
+
+      // Delay modal to show reels for a moment
+      setTimeout(() => {
+        const isWin = newResult[0] === newResult[1] && newResult[1] === newResult[2];
+        setMessage(isWin ? winMessages[Math.floor(Math.random() * winMessages.length)] : loseMessages[Math.floor(Math.random() * loseMessages.length)]);
+        setShowModal(true);
+      }, 1000); // 1 second delay for viewing result on reels
+    }, 2500); // Spin duration adjusted for slower spin effect
   };
 
-  useEffect(() => {
-    // Optional: Any effect to handle component updates during spinning
-  }, [spinning, rotation, segments.length]);
-
   return (
-    <div className="bg-[url('/Spin/spin.jpg')] py-10 h-[800px]">
-      <div className="flex flex-col items-center relative ">
-        {/* Spike Icon - Upside Down */}
-        <div className="absolute top-0 transform rotate-180">
-          <FaArrowUp className="text-red-500" size={50} />
+    <div className=" slot-machine-container font-heading-aldrich" 
+    style={{ height: "calc(100vh - 132px)", overflow: "auto" }}
+    >
+    <div>
+      <h1 className="tracking-wider font-heading-aldrich mt-36 text-yellow-400 font-bold text-3xl text-center p-4">Welcome to BeamLOL Spinning Game!</h1>
+      <p className="tracking-wider font-heading-aldrich  text-yellow-400 font-bold text-xl text-center p-4">Spin To Win! </p>
+    </div>
+      <div className="slot-machine mt-10">
+        {/* Lever Icon */}
+        <PiSpinnerBallFill
+          className={`lever-icon ${spinning ? "lever-pulled" : ""}`}
+          onClick={handleSpin}
+        />
+
+        {/* Slot Reels */}
+        <div className="reels mx-auto">
+          {reelRefs.map((ref, index) => (
+            <div className="slot mx-auto" key={index}>
+              <div className="reel" ref={ref}>
+                {Array(30)
+                  .fill()
+                  .map((_, i) => (
+                    <div className="symbol mx-auto" key={i}>
+                      {symbols[i % symbols.length]}
+                    </div>
+                  ))}
+              </div>
+            </div>
+          ))}
         </div>
-
-        {/* Responsive Spinner */}
-        <svg
-          width="calc(100% - 8px)" // Full width with 4px margin on each side
-          height="calc(100% - 8px)" // Maintain aspect ratio with full height
-          viewBox="-200 -200 400 400" // Adjusted viewBox for increased size
-          className="mt-8"
-          style={{
-            transform: `rotate(${rotation}deg)`,
-            transition: "transform 2s ease-in-out",
-          }} // Apply rotation to SVG with animation
-        >
-          {segments.map((segment, index) => {
-            const angleStart =
-              index * (360 / segments.length) * (Math.PI / 180);
-            const angleEnd =
-              (index + 1) * (360 / segments.length) * (Math.PI / 180);
-
-            const x1 = Math.cos(angleStart) * 180; // Increased radius for more space
-            const y1 = Math.sin(angleStart) * 180; // Increased radius for more space
-            const x2 = Math.cos(angleEnd) * 180; // Increased radius for more space
-            const y2 = Math.sin(angleEnd) * 180; // Increased radius for more space
-
-            // Calculate icon position (center of the segment)
-            const iconX = ((x1 + x2) / 2) * 0.75;
-            const iconY = ((y1 + y2) / 2) * 0.75;
-
-            return (
-              <g key={index}>
-                <path
-                  d={`M0,0 L${x1},${y1} A180,180,0,0,1,${x2},${y2} Z`} // Draw arc with increased radius
-                  fill={segment.color}
-                  stroke="black" // Set border color
-                  strokeWidth="2" // Set border width
-                />
-                {/* Display icon and text together using <foreignObject> for flex alignment */}
-                <foreignObject
-                  x={iconX - 30} // Adjust x to center the flex container
-                  y={iconY - 35} // Adjust y to center the flex container
-                  width="60" // Width of the container
-                  height="70" // Height of the container
-                >
-                  <div className="flex flex-col items-center justify-center h-full">
-                    <img
-                      src={segment.icon}
-                      alt={segment.text}
-                      className="w-8 h-8"
-                    />
-                    <span className="text-sm text-white">{segment.text}</span>
-                  </div>
-                </foreignObject>
-              </g>
-            );
-          })}
-        </svg>
 
         {/* Spin Button */}
         <button
+          className={`spin-button ${spinning ? "disabled" : ""}`}
           onClick={handleSpin}
-          className="mt-10 bg-blue-500 text-white py-2 px-4 rounded"
           disabled={spinning}
         >
           {spinning ? "Spinning..." : "Spin"}
         </button>
 
-        {/* Modal */}
-        {showModal && result !== null && (
-          <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white bg-opacity-80 rounded-lg p-6 text-center">
-              <h2 className="text-2xl font-bold mb-4">Congratulations!</h2>
-              <p className="text-lg">You won: {segments[result].text}</p>
+        {/* Result Modal */}
+        {showModal && (
+          <div className="modal-overlay">
+            <div className="modal">
+              <h2 className="modal-title">Result</h2>
+              <p className="modal-result">
+                {result[0]} {result[1]} {result[2]}
+              </p>
+              <p className="modal-message">{message}</p>
               <button
+                className="modal-close-button"
                 onClick={() => setShowModal(false)}
-                className="mt-4 bg-green-500 text-white py-2 px-4 rounded"
               >
                 Close
               </button>
             </div>
           </div>
+          
         )}
       </div>
-
+      <Link to="/"><button className="mt-10 bg-amber-400 font-bold tracking-wider font-headinf-aldrich px-6 py-3 text-black rounded-full">Home</button></Link>
+      
     </div>
   );
 };

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Aldrich:wght@400&family=Oxanium:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -21,4 +23,285 @@
 .full-height {
   height: 100vh; /* Full viewport height */
   margin: 0; /* Remove default margin */
+}
+.font-heading-aldrich {
+  font-family: "Aldrich", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+.font-text-oxanium {
+  font-family: "Oxanium", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+.glow-effect {
+  box-shadow: 0 0 6px rgba(255, 215, 0, 0.4), 0 0 10px rgba(255, 215, 0, 0.3);
+  transition: box-shadow 0.3s ease;
+}
+.glow-effect:hover {
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.6), 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+.group-hover\\:animate-bounce {
+  animation: bounce 0.5s alternate infinite ease-in-out;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-4px); /* Slightly increased bounce height */
+  }
+}
+.glow-effect {
+  color: #ffeb3b; /* Bright color for glowing */
+  text-shadow: 0 0 8px rgba(255, 235, 59, 0.8), 0 0 10px rgba(255, 235, 59, 0.6), 0 0 15px rgba(255, 235, 59, 0.4);
+}
+
+/* .animate-pulse {
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+} */
+
+@keyframes pulse-scale {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+.animate-pulse {
+  animation: pulse-scale 1.5s infinite alternate;
+}
+
+.animate-progress {
+  animation: pulse-scale 1.5s infinite alternate;
+}
+
+.bg-gradient-to-r {
+  background: linear-gradient(135deg, #6C63FF 0%, #AB47BC 50%, #FF4081 100%);
+}
+
+@keyframes pulse-scale {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.05);
+    opacity: 0.85;
+  }
+}
+
+.animate-pulse {
+  animation: pulse-scale 1.5s infinite alternate;
+}
+/* spin styles */
+
+  .animate-bounce-slow {
+    animation: bounce 2s infinite;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease forwards;
+  }
+
+  .segment-shadow {
+    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.4));
+  }
+
+  .glow {
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(-10%);
+    }
+    50% {
+      transform: translateY(0%);
+    }
+  }
+
+ /* New Spinner */
+ /* Container and General Styles */
+ .slot-machine-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ 
+  height: 100vh;
+  background-image: url('/Spin/spin.png'); /* Replace with your image path */
+  background-size: cover;
+  background-position: center;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+
+/* Slot Machine Styles */
+.slot-machine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  background: #333;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
+  max-width: 300px;
+  width: 100%;
+}
+
+/* Lever Icon Animation */
+.lever-icon {
+  font-size: 3rem;
+  color: #ffdd00;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.lever-pulled {
+  transform: rotate(360deg);
+}
+
+/* Reels Styles */
+.reels {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.slot {
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  border: 3px solid #444;
+  border-radius: 10px;
+  background: #666;
+  position: relative;
+}
+
+.reel {
+  position: absolute;
+  top: 0;
+  transition: top 2s ease-in-out;
+}
+
+.symbol {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  height: 80px;
+  color: #fff;
+}
+
+/* Spin Button Styles */
+.spin-button {
+  background: linear-gradient(145deg, #ffdd00, #ffc107);
+  color: #333;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s;
+}
+
+.spin-button:hover:not(.disabled) {
+  transform: scale(1.1);
+  background: linear-gradient(145deg, #ffc107, #ffdd00);
+}
+
+.spin-button.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Modal Overlay and Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.5s;
+}
+
+.modal {
+  background: linear-gradient(135deg, #333, #444);
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  color: #ffdd00;
+  width: 80%;
+  max-width: 300px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
+}
+
+.modal-title {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #ffdd00;
+}
+
+.modal-result {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.modal-message {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.modal-close-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #ffdd00;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.modal-close-button:hover {
+  background-color: #ffc107;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
