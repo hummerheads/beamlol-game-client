@@ -22,11 +22,11 @@ FROM nginx:alpine
 # Copy the build output to Nginx's html directory
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Expose port 8080 to serve the app
-EXPOSE 8080
+# Expose the new port (e.g., 8081)
+EXPOSE 8081
 
-# Update Nginx configuration to listen on port 8080
-RUN sed -i 's/listen       80;/listen       8080;/' /etc/nginx/conf.d/default.conf
+# Update Nginx configuration to listen on the new port
+RUN sed -i 's/listen       80;/listen       8081;/' /etc/nginx/conf.d/default.conf
 
 # Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
