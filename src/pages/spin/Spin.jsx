@@ -76,13 +76,13 @@ const Spin = () => {
   
         if (Object.keys(updateData).length > 0) {
           try {
-            const response = await fetch(`https://beamlol-server.onrender.com/allusers`, {
+            const response = await fetch(`https://beamlol-server.onrender.com/allusers/${userId}`, {
               method: 'PATCH',
               headers: {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
-                telegram_ID: userId, // Replace with actual user ID
+                telegram_ID: userId, 
                 ...updateData,
               }),
             });
@@ -100,6 +100,7 @@ const Spin = () => {
       }, 500); // 1 second delay for viewing result on reels
     }, 500); // Spin duration adjusted for slower spin effect
   };
+  
   
 
   return (
