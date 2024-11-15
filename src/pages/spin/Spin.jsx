@@ -26,6 +26,9 @@ const Spin = () => {
 
   const reelRefs = [useRef(null), useRef(null), useRef(null)];
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const userId = urlParams.get("user_id");
+
   const handleSpin = async () => {
     if (spinning) return;
     setSpinning(true);
@@ -73,13 +76,13 @@ const Spin = () => {
   
         if (Object.keys(updateData).length > 0) {
           try {
-            const response = await fetch(`https://beamlol-server.onrender.com/api/update-user`, {
+            const response = await fetch(`https://beamlol-server.onrender.com/allusers`, {
               method: 'PATCH',
               headers: {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
-                telegram_ID: "user_telegram_id", // Replace with actual user ID
+                telegram_ID: userId, // Replace with actual user ID
                 ...updateData,
               }),
             });
