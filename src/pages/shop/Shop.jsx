@@ -10,7 +10,7 @@ const modalData = [
     price_STAR: 30,
     price_TON: 0.5,
     description:
-      "Copy the Wallet Address and send 20 Pi. Submit your Transaction hash ID below.",
+      "Copy the Wallet Address and send 5 Pi. Submit your Transaction hash ID below.",
     walletAddress: "GAJS3BIZH7IB55IRFMPR45KTLJQIEDDQRZSHBODD6ARGWXNH6MS2EXWN",
     spins: 500,
   },
@@ -21,7 +21,7 @@ const modalData = [
     price_STAR: 3,
     price_TON: 1,
     description:
-      "Copy the Wallet Address and send 1 Pi. Submit your Transaction hash ID below.",
+      "Copy the Wallet Address and send 10 Pi. Submit your Transaction hash ID below.",
     walletAddress: "GAJS3BIZH7IB55IRFMPR45KTLJQIEDDQRZSHBODD6ARGWXNH6MS2EXWN",
     spins: 1500,
   },
@@ -32,7 +32,7 @@ const modalData = [
     price_STAR: 3,
     price_TON: 3,
     description:
-      "Copy the Wallet Address and send 8.5 Pi. Submit your Transaction hash ID below.",
+      "Copy the Wallet Address and send 30 Pi. Submit your Transaction hash ID below.",
     walletAddress: "GAJS3BIZH7IB55IRFMPR45KTLJQIEDDQRZSHBODD6ARGWXNH6MS2EXWN",
     spins: 6000,
   },
@@ -44,7 +44,7 @@ const modalData = [
     price_TON: 5,
     price: 45,
     description:
-      "Copy the Wallet Address and send 45 Pi. Submit your Transaction hash ID below.",
+      "Copy the Wallet Address and send 50 Pi. Submit your Transaction hash ID below.",
     walletAddress: "GAJS3BIZH7IB55IRFMPR45KTLJQIEDDQRZSHBODD6ARGWXNH6MS2EXWN",
     spins: 15000,
   },
@@ -77,9 +77,9 @@ const Shop = () => {
       return;
     }
 
-    toast.success("🦄 Transaction submitted successfully!", {
+    toast.success("🦄 Transaction Hash submitted successfully! Please wait for 24 hours to get manual confirmation by our Team. Once your payment is confirmed, your assets will automatically be added into your account.", {
       position: "top-center",
-      autoClose: 2000,
+      autoClose: 5000,
       theme: "light",
       transition: Bounce,
     });
@@ -152,7 +152,7 @@ const Shop = () => {
 
       <dialog
         id="my_modal_1"
-        className="modal backdrop:bg-black/50 rounded-lg shadow-2xl p-4"
+        className="modal backdrop:bg-black/50 rounded-lg shadow-2xl p-4 w-full"
       >
         <div className="modal-box bg-white rounded-lg p-6 shadow-lg border border-gray-300">
           {/* Modal Header */}
@@ -168,7 +168,7 @@ const Shop = () => {
             <Clipboard.WithIconText valueToCopy="GAJS3BIZH7IB55IRFMPR45KTLJQIEDDQRZSHBODD6ARGWXNH6MS2EXWN" />
           </div>
           <h3 className="font-bold text-md text-justify text-gray-800 my-4">
-            Copy the above Wallet Address and send 8.5 Pi. Submit your
+            Copy the above Wallet Address and send 50 Pi. Submit your
             Transaction hash ID below.
           </h3>
           <TextInput
@@ -278,7 +278,7 @@ const Shop = () => {
         </Modal.Body>
       </Modal>
       <div className="font-bold w-11/12 mx-auto rounded-md p-2 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
-        <p className="text-[#201b1b] text-xl">NFT&apos;s Coming Soon</p>
+        <p className="text-[#201b1b] text-xl">NFT&apos;s </p>
       </div>
       <div className="mx-auto flex gap-5 my-5">
         <div className="1/2">
