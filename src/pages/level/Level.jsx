@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
 import { useQueryClient } from "@tanstack/react-query";
+import { NavLink } from "react-router-dom";
 
 const Level = () => {
   const { level, perk, total_energy, telegram_ID } = useUser();
@@ -10,82 +11,80 @@ const Level = () => {
     {
       id: 1,
       title: 1,
-      details: 5000,
-      perkImg: "/level/energy.svg",
+      details: 10000,
       crownImg: "/level/crown.svg",
-      perks_needed: 565,
+      perks_needed: 200,
     },
     {
       id: 2,
       title: 2,
-      details: 7000,
-      perkImg: "/level/energy.svg",
+      details: 50000,
       crownImg: "/level/crown.svg",
-      perks_needed: 565,
+      perks_needed: 400,
     },
     {
       id: 3,
       title: 3,
-      details: 7000,
+      details: 500000,
       perkImg: "/level/energy.svg",
       crownImg: "/level/crown.svg",
-      perks_needed: 565,
+      perks_needed: 800,
     },
     {
       id: 4,
       title: 4,
-      details: 7000,
+      details: 2000000,
       perkImg: "/level/energy.svg",
       crownImg: "/level/crown.svg",
-      perks_needed: 565,
+      perks_needed: 1600,
     },
     {
       id: 5,
       title: 5,
-      details: 7000,
+      details: 10000000,
       perkImg: "/level/energy.svg",
       crownImg: "/level/crown.svg",
-      perks_needed: 565,
+      perks_needed: 5000,
     },
     {
       id: 6,
       title: 6,
-      details: 10000,
+      details: 25000000,
       perkImg: "/level/energy.svg",
       crownImg: "/level/crown.svg",
-      perks_needed: 565,
+      perks_needed: 10000,
     },
     {
       id: 7,
       title: 7,
-      details: 20000,
+      details: 50000000,
       perkImg: "/level/energy.svg",
       crownImg: "/level/crown.svg",
-      perks_needed: 565,
+      perks_needed: 20000,
     },
     {
       id: 8,
       title: 8,
-      details: 30000,
+      details: 100000000,
       perkImg: "/level/energy.svg",
       crownImg: "/level/crown.svg",
-      perks_needed: 565,
+      perks_needed: 40000,
     },
     {
       id: 9,
       title: 9,
-      details: 50000,
+      details: 200000000,
       perkImg: "/level/energy.svg",
       crownImg: "/level/crown.svg",
-      perks_needed: 565,
+      perks_needed: 80000,
     },
     {
       id: 10,
       title: 10,
-      details: 70000,
+      details: 5000000000,
       perkImg: "/level/energy.svg",
       crownImg: "/level/crown.svg",
-      perks_needed: 565,
+      perks_needed: 160000,
     },
     // Add more levels as needed
   ];
@@ -152,16 +151,15 @@ const Level = () => {
       className="bg-[#000]"
       style={{ height: "calc(100vh - 132px)", overflow: "auto" }}
     >
-      {/* <Topbar perk={userPerk} /> */}
       <div
-        className="flex justify-center items-center gap-2 mx-16 py-2 rounded-xl"
+        className="flex justify-center items-center gap-2 mx-16 py-5 mt-2 rounded-xl"
         style={{
           background:
             "linear-gradient(180deg, rgba(204, 232, 254, 0.20) 0%, rgba(205, 160, 255, 0.20) 50%, rgba(132, 137, 245, 0.20) 75%, rgba(205, 241, 255, 0.20) 87.5%, rgba(181, 145, 233, 0.20) 100%)",
         }}
       >
         <img src="/level/tick.svg" alt="" />
-        <p className="text-white font-bold pt-5">Upgrade Level</p>
+        <p className="text-white font-bold">Upgrade Level</p>
         <img src="/level/arrow.svg" alt="" />
       </div>
       <div
@@ -171,47 +169,29 @@ const Level = () => {
             "linear-gradient(180deg, rgba(184, 212, 234, 0.30) 0%, rgba(185, 140, 235, 0.30) 50%, rgba(112, 117, 225, 0.30) 75%, rgba(185, 221, 235, 0.30) 87.5%, rgba(161, 125, 213, 0.30) 100%)",
         }}
       >
-        <div className="grid grid-cols-2 gap-3 my-2 pb-0 p-4  justify-around">
-          <div
-            className="flex rounded-lg items-center gap-2 p-2 justify-around"
-            style={{
-              background:
-                "linear-gradient(180deg, rgba(204, 232, 254, 0.20) 0%, rgba(205, 160, 255, 0.20) 50%, rgba(132, 137, 245, 0.20) 75%, rgba(205, 241, 255, 0.20) 87.5%, rgba(181, 145, 233, 0.20) 100%)",
-            }}
-          >
-            <img
-              className="rounded-full w-8 h-8"
-              src="/level/balance.gif"
-              alt=""
-            />
-            <div className="">
-              <p className="text-white font-bold">50,000 </p>
-              <p className="text-white">Coin prize</p>
-            </div>
-          </div>
-          <div
-            className="flex rounded-lg items-center gap-2 p-2 justify-around"
-            style={{
-              background:
-                "linear-gradient(180deg, rgba(204, 232, 254, 0.20) 0%, rgba(205, 160, 255, 0.20) 50%, rgba(132, 137, 245, 0.20) 75%, rgba(205, 241, 255, 0.20) 87.5%, rgba(181, 145, 233, 0.20) 100%)",
-            }}
-          >
-            <img
-              className="rounded-full w-8 h-8"
-              src="/level/energy.svg"
-              alt=""
-            />
-            <div className="">
-              <p className="text-white font-bold">{totalEnergy} </p>
-              <p className="text-white">Level {userLevel} Health</p>
-            </div>
+        <div
+          className="flex rounded-lg items-center gap-2 p-2 justify-center my-2"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(204, 232, 254, 0.20) 0%, rgba(205, 160, 255, 0.20) 50%, rgba(132, 137, 245, 0.20) 75%, rgba(205, 241, 255, 0.20) 87.5%, rgba(181, 145, 233, 0.20) 100%)",
+          }}
+        >
+          <img
+            className="rounded-full w-8 h-8"
+            src="/level/balance.gif"
+            alt=""
+          />
+          <div className="">
+            <p className="text-white text-2xl">Coin prize</p>
           </div>
         </div>
-        <div className="rounded-lg border border-gray-200 bg-gradient-to-b from-yellow-800 to-yellow-200 shadow-inner">
-          <p className="text-[#4E341B] font-black text-xl py-4 text-center">
-            Continue Playing
-          </p>
-        </div>
+        <NavLink to="/">
+          <div className="rounded-lg border border-gray-200 bg-gradient-to-b from-yellow-800 to-yellow-200 shadow-inner">
+            <p className="text-[#4E341B] font-black text-xl py-4 text-center">
+              Continue Playing
+            </p>
+          </div>
+        </NavLink>
       </div>
       <div
         className="mx-4 rounded-xl "
@@ -256,7 +236,7 @@ const Level = () => {
                 <div className="flex justify-center gap-2">
                   <img
                     className="rounded-full w-8 h-8"
-                    src="/level/energy.svg"
+                    src="/level/balance.gif"
                     alt=""
                   />
                   <p className="text-white font-bold text-center mb-3">

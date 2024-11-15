@@ -38,20 +38,20 @@ const Premium = () => {
 
       setStatus("Payment sent successfully!");
 
-      const response = await fetch(
-        `https://beamlol-server.onrender.com/allusers/${telegram_ID}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            balanceIncrement: 1000000,
-            spinIncrement: 500,
-            premium: "yes",
-          }),
-        }
-      );
+         // Send a request to the backend to unlock premium features
+         const response = await fetch(
+          `https://beamlol-server.onrender.com/premium/${telegram_ID}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              increment_balance: 10000000,  // Example energy value
+              increment_spin: 1000,     // Price paid for premium
+            }),
+          }
+        );
 
       if (response.ok) {
         const data = await response.json();
@@ -143,13 +143,13 @@ const Premium = () => {
             <button className="text-base font-bold rounded-md p-4 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center shadow-lg transform hover:scale-105 transition-all duration-300">
               <div className="flex items-center">
                 <img className="w-10" src="/icons/booster.png" alt="" />
-                <p> 10,00,000</p>
+                <p> 1,00,00,000</p>
               </div>
             </button>
             <button className="text-base font-bold rounded-md p-4 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center shadow-lg transform hover:scale-105 transition-all duration-300">
               <div className="flex items-center">
                 <img className="w-10" src="icons/spin.png" alt="" />
-                <p> 500 Spins</p>
+                <p> 1000 Spins</p>
               </div>
             </button>
             <button className="text-base font-bold rounded-md p-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center shadow-lg transform hover:scale-105 transition-all duration-300">

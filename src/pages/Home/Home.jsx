@@ -1,4 +1,4 @@
-//Home.jsx
+// Home.jsx
 import { useEffect, useState, useCallback } from "react";
 import { Drawer } from "flowbite-react";
 import { NavLink } from "react-router-dom";
@@ -8,9 +8,6 @@ import { TonConnectButton } from "@tonconnect/ui-react";
 import { FaCoins } from "react-icons/fa";
 
 const Home = () => {
-
-  // Home.jsx
-
   const context = useUser();
   console.log("Context in Home:", context);
 
@@ -22,52 +19,51 @@ const Home = () => {
     tap_power,
     refetchUserData,
     updateUserData,
+    
   } = context;
-
-  console.log("updateUserData:", updateUserData);
-  console.log("refetchUserData:", refetchUserData);
-
-  // ... rest of your component
-
-
 
   const [isOpen, setIsOpen] = useState(false);
   const [status, setStatus] = useState("");
   const { sender, connected } = useTonConnect();
   const [taps, setTaps] = useState([]);
 
+  useEffect(() => {
+    // Ensure the component has the correct telegram_ID
+    console.log("Telegram User ID:", telegram_ID);
+  }, [telegram_ID]); // This ensures we log the telegram_ID when it's available
+
   const handleTap = useCallback(async (e) => {
     if (!e || !e.currentTarget) return;
-    
+
     if (available_energy < (tap_power || 1)) {
       alert("Not enough energy to tap!");
       return;
     }
-  
+
     if (!telegram_ID) {
       alert("User ID is missing. Please log in again.");
       return;
     }
-  
+
     const rect = e.currentTarget.getBoundingClientRect();
     const tapX = e.clientX - rect.left;
     const tapY = e.clientY - rect.top;
-  
+
     const newTap = {
       id: Date.now(),
       x: tapX,
       y: tapY,
     };
-  
+
     setTaps((prevTaps) => [...prevTaps, newTap]);
-  
+
     const newEnergy = available_energy - (tap_power || 1);
-    
+
     // Update local state first
     updateUserData({
-      available_energy: newEnergy
+      available_energy: newEnergy,
     });
-  
+
     try {
       const response = await fetch(
         `https://beamlol-server.onrender.com/allusers/${telegram_ID}`,
@@ -80,23 +76,22 @@ const Home = () => {
           }),
         }
       );
-  
+
       if (!response.ok) {
         // Revert the change if the server request fails
         updateUserData({
-          available_energy: available_energy
+          available_energy: available_energy,
         });
         console.error("Failed to process tap.");
       }
     } catch (error) {
       // Revert the change if there's an error
       updateUserData({
-        available_energy: available_energy
+        available_energy: available_energy,
       });
       console.error("Error during tap action:", error);
     }
   }, [available_energy, tap_power, telegram_ID, updateUserData]);
-  
   const handleClose = useCallback(() => {
     setIsOpen(false);
   }, []);
@@ -159,7 +154,7 @@ const Home = () => {
   useEffect(() => {
     const resetEnergy = async () => {
       if (!telegram_ID) return;
-      
+
       try {
         await fetch(
           `https://beamlol-server.onrender.com/reset-energy/${telegram_ID}`,
@@ -202,13 +197,13 @@ const Home = () => {
       className="bg-[url('/bggif1.gif')] flex flex-col items-center px-2 bg-gray-700 pt-5"
       style={{ height: "calc(100vh - 132px)", overflow: "auto" }}
     >
-      <div className="flex gap-3 font-heading-aldrich tracking-wider w-11/12 mb-5">
-        {["Giveaways", "Leaderboard", "Level"].map((label, index) => (
+      <div className="flex gap-6 font-heading-aldrich tracking-wider w-11/12 mb-5">
+        {["Giveaways", "Level"].map((label, index) => (
           <div
             key={index}
             className="w-full py-2 rounded-xl text-center bg-gray-700 hover:from-[#2b6cb0] hover:to-[#63b3ed] transform hover:scale-105 transition-all duration-300 shadow-lg"
           >
-            <span className="font-semibold text-xs block mb-1">{label}</span>
+            <span className=" text-xs font-bold text-white block mb-1">{label}</span>
             <span className="block text-white text-lg font-bold drop-shadow-md">
               {index === 1 ? (
                 "1st"
@@ -301,12 +296,12 @@ const Home = () => {
       </div>
 
       <style>
-        {`
-          @keyframes fadeUp {
+        {
+          `@keyframes fadeUp {
             0% { opacity: 1; transform: translateY(0); }
             100% { opacity: 0; transform: translateY(-80px); }
-          }
-        `}
+          }`
+        }
       </style>
 
       <Drawer

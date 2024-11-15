@@ -6,9 +6,9 @@ const modalData = [
   {
     id: 1,
     title: "Send Pi",
-    price_PI: 20,
+    price_PI: 5,
     price_STAR: 30,
-    price_TON: 2,
+    price_TON: 0.5,
     description:
       "Copy the Wallet Address and send 20 Pi. Submit your Transaction hash ID below.",
     walletAddress: "GAJS3BIZH7IB55IRFMPR45KTLJQIEDDQRZSHBODD6ARGWXNH6MS2EXWN",
@@ -17,36 +17,36 @@ const modalData = [
   {
     id: 2,
     title: "Send Pi",
-    price_PI: 1,
+    price_PI: 10,
     price_STAR: 3,
-    price_TON: 20,
+    price_TON: 1,
     description:
       "Copy the Wallet Address and send 1 Pi. Submit your Transaction hash ID below.",
     walletAddress: "GAJS3BIZH7IB55IRFMPR45KTLJQIEDDQRZSHBODD6ARGWXNH6MS2EXWN",
-    spins: 500,
+    spins: 1500,
   },
   {
     id: 3,
     title: "Send Pi",
-    price_PI: 1,
+    price_PI: 30,
     price_STAR: 3,
-    price_TON: 20,
+    price_TON: 3,
     description:
       "Copy the Wallet Address and send 8.5 Pi. Submit your Transaction hash ID below.",
     walletAddress: "GAJS3BIZH7IB55IRFMPR45KTLJQIEDDQRZSHBODD6ARGWXNH6MS2EXWN",
-    spins: 500,
+    spins: 6000,
   },
   {
     id: 4,
     title: "Send Pi",
-    price_PI: 20,
+    price_PI: 50,
     price_STAR: 30,
-    price_TON: 2,
+    price_TON: 5,
     price: 45,
     description:
       "Copy the Wallet Address and send 45 Pi. Submit your Transaction hash ID below.",
     walletAddress: "GAJS3BIZH7IB55IRFMPR45KTLJQIEDDQRZSHBODD6ARGWXNH6MS2EXWN",
-    spins: 500,
+    spins: 15000,
   },
 ];
 
@@ -85,7 +85,6 @@ const Shop = () => {
     });
     onCloseModal();
     document.getElementById("my_modal_1").close();
-
   };
 
   return (
@@ -116,7 +115,7 @@ const Shop = () => {
           </div>
           <div>
             <img className="w-12" src="/shop/bosta.svg" alt="" />
-            <h1 className="text-white text-center text-2xl font-bold">1M</h1>
+            <h1 className="text-white text-center text-2xl font-bold">10M</h1>
           </div>
           <div>
             <img src="/shop/add.svg" alt="" />
@@ -129,23 +128,23 @@ const Shop = () => {
           </div>
         </div>
         <div>
-          <div className="p-1 rounded-b-xl gap-1 shadow-md flex items-center justify-center border border-[rgba(255,255,255,0.53)] bg-gradient-to-b from-[rgba(204,232,254,0.4)] via-[rgba(205,160,255,0.4)] to-[rgba(181,145,233,0.4)]">
+          <div className="p-1 rounded-b-xl gap-5 shadow-md flex items-center justify-center border border-[rgba(255,255,255,0.53)] bg-gradient-to-b from-[rgba(204,232,254,0.4)] via-[rgba(205,160,255,0.4)] to-[rgba(181,145,233,0.4)]">
             {/* Left Button - Opens Modal */}
             <div
-              className="flex items-center gap-1 rounded-lg shadow-xl bg-gray-400 py-1 px-1 cursor-pointer"
+              className="flex items-center gap-2 px-2 rounded-lg shadow-xl bg-gray-400 py-1  cursor-pointer"
               onClick={() => document.getElementById("my_modal_1").showModal()}
             >
               <img className="w-5 h-5" src="/shop/pi.svg" alt="Pi" />
-              <p className="text-black text-xs"></p>
+              <p className="text-black text-xs">50</p>
             </div>
             {/* Middle and Right Buttons - Keep as is */}
-            <div className="flex items-center gap-1 rounded-lg shadow-xl bg-gray-400 py-1 px-1">
+            <div className="hidden flex items-center gap-1 rounded-lg shadow-xl bg-gray-400 py-1 px-1">
               <img className="w-5 h-5" src="/shop/star.svg" alt="Star" />
               <p className="text-black text-xs"></p>
             </div>
-            <div className="flex items-center gap-1 rounded-lg shadow-xl bg-gray-400 py-1 px-1">
+            <div className="flex  gap-2 px-2 items-center gap-1 rounded-lg shadow-xl bg-gray-400 py-1 px-1">
               <img className="w-5 h-5" src="/shop/ton.svg" alt="Ton" />
-              <p className="text-black text-xs"></p>
+              <p className="text-black text-xs">5</p>
             </div>
           </div>
         </div>
@@ -180,9 +179,7 @@ const Shop = () => {
             required
           />
           <div className="w-full mx-auto my-2">
-            <Button  className="mx-auto">
-              Submit
-            </Button>
+            <Button className="mx-auto">Submit</Button>
           </div>
 
           {/* Modal Action (Close Button) */}
@@ -209,21 +206,21 @@ const Shop = () => {
               />
               <p className="text-center text-white">{item.spins} </p>
             </div>
-            <div className="p-1 rounded-b-xl gap-1 shadow-md flex items-center justify-center border border-[rgba(255,255,255,0.53)] bg-gradient-to-b from-[rgba(204,232,254,0.4)] via-[rgba(205,160,255,0.4)] to-[rgba(181,145,233,0.4)]">
+            <div className="p-1 rounded-b-xl gap-2 shadow-md flex items-center justify-center border border-[rgba(255,255,255,0.53)] bg-gradient-to-b from-[rgba(204,232,254,0.4)] via-[rgba(205,160,255,0.4)] to-[rgba(181,145,233,0.4)]">
               {/* Left Button - Opens Modal */}
               <div
-                className="flex items-center gap-1 rounded-lg shadow-xl bg-gray-400 py-1 px-1 cursor-pointer"
+                className="flex items-center gap-2 px-2 rounded-lg shadow-xl bg-gray-400 py-1  cursor-pointer"
                 onClick={() => handleLeftButtonClick(item)}
               >
                 <img className="w-5 h-5" src="/shop/pi.svg" alt="Pi" />
                 <p className="text-black text-xs">{item.price_PI}</p>
               </div>
               {/* Middle and Right Buttons - Keep as is */}
-              <div className="flex items-center gap-1 rounded-lg shadow-xl bg-gray-400 py-1 px-1">
+              <div className=" hidden flex items-center gap-1 rounded-lg shadow-xl bg-gray-400 py-1 px-1">
                 <img className="w-5 h-5" src="/shop/star.svg" alt="Star" />
                 <p className="text-black text-xs">{item.price_STAR}</p>
               </div>
-              <div className="flex items-center gap-1 rounded-lg shadow-xl bg-gray-400 py-1 px-1">
+              <div className="flex items-center gap-2 px-2 rounded-lg shadow-xl bg-gray-400 py-1 ">
                 <img className="w-5 h-5" src="/shop/ton.svg" alt="Ton" />
                 <p className="text-black text-xs">{item.price_TON}</p>
               </div>
@@ -271,7 +268,9 @@ const Shop = () => {
                   />
                 </div>
                 <div className="w-full mx-auto">
-                  <Button onClick={handleSubmit} className="mx-auto">Submit</Button>
+                  <Button onClick={handleSubmit} className="mx-auto">
+                    Submit
+                  </Button>
                 </div>
               </div>
             </div>
@@ -279,8 +278,42 @@ const Shop = () => {
         </Modal.Body>
       </Modal>
       <div className="font-bold w-11/12 mx-auto rounded-md p-2 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
-          <p className="text-[#201b1b] text-xl">NFT&apos;s Coming Soon</p>
+        <p className="text-[#201b1b] text-xl">NFT&apos;s Coming Soon</p>
+      </div>
+      <div className="mx-auto flex gap-5 my-5">
+        <div className="1/2">
+          <img className="w-full" src="/nft/nft1.png" alt="" />
+          <div className=" bg-gray-800 bg-opacity-90 text-white rounded-b-xl shadow-2xl">
+            <p className="text-white text-center py-2">1 NFT(Random) </p>
+            <div className="flex justify-center gap-5 py-2">
+              <div className="flex items-center gap-2 px-2 rounded-lg shadow-xl bg-gray-400 py-1">
+                <img className="w-5 h-5" src="/shop/pi.svg" alt="Pi" />
+                <p className="text-black">5</p>
+              </div>
+              <div className="flex bg-gray-400 p-1 rounded-lg items-center gap-2">
+                <img className="w-5 h-5" src="/shop/ton.svg" alt="Pi" />
+                <p className="text-black text-md">0.5</p>
+              </div>
+            </div>
+          </div>
         </div>
+        <div className="1/2">
+          <img className="w-full" src="/nft/nft2.png" alt="" />
+          <div className=" bg-gray-800 bg-opacity-90 text-white rounded-b-xl shadow-2xl">
+            <p className="text-white text-center py-2">7 NFT (Random)</p>
+            <div className="flex justify-center gap-5 py-2">
+              <div className="flex items-center gap-2 px-2 rounded-lg shadow-xl bg-gray-400 py-1">
+                <img className="w-5 h-5" src="/shop/pi.svg" alt="Pi" />
+                <p className="text-black">30</p>
+              </div>
+              <div className="flex bg-gray-400 p-1 rounded-lg items-center gap-2">
+                <img className="w-5 h-5" src="/shop/ton.svg" alt="Pi" />
+                <p className="text-black text-md">3</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

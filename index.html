@@ -1,76 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/balance.gif" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="./src/index.css" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
+<head>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/balance.gif" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="./src/index.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+  <title>BeamLOL</title>
+  <script>
+    if (window.Telegram && window.Telegram.WebApp) {
+      window.Telegram.WebApp.expand();
 
-    <title>BeamLOL</title>
-    <script>
-      // Check if Telegram Web App API is available
-      if (window.Telegram && window.Telegram.WebApp) {
-        // Automatically expand to full screen when the page loads
-        window.Telegram.WebApp.expand();
+      const urlParams = new URLSearchParams(window.location.search);
+      const userId = urlParams.get("user_id");
+      const source = urlParams.get("source"); // Source is used as referralCode
 
-        // Get user ID from URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const userId = urlParams.get("user_id");
-
-        console.log("User's Telegram ID:", userId); // Log the user ID
-
-        if (!userId) {
-          console.error("User ID is null or undefined");
-        } else {
-          // Send user ID to your server with optional TON address
-          fetch("https://beamlol-server.onrender.com/allusers", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ telegram_ID: userId, ton_address: "" }), // Include empty ton_address
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log("Response from server:", data);
-            })
-            .catch((error) => {
-              console.error("Error adding user:", error);
-            });
-        }
+      if (!userId) {
+        console.error("User ID is null or undefined");
       } else {
-        console.error("Telegram WebApp API is not available");
+        fetch("https://beamlol-server.onrender.com/allusers", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ telegram_ID: userId, ton_address: "", referralCode: source }), // Include referralCode
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Response from server:", data);
+          })
+          .catch((error) => {
+            console.error("Error adding user:", error);
+          });
       }
-    </script>
-    <style>
-      /* src/index.css */
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f0f0f0;
-        color: #333;
-      }
-      .App {
-        text-align: center;
-        padding: 20px;
-      }
-      .montserrat {
-        font-family: "Montserrat", sans-serif;
-        font-optical-sizing: auto;
-      }
-    </style>
-  </head>
-  <body class="flex flex-col montserrat">
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+    } else {
+      console.error("Telegram WebApp API is not available");
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+      color: #333;
+    }
+    .App {
+      text-align: center;
+      padding: 20px;
+    }
+    .montserrat {
+      font-family: "Montserrat", sans-serif;
+      font-optical-sizing: auto;
+    }
+  </style>
+</head>
+<body class="flex flex-col montserrat">
+  <div id="root"></div>
+  <div id="user-info"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
 </html>

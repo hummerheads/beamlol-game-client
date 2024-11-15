@@ -1,5 +1,5 @@
 // UserContext.jsx
-import { createContext, useContext, useState, useCallback, useMemo } from "react";
+import { createContext, useContext, useState, useCallback, useMemo, useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const UserContext = createContext(null);
@@ -15,7 +15,7 @@ export const useUser = () => {
 export const UserProvider = ({ children }) => {
   const queryClient = useQueryClient();
   const userId = new URLSearchParams(window.location.search).get("user_id");
-  
+
   const [userData, setUserData] = useState({
     telegram_ID: "",
     balance: 0,
@@ -24,23 +24,34 @@ export const UserProvider = ({ children }) => {
     spin: 0,
     available_energy: 100,
     total_energy: 100,
-    tap_power: 1
+    tap_power: 1,
+    referralLink: ""
   });
 
   const { data, error, isLoading } = useQuery({
     queryKey: ["userDetails", userId],
     queryFn: async () => {
+      if (!userId) throw new Error("No user ID found.");
       const response = await fetch(`https://beamlol-server.onrender.com/allusers/${userId}`);
       if (!response.ok) throw new Error("Failed to fetch user details");
       return response.json();
     },
-    enabled: !!userId,
+    enabled: !!userId, // Only run if userId exists
     refetchInterval: false,
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
+      if (data) {
+        setUserData(data); // Update user data when fetched successfully
+      }
+    },
+  });
+
+  // Ensure data is correctly set in the context after fetching
+  useEffect(() => {
+    if (data) {
       setUserData(data);
     }
-  });
+  }, [data]);
 
   const updateUserData = useCallback((newData) => {
     setUserData(prevData => ({

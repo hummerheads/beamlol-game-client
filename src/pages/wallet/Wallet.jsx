@@ -1,8 +1,9 @@
 import { Tabs } from "flowbite-react";
 import { HiUserCircle } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
+import { RiNftLine } from "react-icons/ri";
+
 import { TonConnectButton, useTonAddress, useTonWallet } from "@tonconnect/ui-react";
-import Payment from "../../components/Payment";
 const Wallet = () => {
   const tonAddress = useTonAddress();
   const wallet = useTonWallet();
@@ -41,20 +42,28 @@ const Wallet = () => {
             <p className="text-gray-300 mt-4">No wallet connected</p>
           )}
         </div>
-        <Payment></Payment>
+        {/* <Payment></Payment> */}
 
         {/* Tabs Section */}
-        <div className="tabs-container bg-white bg-opacity-10 backdrop-blur-md rounded-xl shadow-lg max-w-lg mx-auto p-6 border border-white border-opacity-20">
+        <div className="flex flex-nowrap tabs-container bg-white bg-opacity-10 backdrop-blur-md rounded-xl shadow-lg max-w-lg mx-auto p-5 border border-white border-opacity-20">
           <Tabs
             aria-label="Wallet Tabs"
             variant="pills"
-            className="rounded-lg"
+            className="rounded-lg w-"
           >
             <Tabs.Item active title="Balances" icon={HiUserCircle}>
               <div className="text-white">
                 <p className="font-medium text-lg mb-2">Your <span className="text-yellow-400">Balances</span> </p>
                 <p className="text-gray-300">
                   View and manage your crypto assets effortlessly.
+                </p>
+              </div>
+            </Tabs.Item>
+            <Tabs.Item title="NFT" icon={RiNftLine}>
+              <div className="text-white">
+                <p className="font-medium text-lg mb-2">Transaction <span className="text-yellow-400">History</span> </p>
+                <p className="text-gray-300">
+                  Track your transaction history, earnings, and expenses.
                 </p>
               </div>
             </Tabs.Item>
