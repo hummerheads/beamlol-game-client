@@ -83,7 +83,7 @@ const Spin = () => {
 
         if (newResult.every((symbol) => symbol === diamondIcon)) {
           message = "You hit the jackpot with coins! Balance increased by 100,000!";
-          updateData.balanceIncrement = 100000;
+          updateData.balanceIncrement = 25000;
         } else if (newResult.every((symbol) => symbol === pickaxeIcon)) {
           message = "You struck gold with Perks! Perk increased by 2!";
           updateData.perkIncrement = 2;
@@ -117,8 +117,8 @@ const Spin = () => {
 
         setMessage(message);
         setShowModal(true);
-      }, 500);
-    }, 1000);
+      }, 1000);
+    }, 500);
   };
 
   return (

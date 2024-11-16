@@ -1,26 +1,11 @@
 import { useUser } from "../../context/UserContext";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Booster = () => {
-  const {
-    telegram_ID,
-    level,
-    available_energy,
-    total_energy,
-    tap_power,
-    balance,
-    refetchUserData,
-  } = useUser();
+  const { telegram_ID, total_energy, tap_power, balance, refetchUserData } =
+    useUser();
   refetchUserData(telegram_ID);
-  console.log(
-    telegram_ID,
-    level,
-    available_energy,
-    total_energy,
-    tap_power,
-    balance
-  );
 
   const boosters = [
     { id: 1, tap: 2, energy: 200, price: 2000 },
@@ -73,10 +58,17 @@ const Booster = () => {
       const data = await response.json();
 
       if (response.ok) {
-        toast.success(
-          `Booster purchased successfully! Tap Power: ${boost.tap}`
-        );
+        // Update the local state after the purchase
         refetchUserData(telegram_ID);
+
+        // Show dynamic toast with updated energy and tap power
+        toast.success(
+          `Booster purchased successfully! You now have ${
+            total_energy + boost.energy
+          } total energy and ${
+            tap_power + boost.tap
+          } tap power. Please Relaunch the game for getting you assests updated.`
+        );
       } else {
         toast.error(
           data.message || "Failed to purchase booster. Please try again."
@@ -93,6 +85,15 @@ const Booster = () => {
       className="bg-[url('/booster/bg.png')] items-center px-2 pt-5"
       style={{ height: "calc(100vh - 132px)", overflow: "auto" }}
     >
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        progress={undefined}
+      />
       <h1 className="text-3xl text-center text-white mb-5">Boosters</h1>
       <div className="grid grid-cols-1 gap-4">
         {boosters.map((boost) => (

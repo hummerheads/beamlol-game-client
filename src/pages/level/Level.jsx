@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
 import { useQueryClient } from "@tanstack/react-query";
 import { NavLink } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Level = () => {
   const { level, perk, total_energy, telegram_ID } = useUser();
@@ -88,6 +90,7 @@ const Level = () => {
     },
     // Add more levels as needed
   ];
+
   const [expandedIds, setExpandedIds] = useState([]);
   const [totalEnergy, setTotalEnergy] = useState(total_energy);
   const [userPerk, setPerk] = useState(perk);
@@ -131,8 +134,31 @@ const Level = () => {
 
       // Trigger re-fetch of user data
       queryClient.invalidateQueries(["userDetails", telegram_ID]);
+
+      // Show toast with updated level and balance
+      toast.success(
+        `Congratulations!! You are now at level ${levelId}. Please Relaunch the game for getting your assets updated.`,
+        {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
     } catch (error) {
       console.error("Failed to update user level and perks:", error);
+      toast.error("Failed to update your level and perks. Please try again.", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
@@ -151,6 +177,16 @@ const Level = () => {
       className="bg-[#000]"
       style={{ height: "calc(100vh - 132px)", overflow: "auto" }}
     >
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        progress={undefined}
+      />
+
       <div
         className="flex justify-center items-center gap-2 mx-16 py-5 mt-2 rounded-xl"
         style={{
@@ -203,7 +239,7 @@ const Level = () => {
         {/* Additional content here */}
       </div>
       {levels
-        .filter((luvul) => luvul.title > level)
+        .filter((luvul) => luvul.title === userLevel + 1) // Display only the next level
         .map((luvul) => (
           <div
             key={luvul.id}
@@ -233,13 +269,13 @@ const Level = () => {
             </div>
             {expandedIds.includes(luvul.id) && (
               <div className="p-4 my-4 border-2 border-blue-100 bg-gradient-to-r from-gray-800 via-gray-600 to-gray-700 bg-opacity-25 items-center">
-                <div className="flex justify-center gap-2">
+                <div className="flex items-center justify-center gap-2 pb-2">
                   <img
                     className="rounded-full w-8 h-8"
                     src="/level/balance.gif"
                     alt=""
                   />
-                  <p className="text-white font-bold text-center mb-3">
+                  <p className="text-white font-bold text-center ">
                     {luvul.details}
                   </p>
                 </div>

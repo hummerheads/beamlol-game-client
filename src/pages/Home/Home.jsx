@@ -34,36 +34,36 @@ const Home = () => {
 
   const handleTap = useCallback(async (e) => {
     if (!e || !e.currentTarget) return;
-
+  
     if (available_energy < (tap_power || 1)) {
       alert("Not enough energy to tap!");
       return;
     }
-
+  
     if (!telegram_ID) {
       alert("User ID is missing. Please log in again.");
       return;
     }
-
+  
     const rect = e.currentTarget.getBoundingClientRect();
     const tapX = e.clientX - rect.left;
     const tapY = e.clientY - rect.top;
-
+  
     const newTap = {
       id: Date.now(),
       x: tapX,
       y: tapY,
     };
-
+  
     setTaps((prevTaps) => [...prevTaps, newTap]);
-
+  
     const newEnergy = available_energy - (tap_power || 1);
-
+  
     // Update local state first
     updateUserData({
       available_energy: newEnergy,
     });
-
+  
     try {
       const response = await fetch(
         `https://beamlol-server.onrender.com/allusers/${telegram_ID}`,
@@ -72,11 +72,11 @@ const Home = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             balanceIncrement: tap_power || 1,
-            available_energy_decrement: tap_power || 1,
+            available_energy_decrement: tap_power || 1, // Make sure this matches backend logic
           }),
         }
       );
-
+  
       if (!response.ok) {
         // Revert the change if the server request fails
         updateUserData({
@@ -92,6 +92,7 @@ const Home = () => {
       console.error("Error during tap action:", error);
     }
   }, [available_energy, tap_power, telegram_ID, updateUserData]);
+  
   const handleClose = useCallback(() => {
     setIsOpen(false);
   }, []);
@@ -199,21 +200,25 @@ const Home = () => {
     >
       <div className="flex gap-6 font-heading-aldrich tracking-wider w-11/12 mb-5">
         {["Giveaways", "Level"].map((label, index) => (
-          <div
+          <NavLink
+          to={label === "Level" ? "/level" : ""}
             key={index}
             className="w-full py-2 rounded-xl text-center bg-gray-700 hover:from-[#2b6cb0] hover:to-[#63b3ed] transform hover:scale-105 transition-all duration-300 shadow-lg"
           >
             <span className=" text-xs font-bold text-white block mb-1">{label}</span>
             <span className="block text-white text-lg font-bold drop-shadow-md">
               {index === 1 ? (
-                "1st"
+                `${level}`
               ) : index === 2 ? (
                 `${level}`
               ) : (
+              <div className="flex justify-center gap-2 items-center">
                 <FaCoins className="inline text-yellow-400" />
+                <p>Coming Soon</p>
+              </div>
               )}
             </span>
-          </div>
+          </NavLink>
         ))}
       </div>
 

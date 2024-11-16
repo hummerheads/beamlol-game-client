@@ -118,7 +118,7 @@ const Shop = () => {
       });
 
       if (response.ok) {
-        toast.success("Transaction Hash submitted successfully!", {
+        toast.success("Transaction Hash submitted successfully! Please wait for our representative to check your transaction. Thank You", {
           position: "top-center",
           autoClose: 5000,
           theme: "light",

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useUserData } from "../../hooks/useUserData";
+import { NavLink } from "react-router-dom";
 
 const Topbar = () => {
   const [telegramID, setTelegramID] = useState(null);
@@ -74,7 +75,10 @@ const Topbar = () => {
       <div className="group px-4 py-2 flex gap-2 items-center text-base font-semibold rounded-lg  bg-yellow-400 to-white text-center transition-all transform hover:scale-105 duration-200 glow-effect">
         <img className="w-8 rounded-full drop-shadow-md group-hover:animate-bounce" src="/icons/spin.png" alt="Spin Icon" />
         <p className="text-[#555555] text-xs font-bold font-heading-aldrich">{spin}</p>
+        <NavLink to="/shop">
         <img className="w-4 rounded-full ml-1 drop-shadow-md" src="/icons/plus.svg" alt="Add Icon" />
+
+        </NavLink>
       </div>
     </div>
   );
