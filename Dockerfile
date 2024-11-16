@@ -4,7 +4,7 @@ FROM node:18 AS build
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy package.json and package-lock.json (or yarn.lock)
 COPY package*.json ./
 
 # Install dependencies
