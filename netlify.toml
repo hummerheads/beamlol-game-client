@@ -2,4 +2,4 @@
   force = true
   from = "/tonconnect-manifest.json"
   status = 200
-  to = "https://astounding-licorice-1ef290.netlify.app/tonconnect-manifest.json"
+  to = "https://server.beamlol.club/tonconnect-manifest.json"

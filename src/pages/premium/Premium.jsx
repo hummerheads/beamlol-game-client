@@ -40,7 +40,7 @@ const Premium = () => {
 
          // Send a request to the backend to unlock premium features
          const response = await fetch(
-          `https://beamlol-server.onrender.com/premium/${telegram_ID}`,
+          `https://pcooogcck4k8kkksk4s80g8k.92.112.181.229.sslip.io/premium/${telegram_ID}`,
           {
             method: "PATCH",
             headers: {

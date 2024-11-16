@@ -66,7 +66,7 @@ const Home = () => {
   
     try {
       const response = await fetch(
-        `https://beamlol-server.onrender.com/allusers/${telegram_ID}`,
+        `https://pcooogcck4k8kkksk4s80g8k.92.112.181.229.sslip.io/allusers/${telegram_ID}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -122,7 +122,7 @@ const Home = () => {
       setStatus("Payment sent successfully!");
 
       const response = await fetch(
-        `https://beamlol-server.onrender.com/${telegram_ID}`,
+        `https://pcooogcck4k8kkksk4s80g8k.92.112.181.229.sslip.io/${telegram_ID}`,
         {
           method: "PATCH",
           headers: {
@@ -158,7 +158,7 @@ const Home = () => {
 
       try {
         await fetch(
-          `https://beamlol-server.onrender.com/reset-energy/${telegram_ID}`,
+          `https://pcooogcck4k8kkksk4s80g8k.92.112.181.229.sslip.io/reset-energy/${telegram_ID}`,
           {
             method: "PATCH",
           }

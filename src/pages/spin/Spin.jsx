@@ -30,7 +30,7 @@ const Spin = () => {
   // Fetch user data
   const fetchUserData = async () => {
     try {
-      const response = await fetch(`https://beamlol-server.onrender.com/allusers/${telegram_ID}`);
+      const response = await fetch(`https://pcooogcck4k8kkksk4s80g8k.92.112.181.229.sslip.io/allusers/${telegram_ID}`);
       if (!response.ok) {
         throw new Error("Failed to fetch user data");
       }
@@ -95,7 +95,7 @@ const Spin = () => {
         }
 
         try {
-          const response = await fetch(`https://beamlol-server.onrender.com/allusers/${telegram_ID}`, {
+          const response = await fetch(`https://pcooogcck4k8kkksk4s80g8k.92.112.181.229.sslip.io/allusers/${telegram_ID}`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",

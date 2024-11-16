@@ -32,7 +32,7 @@ export const UserProvider = ({ children }) => {
     queryKey: ["userDetails", userId],
     queryFn: async () => {
       if (!userId) throw new Error("No user ID found.");
-      const response = await fetch(`https://beamlol-server.onrender.com/allusers/${userId}`);
+      const response = await fetch(`https://pcooogcck4k8kkksk4s80g8k.92.112.181.229.sslip.io/allusers/${userId}`);
       if (!response.ok) throw new Error("Failed to fetch user details");
       return response.json();
     },

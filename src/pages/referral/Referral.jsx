@@ -17,7 +17,7 @@ const Referral = () => {
   useEffect(() => {
     const fetchReferredUsers = async () => {
       try {
-        const response = await fetch("https://beamlol-server.onrender.com/allusers");
+        const response = await fetch("https://pcooogcck4k8kkksk4s80g8k.92.112.181.229.sslip.io/allusers");
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);
         }

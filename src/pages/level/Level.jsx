@@ -108,7 +108,7 @@ const Level = () => {
     const selectedLevel = levels.find((l) => l.id === levelId);
     try {
       const response = await fetch(
-        `https://beamlol-server.onrender.com/allusers/update/${telegram_ID}`,
+        `https://pcooogcck4k8kkksk4s80g8k.92.112.181.229.sslip.io/allusers/update/${telegram_ID}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

@@ -45,7 +45,7 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <TonConnectUIProvider manifestUrl="https://astounding-licorice-1ef290.netlify.app/tonconnect-manifest.json">
+    <TonConnectUIProvider manifestUrl="https://server.beamlol.club/tonconnect-manifest.json">
       <QueryClientProvider client={queryClient}>
         <UserProvider>
           <WalletProvider>

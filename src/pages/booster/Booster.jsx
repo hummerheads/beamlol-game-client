@@ -43,7 +43,7 @@ const Booster = () => {
 
     try {
       const response = await fetch(
-        `https://beamlol-server.onrender.com/purchase-booster/${telegram_ID}`,
+        `https://pcooogcck4k8kkksk4s80g8k.92.112.181.229.sslip.io/purchase-booster/${telegram_ID}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },

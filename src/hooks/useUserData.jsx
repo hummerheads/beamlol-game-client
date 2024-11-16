@@ -7,7 +7,7 @@ export const useUserData = (telegramID) => {
     const [, telegram_ID] = queryKey;
     if (!telegram_ID) throw new Error("Invalid Telegram ID");
     const response = await axios.get(
-      `https://beamlol-server.onrender.com/allusers/${telegram_ID}`
+      `https://pcooogcck4k8kkksk4s80g8k.92.112.181.229.sslip.io/allusers/${telegram_ID}`
     );
     return response.data;
   };

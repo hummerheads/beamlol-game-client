@@ -1,7 +1,7 @@
 import { Telegraf } from 'telegraf';
 
 const bot = new Telegraf('7474422454:AAE9xa-0_YXi9VaOtcR1AudDmX8MniOygrg'); // Replace with your bot token
-const webLink = "https://astounding-licorice-1ef290.netlify.app/";
+const webLink = "https://server.beamlol.club/";
 
 bot.start((ctx) => {
   const userId = ctx.from.id;

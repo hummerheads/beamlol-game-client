@@ -7,7 +7,7 @@ const useTonConnect = () => {
 
   const saveWalletAddress = async (telegram_ID, ton_address) => {
     try {
-      const response = await fetch('https://beamlol-server.onrender.com/allusers', {
+      const response = await fetch('https://pcooogcck4k8kkksk4s80g8k.92.112.181.229.sslip.io/allusers', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

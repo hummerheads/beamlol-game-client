@@ -81,7 +81,7 @@ const Shop = () => {
       toast.success("TON payment successful!");
 
       // Update user spins
-      await fetch(`https://beamlol-server.onrender.com/allusers/${telegram_ID}`, {
+      await fetch(`https://pcooogcck4k8kkksk4s80g8k.92.112.181.229.sslip.io/allusers/${telegram_ID}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ spinIncrement: item.spins }),
@@ -106,7 +106,7 @@ const Shop = () => {
     }
 
     try {
-      const response = await fetch("https://beamlol-server.onrender.com/piTransactions", {
+      const response = await fetch("https://pcooogcck4k8kkksk4s80g8k.92.112.181.229.sslip.io/piTransactions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
