@@ -1,5 +1,5 @@
 # Use Node.js image to build the React app
-FROM node:14 as build
+FROM node:18 as build
 
 # Set working directory
 WORKDIR /app
