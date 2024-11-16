@@ -1,6 +1,8 @@
 import { Button, Clipboard, Modal, TextInput } from "flowbite-react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Bounce, toast, ToastContainer } from "react-toastify";
+import { useUser } from "../../context/UserContext";
+import useTonConnect from "../../hooks/useTonConnect";
 
 const modalData = [
   {
@@ -54,19 +56,45 @@ const Shop = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [hash, setHash] = useState("");
+  const [status, setStatus] = useState("");
+  const { sender, connected } = useTonConnect();
+  const { telegram_ID, refetchUserData } = useUser();
 
-  const handleLeftButtonClick = (item) => {
-    setSelectedItem(item);
-    setOpenModal(true);
-  };
+  const handleTonPayment = useCallback(async (item) => {
+    if (!telegram_ID) {
+      setStatus("User ID not found. Please log in again.");
+      return;
+    }
 
-  const onCloseModal = () => {
-    setOpenModal(false);
-    setHash("");
-    setSelectedItem(null);
-  };
+    try {
+      setStatus("Sending TON payment...");
+      const transactionResponse = await sender.send(
+        "UQAXP55KXVCUp-kTYQ7nuST3YNcvipJ8JSet9F7COb6EjMJF",
+        item.price_TON.toString()
+      );
 
-  const handleSubmit = () => {
+      if (!transactionResponse) {
+        throw new Error("No response from TON Connect transaction.");
+      }
+
+      setStatus("Payment sent successfully!");
+      toast.success("TON payment successful!");
+
+      // Update user spins
+      await fetch(`https://beamlol-server.onrender.com/allusers/${telegram_ID}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ spinIncrement: item.spins }),
+      });
+
+      refetchUserData(telegram_ID);
+    } catch (error) {
+      setStatus("Payment failed. Please try again.");
+      console.error("Error during TON payment:", error);
+    }
+  }, [telegram_ID, sender, refetchUserData]);
+
+  const handlePiSubmit = async () => {
     if (hash.trim() === "") {
       toast.error("Please enter a valid transaction hash!", {
         position: "top-center",
@@ -77,14 +105,45 @@ const Shop = () => {
       return;
     }
 
-    toast.success("🦄 Transaction Hash submitted successfully! Please wait for 24 hours to get manual confirmation by our Team. Once your payment is confirmed, your assets will automatically be added into your account.", {
-      position: "top-center",
-      autoClose: 5000,
-      theme: "light",
-      transition: Bounce,
-    });
+    try {
+      const response = await fetch("https://beamlol-server.onrender.com/piTransactions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          telegram_ID,
+          transactionHash: hash,
+          price_PI: selectedItem.price_PI,
+          spins: selectedItem.spins,
+        }),
+      });
+
+      if (response.ok) {
+        toast.success("Transaction Hash submitted successfully!", {
+          position: "top-center",
+          autoClose: 5000,
+          theme: "light",
+          transition: Bounce,
+        });
+      } else {
+        toast.error("Failed to submit transaction hash. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting transaction hash:", error);
+      toast.error("Error submitting transaction hash. Please try again.");
+    }
+
     onCloseModal();
-    document.getElementById("my_modal_1").close();
+  };
+
+  const handleLeftButtonClick = (item) => {
+    setSelectedItem(item);
+    setOpenModal(true);
+  };
+
+  const onCloseModal = () => {
+    setOpenModal(false);
+    setHash("");
+    setSelectedItem(null);
   };
 
   return (
@@ -132,67 +191,22 @@ const Shop = () => {
             {/* Left Button - Opens Modal */}
             <div
               className="flex items-center gap-2 px-2 rounded-lg shadow-xl bg-gray-400 py-1  cursor-pointer"
-              onClick={() => document.getElementById("my_modal_1").showModal()}
+              onClick={() => handleLeftButtonClick(modalData[3])} // Example: Using the last item for the top card
             >
               <img className="w-5 h-5" src="/shop/pi.svg" alt="Pi" />
               <p className="text-black text-xs">50</p>
             </div>
-            {/* Middle and Right Buttons - Keep as is */}
-            <div className="hidden flex items-center gap-1 rounded-lg shadow-xl bg-gray-400 py-1 px-1">
-              <img className="w-5 h-5" src="/shop/star.svg" alt="Star" />
-              <p className="text-black text-xs"></p>
-            </div>
-            <div className="flex  gap-2 px-2 items-center gap-1 rounded-lg shadow-xl bg-gray-400 py-1 px-1">
+            {/* Middle and Right Buttons - TON Payment */}
+            <div
+              className="flex items-center gap-2 px-2 rounded-lg shadow-xl bg-gray-400 py-1 cursor-pointer"
+              onClick={() => handleTonPayment(modalData[3])} // Example: Using the last item for the top card
+            >
               <img className="w-5 h-5" src="/shop/ton.svg" alt="Ton" />
               <p className="text-black text-xs">5</p>
             </div>
           </div>
         </div>
       </div>
-
-      <dialog
-        id="my_modal_1"
-        className="modal backdrop:bg-black/50 rounded-lg shadow-2xl p-4 w-full"
-      >
-        <div className="modal-box bg-white rounded-lg p-6 shadow-lg border border-gray-300">
-          {/* Modal Header */}
-          <div className="relative">
-            <input
-              id="wallet-address"
-              type="text"
-              className="block w-full rounded-lg border border-gray-300 bg-gray-50 px-2.5 py-4 text-sm text-gray-500"
-              value="GAJS3BIZH7IB55IRFMPR45KTLJQIEDDQRZSHBODD6ARGWXNH6MS2EXWN"
-              disabled
-              readOnly
-            />
-            <Clipboard.WithIconText valueToCopy="GAJS3BIZH7IB55IRFMPR45KTLJQIEDDQRZSHBODD6ARGWXNH6MS2EXWN" />
-          </div>
-          <h3 className="font-bold text-md text-justify text-gray-800 my-4">
-            Copy the above Wallet Address and send 50 Pi. Submit your
-            Transaction hash ID below.
-          </h3>
-          <TextInput
-            id="hash"
-            placeholder="Enter Your Transaction Hash ID"
-            value={hash}
-            onChange={(event) => setHash(event.target.value)}
-            required
-          />
-          <div className="w-full mx-auto my-2">
-            <Button className="mx-auto">Submit</Button>
-          </div>
-
-          {/* Modal Action (Close Button) */}
-          <div className="modal-action mt-6 mx-auto">
-            <button
-              className="btn bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg px-4 py-2"
-              onClick={() => document.getElementById("my_modal_1").close()}
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      </dialog>
 
       {/* Cards with Dynamic Modal for Left Button */}
       <div className="py-2 grid grid-cols-2 gap-5 mb-5 px-4">
@@ -215,12 +229,11 @@ const Shop = () => {
                 <img className="w-5 h-5" src="/shop/pi.svg" alt="Pi" />
                 <p className="text-black text-xs">{item.price_PI}</p>
               </div>
-              {/* Middle and Right Buttons - Keep as is */}
-              <div className=" hidden flex items-center gap-1 rounded-lg shadow-xl bg-gray-400 py-1 px-1">
-                <img className="w-5 h-5" src="/shop/star.svg" alt="Star" />
-                <p className="text-black text-xs">{item.price_STAR}</p>
-              </div>
-              <div className="flex items-center gap-2 px-2 rounded-lg shadow-xl bg-gray-400 py-1 ">
+              {/* Middle and Right Buttons - TON Payment */}
+              <div
+                className="flex items-center gap-2 px-2 rounded-lg shadow-xl bg-gray-400 py-1 cursor-pointer"
+                onClick={() => handleTonPayment(item)}
+              >
                 <img className="w-5 h-5" src="/shop/ton.svg" alt="Ton" />
                 <p className="text-black text-xs">{item.price_TON}</p>
               </div>
@@ -229,7 +242,7 @@ const Shop = () => {
         ))}
       </div>
 
-      {/* Modal Component */}
+      {/* Modal Component for PI Transactions */}
       <Modal
         show={openModal}
         size="md"
@@ -268,7 +281,7 @@ const Shop = () => {
                   />
                 </div>
                 <div className="w-full mx-auto">
-                  <Button onClick={handleSubmit} className="mx-auto">
+                  <Button onClick={handlePiSubmit} className="mx-auto">
                     Submit
                   </Button>
                 </div>
@@ -277,6 +290,7 @@ const Shop = () => {
           )}
         </Modal.Body>
       </Modal>
+
       <div className="font-bold w-11/12 mx-auto rounded-md p-2 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white text-center">
         <p className="text-[#201b1b] text-xl">NFT&apos;s </p>
       </div>
