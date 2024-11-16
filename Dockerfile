@@ -1,7 +1,7 @@
-# Use Node.js image to build the React app
-FROM node:18 as build
+# Use an official Node.js runtime as a parent image
+FROM node:18 AS build
 
-# Set working directory
+# Set the working directory in the container
 WORKDIR /app
 
 # Copy package.json and package-lock.json
@@ -10,20 +10,20 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application source code
+# Copy the rest of the application code
 COPY . .
 
-# Build the React app
+# Build the application
 RUN npm run build
 
-# Use Nginx to serve the static files
-FROM nginx:alpine
+# Use a minimal nginx image to serve the built files
+FROM nginx:stable-alpine
 
-# Copy the build output to the Nginx HTML directory
-COPY --from=build /app/build /usr/share/nginx/html
+# Copy the build output to the nginx html directory
+COPY --from=build /app/dist /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
 
-# Start Nginx server
+# Start nginx
 CMD ["nginx", "-g", "daemon off;"]
