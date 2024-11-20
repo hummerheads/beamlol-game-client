@@ -68,6 +68,11 @@ const Shop = () => {
         return;
       }
 
+      if (!connected) {
+        setStatus("Please connect your wallet first.");
+        return;
+      }
+
       try {
         setStatus("Sending TON payment...");
         const transactionResponse = await sender.send(
