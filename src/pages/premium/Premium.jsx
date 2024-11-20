@@ -76,7 +76,7 @@ const Premium = () => {
           {/* Stats Section */}
           <div className="flex gap-4 items-center text-lg font-bold mx-auto rounded-md p-2 my-4 bg-gradient-to-r from-yellow-400 via-yellow-200 to-white w-1/2 justify-center shadow-lg transform hover:scale-105 transition-all duration-300">
             <img src="/Premium/Avatar Stack.svg" alt="Avatar Stack" />
-            <h1 className="text-gray-800 text-xl">890,357 Joined</h1>
+            <h1 className="text-gray-800 text-xl">22 Joined</h1>
           </div>
 
           {/* Title Section */}

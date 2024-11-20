@@ -1,4 +1,3 @@
-// Home.jsx
 import { useEffect, useState, useCallback } from "react";
 import { Drawer } from "flowbite-react";
 import { NavLink } from "react-router-dom";
@@ -19,7 +18,6 @@ const Home = () => {
     tap_power,
     refetchUserData,
     updateUserData,
-    
   } = context;
 
   const [isOpen, setIsOpen] = useState(false);
@@ -30,40 +28,36 @@ const Home = () => {
   useEffect(() => {
     // Ensure the component has the correct telegram_ID
     console.log("Telegram User ID:", telegram_ID);
-  }, [telegram_ID]); // This ensures we log the telegram_ID when it's available
+  }, [telegram_ID]);
 
-  const handleTap = useCallback(async (e) => {
-    if (!e || !e.currentTarget) return;
-  
+  const handleCardClick = async (e) => {
     if (available_energy < (tap_power || 1)) {
       alert("Not enough energy to tap!");
       return;
     }
-  
+
     if (!telegram_ID) {
       alert("User ID is missing. Please log in again.");
       return;
     }
-  
-    const rect = e.currentTarget.getBoundingClientRect();
+
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
     const tapX = e.clientX - rect.left;
     const tapY = e.clientY - rect.top;
-  
+
     const newTap = {
       id: Date.now(),
       x: tapX,
       y: tapY,
+      power: tap_power || 1,
     };
-  
+
     setTaps((prevTaps) => [...prevTaps, newTap]);
-  
+
     const newEnergy = available_energy - (tap_power || 1);
-  
-    // Update local state first
-    updateUserData({
-      available_energy: newEnergy,
-    });
-  
+    updateUserData({ available_energy: newEnergy });
+
     try {
       const response = await fetch(
         `https://pcooogcck4k8kkksk4s80g8k.92.112.181.229.sslip.io/allusers/${telegram_ID}`,
@@ -72,27 +66,56 @@ const Home = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             balanceIncrement: tap_power || 1,
-            available_energy_decrement: tap_power || 1, // Make sure this matches backend logic
+            available_energy_decrement: tap_power || 1,
           }),
         }
       );
-  
+
       if (!response.ok) {
-        // Revert the change if the server request fails
-        updateUserData({
-          available_energy: available_energy,
-        });
+        updateUserData({ available_energy: available_energy });
         console.error("Failed to process tap.");
       }
     } catch (error) {
-      // Revert the change if there's an error
-      updateUserData({
-        available_energy: available_energy,
-      });
+      updateUserData({ available_energy: available_energy });
       console.error("Error during tap action:", error);
     }
-  }, [available_energy, tap_power, telegram_ID, updateUserData]);
-  
+  };
+
+  const handleMultiTap = (e) => {
+    e.persist(); // Ensure the event persists for asynchronous updates
+    if (e.touches) {
+      // Handle multitap for touch devices
+      Array.from(e.touches).forEach((touch) => {
+        const card = e.currentTarget;
+        const rect = card.getBoundingClientRect();
+        const tapX = touch.clientX - rect.left;
+        const tapY = touch.clientY - rect.top;
+
+        const newTap = {
+          id: Date.now() + Math.random(), // Unique ID for each tap
+          x: tapX,
+          y: tapY,
+          power: tap_power || 1,
+        };
+
+        setTaps((prevTaps) => [...prevTaps, newTap]);
+      });
+    } else {
+      handleCardClick(e); // Fallback for mouse clicks
+    }
+  };
+
+  useEffect(() => {
+    if (taps.length > 0) {
+      const timer = setTimeout(() => {
+        setTaps((prev) => prev.slice(1));
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [taps]);
+
+  const progress = Math.min(level * 10, 100);
+
   const handleClose = useCallback(() => {
     setIsOpen(false);
   }, []);
@@ -153,27 +176,6 @@ const Home = () => {
   }, [connected, telegram_ID, sender, refetchUserData]);
 
   useEffect(() => {
-    const resetEnergy = async () => {
-      if (!telegram_ID) return;
-
-      try {
-        await fetch(
-          `https://pcooogcck4k8kkksk4s80g8k.92.112.181.229.sslip.io/reset-energy/${telegram_ID}`,
-          {
-            method: "PATCH",
-          }
-        );
-        refetchUserData(telegram_ID);
-      } catch (error) {
-        console.error("Error resetting energy:", error);
-      }
-    };
-
-    const interval = setInterval(resetEnergy, 3600000);
-    return () => clearInterval(interval);
-  }, [telegram_ID, refetchUserData]);
-
-  useEffect(() => {
     const lastCheckIn = localStorage.getItem("lastCheckIn");
     const now = new Date().getTime();
 
@@ -191,31 +193,29 @@ const Home = () => {
     }
   }, [taps]);
 
-  const progress = Math.min(level * 10, 100);
-
   return (
     <div
-      className="bg-[url('/bggif1.gif')] flex flex-col items-center px-2 bg-gray-700 pt-5"
+      className="bg-[url('/bggif2.gif')] flex flex-col items-center px-2 bg-gray-700 pt-5"
       style={{ height: "calc(100vh - 132px)", overflow: "auto" }}
     >
       <div className="flex gap-6 font-heading-aldrich tracking-wider w-11/12 mb-5">
         {["Giveaways", "Level"].map((label, index) => (
           <NavLink
-          to={label === "Level" ? "/level" : ""}
+            to={label === "Level" ? "/level" : ""}
             key={index}
             className="w-full py-2 rounded-xl text-center bg-gray-700 hover:from-[#2b6cb0] hover:to-[#63b3ed] transform hover:scale-105 transition-all duration-300 shadow-lg"
           >
-            <span className=" text-xs font-bold text-white block mb-1">{label}</span>
+            <span className=" text-xs font-bold text-white block mb-1">
+              {label}
+            </span>
             <span className="block text-white text-lg font-bold drop-shadow-md">
               {index === 1 ? (
                 `${level}`
-              ) : index === 2 ? (
-                `${level}`
               ) : (
-              <div className="flex justify-center gap-2 items-center">
-                <FaCoins className="inline text-yellow-400" />
-                <p>Coming Soon</p>
-              </div>
+                <div className="flex justify-center gap-2 items-center">
+                  <FaCoins className="inline text-yellow-400" />
+                  <p>Coming Soon</p>
+                </div>
               )}
             </span>
           </NavLink>
@@ -224,7 +224,9 @@ const Home = () => {
 
       <div className="w-11/12 max-w-lg font-heading-aldrich tracking-wider mb-2">
         <div className="flex justify-between items-center mb-2">
-          <span className="text-gray-100 text-lg font-semibold">Epic Level</span>
+          <span className="text-gray-100 text-lg font-semibold">
+            Epic Level
+          </span>
           <span className="text-gray-100 text-base font-medium">
             Level {level}/10
           </span>
@@ -277,37 +279,30 @@ const Home = () => {
         ))}
       </div>
 
-      <div className="flex justify-center relative">
-        <img
-          src="/banner.png"
-          alt="A cute robot with glowing eyes"
-          className="h-[380px] mb-3 cursor-pointer"
-          onClick={handleTap}
-        />
-
-        {taps.map((tap) => (
-          <div
-            key={tap.id}
-            className="absolute text-white text-3xl font-black pointer-events-none"
-            style={{
-              left: `${tap.x}px`,
-              top: `${tap.y}px`,
-              animation: "fadeUp 1s forwards",
-            }}
-          >
-            +{tap_power || 1}
+      <div onClick={handleMultiTap} className="flex justify-center my-4">
+        <div className="relative w-full shadow-2xl rounded-full bg-opacity-50 bg-gray-500 flex justify-center">
+          <div className="p-7">
+            <img
+              src="/banner.png"
+              alt="Main Character"
+              className="w-60 h-auto"
+            />
           </div>
-        ))}
-      </div>
 
-      <style>
-        {
-          `@keyframes fadeUp {
-            0% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(-80px); }
-          }`
-        }
-      </style>
+          {taps.map((tap) => (
+            <div
+              key={tap.id}
+              className="absolute text-3xl font-bold text-white pointer-events-none animate-float animate-bounce-tap animate-circular-movement"
+              style={{
+                top: `${tap.y - 20}px`,
+                left: `${tap.x - 20}px`,
+              }}
+            >
+              +{tap.power}
+            </div>
+          ))}
+        </div>
+      </div>
 
       <Drawer
         open={isOpen}
@@ -346,7 +341,7 @@ const Home = () => {
         </Drawer.Items>
       </Drawer>
 
-      <div className="my-2 items-center gap-2 rounded-full flex">
+      <div className="mb-4 items-center gap-2 rounded-full flex">
         <img
           className="w-12 h-12 rounded-full"
           src="/icons/energy.svg"

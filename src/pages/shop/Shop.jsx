@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import { useUser } from "../../context/UserContext";
 import useTonConnect from "../../hooks/useTonConnect";
+import { TonConnectButton } from "@tonconnect/ui-react";
 
 const modalData = [
   {
@@ -60,39 +61,45 @@ const Shop = () => {
   const { sender, connected } = useTonConnect();
   const { telegram_ID, refetchUserData } = useUser();
 
-  const handleTonPayment = useCallback(async (item) => {
-    if (!telegram_ID) {
-      setStatus("User ID not found. Please log in again.");
-      return;
-    }
-
-    try {
-      setStatus("Sending TON payment...");
-      const transactionResponse = await sender.send(
-        "UQAXP55KXVCUp-kTYQ7nuST3YNcvipJ8JSet9F7COb6EjMJF",
-        item.price_TON.toString()
-      );
-
-      if (!transactionResponse) {
-        throw new Error("No response from TON Connect transaction.");
+  const handleTonPayment = useCallback(
+    async (item) => {
+      if (!telegram_ID) {
+        setStatus("User ID not found. Please log in again.");
+        return;
       }
 
-      setStatus("Payment sent successfully!");
-      toast.success("TON payment successful!");
+      try {
+        setStatus("Sending TON payment...");
+        const transactionResponse = await sender.send(
+          "UQAXP55KXVCUp-kTYQ7nuST3YNcvipJ8JSet9F7COb6EjMJF",
+          item.price_TON.toString()
+        );
 
-      // Update user spins
-      await fetch(`https://pcooogcck4k8kkksk4s80g8k.92.112.181.229.sslip.io/allusers/${telegram_ID}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ spinIncrement: item.spins }),
-      });
+        if (!transactionResponse) {
+          throw new Error("No response from TON Connect transaction.");
+        }
 
-      refetchUserData(telegram_ID);
-    } catch (error) {
-      setStatus("Payment failed. Please try again.");
-      console.error("Error during TON payment:", error);
-    }
-  }, [telegram_ID, sender, refetchUserData]);
+        setStatus("Payment sent successfully!");
+        toast.success("TON payment successful!");
+
+        // Update user spins
+        await fetch(
+          `https://pcooogcck4k8kkksk4s80g8k.92.112.181.229.sslip.io/allusers/${telegram_ID}`,
+          {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ spinIncrement: item.spins }),
+          }
+        );
+
+        refetchUserData(telegram_ID);
+      } catch (error) {
+        setStatus("Payment failed. Please try again.");
+        console.error("Error during TON payment:", error);
+      }
+    },
+    [telegram_ID, sender, refetchUserData]
+  );
 
   const handlePiSubmit = async () => {
     if (hash.trim() === "") {
@@ -106,24 +113,30 @@ const Shop = () => {
     }
 
     try {
-      const response = await fetch("https://pcooogcck4k8kkksk4s80g8k.92.112.181.229.sslip.io/piTransactions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          telegram_ID,
-          transactionHash: hash,
-          price_PI: selectedItem.price_PI,
-          spins: selectedItem.spins,
-        }),
-      });
+      const response = await fetch(
+        "https://pcooogcck4k8kkksk4s80g8k.92.112.181.229.sslip.io/piTransactions",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            telegram_ID,
+            transactionHash: hash,
+            price_PI: selectedItem.price_PI,
+            spins: selectedItem.spins,
+          }),
+        }
+      );
 
       if (response.ok) {
-        toast.success("Transaction Hash submitted successfully! Please wait for our representative to check your transaction. Thank You", {
-          position: "top-center",
-          autoClose: 5000,
-          theme: "light",
-          transition: Bounce,
-        });
+        toast.success(
+          "Transaction Hash submitted successfully! Please wait for our representative to check your transaction. Thank You",
+          {
+            position: "top-center",
+            autoClose: 5000,
+            theme: "light",
+            transition: Bounce,
+          }
+        );
       } else {
         toast.error("Failed to submit transaction hash. Please try again.");
       }
@@ -201,8 +214,12 @@ const Shop = () => {
               className="flex items-center gap-2 px-2 rounded-lg shadow-xl bg-gray-400 py-1 cursor-pointer"
               onClick={() => handleTonPayment(modalData[3])} // Example: Using the last item for the top card
             >
+              {status && <p className="text-xs text-center">{status}</p>}
+              {!connected && (
+                <TonConnectButton className="my-connect-button mx-auto" />
+              )}
               <img className="w-5 h-5" src="/shop/ton.svg" alt="Ton" />
-              <p className="text-black text-xs">5</p>
+              <p className="text-black text-xs ">5</p>
             </div>
           </div>
         </div>
@@ -234,6 +251,10 @@ const Shop = () => {
                 className="flex items-center gap-2 px-2 rounded-lg shadow-xl bg-gray-400 py-1 cursor-pointer"
                 onClick={() => handleTonPayment(item)}
               >
+                {status && <p className="text-xs text-center">{status}</p>}
+                {!connected && (
+                  <TonConnectButton className="my-connect-button mx-auto" />
+                )}
                 <img className="w-5 h-5" src="/shop/ton.svg" alt="Ton" />
                 <p className="text-black text-xs">{item.price_TON}</p>
               </div>

@@ -16,7 +16,7 @@ export const useUserData = (telegramID) => {
     queryKey: ["userData", telegramID],
     queryFn: fetchUserData,
     enabled: !!telegramID,
-    refetchInterval: 500, // Auto-refetch every 0.5 seconds
+    refetchInterval: 100, // Auto-refetch every 0.5 seconds
     onError: (err) => console.error("Error fetching user data:", err.message),
   });
 
